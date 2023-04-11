@@ -1,0 +1,74 @@
+.medical-cases {
+  padding: 15px;
+  margin: 30px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 2px;
+  border-radius: 15px;
+}
+
+.insert-medical-case {
+  padding: 50px;
+  margin: 30px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 2px;
+  border-radius: 15px;
+  height:100%;
+}
+
+.input {
+  position: relative;
+  width: 66% !important;
+  /*left: 30px;*/
+  /*transform: scale(75%, 75%);*/
+}
+
+
+.cfp-image {
+  left: 71%;
+  height: 420px;
+  width: 420px;
+  position: absolute;
+  /*top:-660px;*/
+  margin-top: 20px;
+  border: rgb(0, 138, 140) 5px solid;
+  /*margin-bottom: 200px;*/
+  /*position: sticky;*/
+}
+
+button.add-case:enabled {
+  width: 300px;
+  align-self: end;
+  height: 50px;
+  background-color: rgb(0, 138, 140) !important;
+  margin-left: 20px;
+}
+
+.upload-image {
+  color: rgb(0, 138, 140) !important;
+}
+
+button.add-case:disabled {
+  align-self: end;
+  width: 300px;
+  height: 50px;
+  margin-left: 20px;
+}
+
+mat-datepicker-toggle {
+  color: rgb(0, 138, 140) !important;
+}
+
+.border {
+  align-self: end;
+}
+
+.small-input {
+  width: 20% !important;
+  margin-right: 50px;
+}
+.align-left {
+  display: inline-block;
+}
+.black{
+  color: #343434 !important;
+}

@@ -1,0 +1,21 @@
+export enum Disease {
+  "Normal",
+  "Age-related macular degeneration",
+  "Diabetic retinopathy",
+  "Glaucoma",
+  "Hypertensive retinopathy",
+  "Pathological myopia",
+  "Tessellated fundus",
+  "Vitreous degeneration",
+  "Branch retinal vein occlusion",
+  "Large optic cup",
+  "Drusen",
+  "Epiretinal membrane",
+  "Optic disc edema",
+  "Myelinated nerve fibers",
+  "Rhegmatogenous retinal detachment",
+  "Refractive media opacity",
+  "Central serous chorioretinopathy",
+  "Laser spots",
+  "Central retinal vein occlusion"
+}

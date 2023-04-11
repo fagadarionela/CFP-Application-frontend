@@ -1,0 +1,419 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+html,
+body {
+  background-image: url("/assets/background2.jpg");
+  background-color: rgb(156, 216, 237);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: "Bahnschrift", "Times New Roman", Times, serif;
+  left: 0;
+  margin: 0;
+}
+
+.logo-title-first {
+  color: rgb(0, 138, 140);
+  display: inline;
+  position: relative;
+  top: -15px;
+  font-size: 20px;
+}
+
+.logo-title-second {
+  color: rgb(47, 200, 200);
+  display: inline;
+  position: relative;
+  top: -15px;
+  font-size: 20px;
+}
+
+.logo-title-third {
+  color: rgb(47, 164, 200);
+  display: inline;
+  position: relative;
+  top: -15px;
+  font-size: 20px;
+}
+
+.nav-bar {
+  background-color: rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  position: fixed;
+  width: 95%;
+  margin: 30px 0 20px;
+  padding: 0 2000px 0 50px;
+  font-size: 14px;
+  z-index: 10;
+  box-shadow: 5px 5px 5px 3px #aaaaaa;
+}
+
+.nav-bar ul {
+  list-style: none;
+  margin: 0;
+  padding-top: 10px;
+}
+
+.nav-bar a {
+  text-decoration: none;
+  color: rgb(0, 138, 140);
+}
+
+.nav-bar a:visited {
+  color: rgb(0, 138, 140);
+}
+
+.nav-bar a:active {
+  color: rgb(47, 164, 200);
+}
+
+.nav-bar .nav-bar-item {
+  float: right;
+  padding: 15px 15px 0px 15px;
+  height: 35px;
+}
+
+.nav-bar .nav-bar-item:hover:after {
+  content: "";
+  display: block;
+  width: 25px;
+  color: rgb(0, 138, 140);
+  border-bottom: 2px solid;
+  margin: 10px auto;
+}
+
+.nav-bar .nav-bar-item-active:after {
+  content: "";
+  display: block;
+  width: 25px;
+  color: rgb(0, 138, 140);
+  border-bottom: 2px solid;
+  margin: 10px auto;
+}
+
+#nav-bar-logo {
+  float: left;
+  padding: 0;
+  margin: 0;
+}
+
+#nav-bar-logo:hover {
+  background-color: rgba(113, 142, 164, 0);
+}
+
+#nav-bar-logo img {
+  height: 100%;
+  padding: 6px;
+}
+
+.intro {
+  width: 40%;
+  height: 100%;
+  padding-left: 100px;
+  padding-right: 100px;
+
+}
+
+.intro .generals-title {
+  position: relative;
+  padding-top: 200px;
+  font-size: 30px;
+  font-weight: bold;
+  color: rgb(0, 138, 140);
+  text-align: center;
+  width: 600px;
+}
+
+.intro hr {
+  width: 600px;
+  float: left;
+}
+
+.intro .generals {
+  font-size: 20px;
+  line-height: 1.6;
+  padding-left: 40px;
+  padding-right: 40px;
+  color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  text-justify: inter-word;
+  width: 600px;
+}
+
+.intro .generals img {
+  width: 15px;
+  height: 15px;
+}
+
+.info {
+  background-color: white;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.more-info {
+  box-shadow: 5px 5px 5px #aaaaaa;
+  border-radius: 10px;
+  width: 27%;
+  height: 350px;
+  padding: 30px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  margin-right: 40px;
+  float: right;
+  background-color: rgba(163, 219, 239, 0.2);
+}
+
+.table-tarife {
+  width: 100%;
+}
+
+.div-transparent {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.div-transparent .generals-title {
+  color: rgb(0, 138, 140);
+  font-size: 20px;
+}
+
+.div-transparent table {
+  width: 100%;
+}
+
+.table-tarife td {
+  border-bottom: 1px solid black;
+}
+
+.pret {
+  width: 100px;
+  text-align: right;
+}
+
+.info h1 {
+  color: rgb(0, 138, 140);
+}
+
+.info h2 {
+  color: rgb(0, 138, 140);
+}
+
+.table-tarife {
+  background-color: rgba(163, 219, 239, 0.2);
+  box-shadow: 4px 4px 4px #aaaaaa;
+  padding: 5px;
+}
+
+.card-medic {
+  background-color: rgba(163, 219, 239, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+  padding-left: 20px;
+  box-shadow: 4px 4px 4px #aaaaaa;
+  width: 48%;
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  min-height: 150px;
+  text-align: justify;
+}
+
+.td-image {
+  width: 110px;
+  height: 110px;
+}
+
+.atribut-card {
+  color: rgb(0, 138, 140);
+}
+
+.button:visited, .button:active, .button:link {
+  color: black;
+  background-color: rgb(118, 183, 186);
+  border-radius: 20px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.footer {
+  background-color: rgb(237, 249, 253);
+  padding: 0;
+  width: 100%;
+  display: inline-block;
+  clear: both;
+}
+
+.intro-contact {
+  width: 42%;
+  height: 100%;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.intro-contact .generals-title {
+  position: relative;
+  padding-top: 200px;
+  font-size: 25px;
+  font-weight: bold;
+  color: rgb(0, 138, 140);
+  text-align: justify;
+  width: 600px;
+}
+
+.intro-contact hr {
+  width: 600px;
+  float: left;
+}
+
+.intro-contact .generals {
+  font-size: 15px;
+  line-height: 1.6;
+  padding-left: 40px;
+  padding-right: 40px;
+  color: black;
+  text-justify: inter-word;
+}
+
+.info-single {
+  background-color: white;
+  padding-left: 100px;
+  padding-right: 100px;
+  min-height: 91.8%;
+}
+
+.info-single .title {
+  color: rgb(0, 138, 140);
+  font-size: 20px;
+}
+
+.info-single iframe {
+  float: right;
+}
+
+.detalii-1 {
+  float: left;
+  height: 240px;
+  font-size: 20px;
+  padding: 80px;
+  text-align: center;
+  line-height: 1.5;
+  align-items: center;
+  width: 45%;
+}
+
+.info-single img {
+  left: 50px;
+  margin-top: 100px;
+}
+
+.detalii-2 {
+  margin-top: -250px;
+  float: right;
+  height: 240px;
+  font-size: 20px;
+  /*padding: 50px;*/
+  text-align: center;
+  line-height: 1.5;
+  align-items: center;
+  width: 45%;
+}
+
+.card-medic img {
+  border-radius: 50px;
+  margin-top: 0;
+}
+
+.title-card {
+  font-size: 18px;
+}
+
+.card {
+  background-color: rgba(163, 219, 239, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+  padding-left: 20px;
+  box-shadow: 4px 4px 4px #aaaaaa;
+  width: 45%;
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  min-height: 150px;
+  text-align: justify;
+  min-height: 200px;
+}
+
+.tabel-servicii td {
+  width: 33.33%;
+}
+
+input {
+  width: 47%;
+  padding: 5px;
+  margin: 5px;
+}
+
+textarea {
+  width: 97%;
+  padding: 5px;
+  margin: 5px;
+}
+
+.button, .button:active {
+  margin: 5px;
+  color: black;
+  background-color: rgb(118, 183, 186);
+  border-radius: 20px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.info-contact {
+  background-color: white;
+  padding-left: 100px;
+  padding-right: 100px;
+  margin-bottom: -80px;
+}
+
+.center {
+  text-align: center;
+}
+
+iframe {
+  border: 0;
+}
+
+h1 {
+  color: rgb(0, 138, 140);
+  font-size: 20px;
+}
+
+p {
+  font-size: 18px;
+}
+
+.paginator {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+}

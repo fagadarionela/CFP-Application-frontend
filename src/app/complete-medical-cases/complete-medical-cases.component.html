@@ -1,0 +1,47 @@
+<div class="content">
+  <br><br><br><br><br>
+  <div class="filters">
+    <mat-form-field class="small-input" appearance="fill">
+      <mat-label>Diagnostic</mat-label>
+      <input matInput [(ngModel)]="searchedDiagnostic">
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" (click)="searchMedicalCases()"
+            [disabled]="searchedDiagnostic === ''"
+            class="search-case">
+      Cauta caz medical
+    </button>
+  </div>
+  <mat-card *ngFor="let medicalCase of medicalCases; let i=index" class="insert-medical-case">
+    <div class="align-left">
+      <mat-form-field class="half-input" appearance="fill">
+        <mat-label class="black">Diagnostic rezident</mat-label>
+        <textarea matInput [(ngModel)]="medicalCase.residentDiagnosis" rows="1" disabled class="black"></textarea>
+      </mat-form-field>
+      <mat-form-field class="half-input" appearance="fill">
+        <mat-label class="black">Diagnostic diferential</mat-label>
+        <textarea matInput [(ngModel)]="medicalCase.differentialDiagnosis" rows="1" disabled class="black"></textarea>
+      </mat-form-field>
+    </div>
+    <mat-form-field class="input" appearance="fill">
+      <mat-label class="black">Plan terapeutic</mat-label>
+      <textarea matInput [(ngModel)]="medicalCase.therapeuticPlan" rows="1" disabled class="black"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="input" appearance="fill">
+      <mat-label class="black">Diagnostic expert</mat-label>
+      <textarea matInput [(ngModel)]="medicalCase.therapeuticPlan" rows="1" disabled class="black"></textarea>
+    </mat-form-field>
+    <div class="cfp-image">
+      <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="preview" width="100%" height="100%"
+           alt="Imagine CFP" (click)="openImage(medicalCase.cfpimage)">
+    </div>
+  </mat-card>
+  <mat-paginator #paginator class="paginator" [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 [showFirstLastButtons]="true"
+                 [length]="totalSize"
+                 [pageIndex]="currentPage"
+                 (page)="handlePage($event.pageIndex, $event.pageSize, searchedDiagnostic)">
+  </mat-paginator>
+</div>

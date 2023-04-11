@@ -1,0 +1,8 @@
+.modal{
+  min-width:1260px;
+  overflow: hidden;
+}
+.cfp-image {
+  height: 420px;
+  width: 420px;
+}

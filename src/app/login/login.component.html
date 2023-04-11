@@ -1,0 +1,29 @@
+<div class="intro-contact">
+  <br>
+  <div class="generals-title"> Autentificare:</div>
+  <hr>
+  <br><br><br>
+  <form  class="form align" [formGroup]="this.loginForm"   (ngSubmit)="loginUser(loginForm.value)">
+  <div class="form-group">
+    <mat-form-field  class="input example-full-width" >
+      <mat-label>Username</mat-label>
+      <input  matInput  placeholder="Username" name="username" formControlName="username">
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field appearance="fill" class="input example-full-width">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" name="password" formControlName="password">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="!hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <br>
+  <button type="submit" id="loginButton"  class="button btn btn-success">Autentificare</button>
+  <br>
+  <br><br><br><br><br><br>
+  </form>
+</div>

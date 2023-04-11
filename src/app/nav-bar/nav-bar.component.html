@@ -1,0 +1,50 @@
+<div class="nav-bar">
+  <ul>
+    <li class="nav-bar-item" id="nav-bar-logo">
+      <a id="elements" class="logo">
+        <img alt="Tooth Logo" src="/assets/logo.png"/>
+        <div class="logo-title-first">CFP</div>
+        <div class="logo-title-second">-</div>
+        <div class="logo-title-third">Ophthalmology</div>
+      </a>
+    </li>
+    <li>
+    </li>
+    <li class="nav-bar-item" *ngIf="!loggedIn">
+      <a href="signup" id="elements">Inregistrare</a>
+    </li>
+    <li class="nav-bar-item" *ngIf="!loggedIn">
+      <a href="login" id="elements">Autentificare</a>
+    </li>
+
+    <li class="nav-bar-item" *ngIf="loggedIn">
+
+      <a [matMenuTriggerFor]="menu">
+        <div class="nav-bar-item-without-line username" *ngIf="loggedIn">
+          <a>{{username}}</a>
+        </div>
+        <span class="material-icons" style="font-size:40px; margin-top:-15px; cursor:pointer;">
+        account_circle
+        </span></a>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="goTo('/profile')">Profil</button>
+        <button mat-menu-item (click)="goTo('/logout')">Deconectare</button>
+      </mat-menu>
+    </li>
+
+    <li class="nav-bar-item" *ngIf="role=='OPERATOR'" id="elements">
+      <a href="medical-cases/insert">Inserare cazuri medicale</a>
+    </li>
+    <li class="nav-bar-item" *ngIf="role=='RESIDENT'" id="elements">
+      <a href="medical-cases/completed">Cazuri medicale completate</a>
+    </li>
+    <li class="nav-bar-item" *ngIf="role=='RESIDENT'" id="elements">
+      <a href="medical-cases/incomplete">Cazuri medicale necompletate</a>
+    </li>
+
+  </ul>
+</div>
+
+
+
+

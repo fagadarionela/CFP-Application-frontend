@@ -1,0 +1,95 @@
+.medical-cases {
+  padding: 15px;
+  margin: 30px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 2px;
+  border-radius: 15px;
+}
+
+.insert-medical-case {
+  padding: 50px;
+  margin: 30px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 2px;
+  border-radius: 15px;
+}
+
+.input {
+  position: relative;
+  width: 66% !important;
+  /*left: 30px;*/
+  /*transform: scale(75%, 75%);*/
+}
+
+.cfp-image {
+  left: 71%;
+  height: 420px;
+  width: 420px;
+  position: absolute;
+  margin-top: -10px;
+  border: rgb(0, 138, 140) 5px solid;
+}
+
+button.add-case:enabled {
+  width: 300px;
+  align-self: end;
+  height: 50px;
+  background-color: rgb(0, 138, 140) !important;
+  margin-left: 20px;
+}
+
+.upload-image {
+  color: rgb(0, 138, 140) !important;
+}
+
+button.add-case:disabled {
+  align-self: end;
+  width: 300px;
+  height: 50px;
+  margin-left: 20px;
+}
+
+mat-datepicker-toggle {
+  color: rgb(0, 138, 140) !important;
+}
+
+.align {
+  width: 100%;
+  align-self: end;
+  /*border: solid black 1px;*/
+}
+
+.align-left {
+  display: inline-block;
+}
+
+.small-input {
+  /*position: relative;*/
+  width: 20% !important;
+  margin-right: 50px;
+  /*transform: scale(80%, 80%);*/
+  /*align-self: start;*/
+}
+
+.black {
+  color: #343434 !important;
+}
+
+.link {
+  background-color: white;
+  border: 2px solid white;
+  color: blue;
+  text-decoration: underline;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search-case {
+  align-self: end;
+  width: 300px;
+  height: 50px;
+  margin-left: 20px;
+  top: -30px;
+}

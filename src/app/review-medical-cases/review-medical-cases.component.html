@@ -1,0 +1,62 @@
+<div class="content">
+  <br><br><br><br><br>
+  <mat-card *ngFor="let medicalCase of medicalCases; let i=index" class="insert-medical-case">
+    <h1>Caz medical {{medicalCase.encodedInfo}}</h1>
+<!--    <mat-form-field class="input" appearance="fill">-->
+<!--      <mat-label>Nume</mat-label>-->
+<!--      <input matInput [(ngModel)]="medicalCase.lastName" disabled class="black">-->
+<!--    </mat-form-field>-->
+<!--    <br>-->
+<!--    <mat-form-field class="input" appearance="fill">-->
+<!--      <mat-label>Prenume</mat-label>-->
+<!--      <input class="input" matInput [(ngModel)]="medicalCase.firstName" disabled class="black">-->
+<!--    </mat-form-field>-->
+    <br>
+    <mat-form-field class="input" appearance="fill">
+      <mat-label>Data nasterii</mat-label>
+      <input matInput [matDatepicker]="dp" [(ngModel)]="medicalCase.birthDate" disabled class="black">
+      <mat-datepicker-toggle matIconSuffix [for]="dp" style="padding-right: 10px;" disabled></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+      <!--      <mat-error *ngIf="checkDate(this.dataNasterii.value!)">{{getErrorMessage()}}</mat-error>-->
+    </mat-form-field>
+    <br>
+    <mat-form-field class="input" appearance="fill">
+      <mat-label>Diagnostic prezis</mat-label>
+      <textarea matInput [(ngModel)]="medicalCase.presumptiveDiagnosis" rows="1" disabled class="black"></textarea>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Informatii aditionale</mat-label>
+      <textarea matInput [(ngModel)]="medicalCase.additionalInformation" rows="4" disabled class="black"></textarea>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Diagnostic rezident</mat-label>
+      <textarea matInput [(ngModel)]="medicalCase.residentDiagnosis" rows="2" disabled class="black"></textarea>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Diagnostic diferential</mat-label>
+      <textarea matInput [(ngModel)]="medicalCase.differentialDiagnosis" rows="2" disabled class="black"></textarea>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Plan terapeutic</mat-label>
+      <textarea matInput [(ngModel)]="medicalCase.therapeuticPlan" rows="2" disabled class="black"></textarea>
+    </mat-form-field>
+    <br>
+
+    <div class="align">
+      <button mat-flat-button color="primary" [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null" class="add-case">
+        Caz corect
+      </button>
+      <button mat-flat-button color="primary" [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null" class="add-case">
+        Caz incorect
+      </button>
+    </div>
+    <div class="cfp-image">
+      <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="preview" width="100%" height="100%"
+           alt="Imagine CFP">
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,55 @@
+.dropdown-limba {
+  width: 40px;
+  margin-left: 10px;
+  float: right;
+}
+
+.nav-bar {
+  z-index: 1000;
+}
+
+.account-logo {
+  max-height: 9999px;
+  top: -150px;
+}
+
+#elements {
+  position: relative;
+  top: -5px;
+  font-weight: 450;
+  font-size: 18px;
+}
+
+.username {
+  left: -12px;
+  position: relative;
+  top: -19px;
+}
+
+.logo {
+  cursor: default;
+}
+
+.nav-bar-item-without-line {
+  float: right;
+  padding: 15px 15px 0px 15px;
+  height: 35px;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.nav-bar-item-without-line:after {
+  content: "";
+  display: block;
+  width: 25px;
+  color: rgb(0, 138, 140);
+  margin: 10px auto;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
