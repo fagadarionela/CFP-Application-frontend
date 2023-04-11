@@ -6,8 +6,9 @@ import {MedicalCaseService} from "../services/medical-case.service";
 import {Disease} from "../utils/disease";
 import * as bcrypt from 'bcryptjs';
 import {SALT} from "../utils/http-constants";
-import {ImageModalComponent} from "../modals/image-modal/image-modal.component";
 import {MatDialog} from "@angular/material/dialog";
+import {SuccessModalComponent} from "../modals/success-modal/success-modal.component";
+import {ErrorModalComponent} from "../modals/error-modal/error-modal.component";
 
 @Component({
   selector: 'app-insert-medical-cases',
@@ -32,7 +33,7 @@ export class InsertMedicalCasesComponent implements OnInit {
 
   diseases = Object.values(Disease);
 
-  constructor(private httpService: MedicalCaseService, private _adapter: DateAdapter<any>,private dialog: MatDialog,
+  constructor(private httpService: MedicalCaseService, private _adapter: DateAdapter<any>, private dialog: MatDialog,
               @Inject(MAT_DATE_LOCALE) private _locale: string, private medicalCaseService: MedicalCaseService) {
     this.role = sessionStorage.getItem('role')!;
     this._locale = 'ro';
@@ -93,14 +94,14 @@ export class InsertMedicalCasesComponent implements OnInit {
     console.log(medicalCase);
     this.medicalCaseService.addMedicalCase(uploadImageData).subscribe(
       (res) => {
-        console.log(res)
-        this.dialog.open(ImageModalComponent, {data: `Cazul medical a fost inserat!`});
+        console.log(res);
+        this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost inserat cu succes!`});
+        this.resetFields();
       },
-      (error) => console.log(error));
-    // this.medicalCaseService.addMedicalCase(medicalCase).subscribe(
-    //   (res) => console.log(res),
-    //   (error) => console.log(error));
-
+      (error) => {
+        console.log(error);
+        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la inserarea cazului!`});
+      });
   }
 
   getNumberOfRows(presumptiveDiagnosisModality: string) {
@@ -108,5 +109,17 @@ export class InsertMedicalCasesComponent implements OnInit {
       return 7;
     }
     return 4;
+  }
+
+  resetFields(): void {
+    this.firstName.setValue("");
+    this.lastName.setValue("");
+    this.birthDate.setValue("");
+    this.CFPImage.setValue("");
+    // this.selectedFiles = '';
+    this.selectedFileName = "";
+    this.previewImage = "";
+    this.presumptiveDiagnosis.setValue("");
+    this.additionalInformation.setValue("");
   }
 }

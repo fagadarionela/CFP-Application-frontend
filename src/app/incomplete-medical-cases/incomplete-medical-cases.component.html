@@ -282,6 +282,8 @@
     </button>
   </div>
   <mat-card *ngFor="let medicalCase of medicalCases;let i = index;" class="insert-medical-case">
+
+    <div>
     <!--    <div class="input">-->
     <h1>Caz medical {{i+1}} - {{formatDate(medicalCase.insertDate)}}</h1>
 <!--    <div class="align-left">-->
@@ -311,7 +313,10 @@
 <!--      <mat-datepicker-toggle matIconSuffix [for]="dp2" style="padding-right: 10px;"></mat-datepicker-toggle>-->
 <!--      <mat-datepicker #dp2></mat-datepicker>-->
 <!--    </mat-form-field>-->
-    <br>
+    <br>    <div class="cfp-image">
+    <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="preview" width="100%" height="100%"
+         alt="Imagine CFP" (click)="openImage(medicalCase.cfpimage)">
+  </div>
     <mat-form-field class="input" appearance="fill">
       <mat-label>Informatii aditionale</mat-label>
       <textarea matInput [(ngModel)]="medicalCase.additionalInformation" rows="1"></textarea>
@@ -338,10 +343,13 @@
     </mat-form-field>
     <br>
 
+    </div>
     <div class="align">
-      <button class="link" (click)="showOtherCases(medicalCase.encodedInfo)" style="align-self: start; "> Vizualizeaza
+<!--      <div class="to-left">-->
+      <button class="link to-left" (click)="showOtherCases(medicalCase.encodedInfo)" style="align-self: start; "> Vizualizeaza
         cazuri medicale anterioare ale acestui pacient
       </button>
+<!--      </div>-->
       <!--      <a [attr.href]="'/medical-cases?encodedInfo='+medicalCase.encodedInfo" style="align-self: start;"> Vizualizeaza cazuri medicale anterioare ale actestui pacient</a>-->
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -352,20 +360,19 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)"
-              [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
-              class="add-case">
-        Salveaza caz medical
-      </button>
-      <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)"
-              [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
-              class="add-case">
-        Finalizeaza caz
-      </button>
-    </div>
-    <div class="cfp-image">
-      <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="preview" width="100%" height="100%"
-           alt="Imagine CFP" (click)="openImage(medicalCase.cfpimage)">
+      <div class="to-right">
+        <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)"
+                [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
+                class="add-case">
+          Salveaza caz medical
+        </button>
+        <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)"
+                [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
+                class="add-case">
+          Finalizeaza caz
+        </button>
+      </div>
+
     </div>
   </mat-card>
 

@@ -231,16 +231,16 @@ body {
   color: rgb(0, 138, 140);
 }
 
-.button:visited, .button:active, .button:link {
-  color: black;
-  background-color: rgb(118, 183, 186);
-  border-radius: 20px;
-  padding: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
-  text-decoration: none;
-  font-size: 15px;
-}
+/*.button:visited, .button:active, .button:link {*/
+/*  color: black;*/
+/*  background-color: rgb(118, 183, 186);*/
+/*  !*border-radius: 20px;*!*/
+/*  padding: 10px;*/
+/*  padding-left: 30px;*/
+/*  padding-right: 30px;*/
+/*  text-decoration: none;*/
+/*  font-size: 15px;*/
+/*}*/
 
 .button:hover {
   cursor: pointer;

@@ -10,6 +10,8 @@ import {SliderModalComponent} from "../modals/slider-modal/slider-modal.componen
 import * as bcrypt from "bcryptjs";
 import {SALT} from "../utils/http-constants";
 import {formatDate} from "@angular/common";
+import {ErrorModalComponent} from "../modals/error-modal/error-modal.component";
+import {SuccessModalComponent} from "../modals/success-modal/success-modal.component";
 
 @Component({
   selector: 'app-incomplete-medical-cases',
@@ -66,24 +68,35 @@ export class IncompleteMedicalCasesComponent implements OnInit {
 
   updateMedicalCase(medicalCase: MedicalCase): void {
     this.medicalCaseService.updateMedicalCase(medicalCase).subscribe(
-      (res) => console.log(res),
-      (error) => console.log(error));
-  }
-
-  getAllMedicalCasesAssignedTo(firstName: string, lastName: string): void {
-    this.router.navigate(
-      ['/medical-cases'],
-      {queryParams: {firstName: firstName, lastName: lastName}}
-    );
+      (res) => {
+        console.log(res);
+        this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost salvat cu succes!`});
+      },
+      (error) => {
+        console.log(error);
+        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la salvarea cazului medical!`});
+      });
   }
 
   moveToCompleted(medicalCase: MedicalCase): void {
     this.medicalCaseService.updateMedicalCase(medicalCase).subscribe(
-      (res) => console.log(res),
-      (error) => console.log(error),
+      (res) => {
+        console.log(res);
+        this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost salvat cu succes!`});
+      },
+      (error) => {
+        console.log(error);
+        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la salvarea cazului medical!`});
+      },
       () => this.medicalCaseService.completeMedicalCase(medicalCase.id).subscribe(
-        (res) => console.log(res),
-        (error) => console.log(error),
+        (res) => {
+          console.log(res);
+          this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost salvat cu succes!`});
+        },
+        (error) => {
+          console.log(error);
+          this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la salvarea cazului medical!`});
+        },
         () => window.location.reload()));
   }
 
@@ -92,13 +105,7 @@ export class IncompleteMedicalCasesComponent implements OnInit {
   }
 
   showOtherCases(encodedInfo: string) {
-
     this.dialog.open(SliderModalComponent, {data: `` + encodedInfo});
-    // {
-    //   image: '.../iOe/xHHf4nf8AE75h3j1x64ZmZ//Z==', // Support base64 image
-    //   title: 'Image title'}
-    //   // this.medicalCases = data;
-
   }
 
   handlePage(page: number, size: number, searchedEncodedInfo: string) {
@@ -106,6 +113,7 @@ export class IncompleteMedicalCasesComponent implements OnInit {
       response => {
         if (response.error) {
           console.log(response.error);
+          this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la inserarea cazului!`});
         } else {
           const {content, totalElements} = response;
           this.totalSize = totalElements;
@@ -114,13 +122,17 @@ export class IncompleteMedicalCasesComponent implements OnInit {
       },
       error => {
         console.log(error);
-        }
+        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la inserarea cazului!`});
+      }
     );
   }
 
   searchMedicalCases() {
-    this.searchedEncodedInfo = bcrypt.hashSync(this.searchedFirstName+this.searchedLastName+this.searchedBirthDate,SALT);
+    this.searchedEncodedInfo = bcrypt.hashSync(this.searchedFirstName + this.searchedLastName + this.searchedBirthDate, SALT);
     console.log(this.searchedEncodedInfo);
+    if (this.searchedLastName === '' || this.searchedFirstName === '' || this.searchedBirthDate === ''){
+      this.searchedEncodedInfo = "$2a"
+    }
     this.handlePage(this.currentPage, this.pageSize, this.searchedEncodedInfo);
   }
 
@@ -134,7 +146,7 @@ export class IncompleteMedicalCasesComponent implements OnInit {
   //   this.pageSize = e.pageSize;
   //   this.pageIndex = e.pageIndex;
   // }
-  formatDate(insertDate: Date){
-    return formatDate(insertDate, 'yyyy-MM-dd hh:mm:ss',this.locale)
+  formatDate(insertDate: Date) {
+    return formatDate(insertDate, 'yyyy-MM-dd hh:mm:ss', this.locale)
   }
 }

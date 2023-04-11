@@ -12,6 +12,7 @@
   background-color: rgba(255, 255, 255, 0.75);
   border: 2px;
   border-radius: 15px;
+  position: relative;
 }
 
 .input {
@@ -25,17 +26,12 @@
   left: 71%;
   height: 420px;
   width: 420px;
-  position: absolute;
-  margin-top: -10px;
+  /*position: relative;*/
+  /*top:-10px;*/
+  float: right;
+  /*margin: 5px;*/
+  /*margin-top: -10px;*/
   border: rgb(0, 138, 140) 5px solid;
-}
-
-button.add-case:enabled {
-  width: 300px;
-  align-self: end;
-  height: 50px;
-  background-color: rgb(0, 138, 140) !important;
-  margin-left: 20px;
 }
 
 .upload-image {
@@ -55,7 +51,7 @@ mat-datepicker-toggle {
 
 .align {
   width: 100%;
-  align-self: end;
+  /*align-self: end;*/
   /*border: solid black 1px;*/
 }
 
@@ -92,4 +88,20 @@ mat-datepicker-toggle {
   height: 50px;
   margin-left: 20px;
   top: -30px;
+}
+.search-case:enabled {
+  align-self: end;
+  width: 300px;
+  height: 50px;
+  margin-left: 20px;
+  top: -30px;
+  background-color: rgb(0, 138, 140) !important;
+}
+
+.to-right{
+  float: right;
+}
+.to-left{
+  position: relative;
+  top:40px;
 }

@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 // import Swal from 'sweetalert2';
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../services/user.service";
+import {ErrorModalComponent} from "../modals/error-modal/error-modal.component";
+import {SuccessModalComponent} from "../modals/success-modal/success-modal.component";
 
 @Component({
   selector: 'app-login',
@@ -43,14 +45,7 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('role', role);
       },
       (error: any) => {
-        this.router.navigate(['login']);
-        // Swal.fire({
-        //   title: 'Alert message',
-        //   text: 'Incorrect credentials. Please try again.',
-        //   icon: 'error',
-        //   showCancelButton: true,
-        //   width: '500px',
-        // });
+         this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la logare!`});
       });
 
   }

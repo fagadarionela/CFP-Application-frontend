@@ -1,20 +1,22 @@
 <div class="modal">
-  <div class="icon">
-    <span class="material-icons icon">
-    check_circle_outline
-    </span>
+  <div class="div-icon">
+    <!--    <span class="material-icons icon">-->
+    <!--    error_outline-->
+    <!--    </span>-->
+    <img src="/assets/success.png" class="icon">
+  </div>
+  <div class="title">
+    <div mat-dialog-title class="title-content"> Succes </div>
   </div>
 
-  <h1 mat-dialog-title> Succes
-  </h1>
-  <hr><br>
+  <!--  <hr><br>-->
   <div mat-dialog-content class="content">
     {{message}}
   </div>
-  <br><hr>
+  <!--  <br><hr>-->
   <br>
   <div mat-dialog-actions align="center">
-    <button class="button" mat-dialog-close>Inchide</button>
+    <button class="close-button" mat-flat-button color="primary" mat-dialog-close>Inchide</button>
   </div>
 </div>
 

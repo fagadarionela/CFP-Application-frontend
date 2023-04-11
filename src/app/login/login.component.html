@@ -3,7 +3,7 @@
   <div class="generals-title"> Autentificare:</div>
   <hr>
   <br><br><br>
-  <form  class="form align" [formGroup]="this.loginForm"   (ngSubmit)="loginUser(loginForm.value)">
+  <form  class="form align" [formGroup]="this.loginForm">
   <div class="form-group">
     <mat-form-field  class="input example-full-width" >
       <mat-label>Username</mat-label>
@@ -14,15 +14,15 @@
   <div class="form-group">
     <mat-form-field appearance="fill" class="input example-full-width">
       <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" name="password" formControlName="password">
+      <input matInput [type]="hide ? 'password' : 'text'" name="password" formControlName="password" onkeydown="return (event.keyCode!=13);">
       <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="!hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
   </div>
 
-  <br>
-  <button type="submit" id="loginButton"  class="button btn btn-success">Autentificare</button>
+  <br><br>
+  <button mat-flat-button color="primary" type="submit" id="loginButton"  class="login-button" (click)="loginUser(loginForm.value)">Autentificare</button>
   <br>
   <br><br><br><br><br><br>
   </form>
