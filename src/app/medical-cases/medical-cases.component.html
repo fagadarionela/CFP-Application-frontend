@@ -15,7 +15,6 @@
       <input matInput [matDatepicker]="dp" [(ngModel)]="searchedBirthDate">
       <mat-datepicker-toggle matIconSuffix [for]="dp" style="padding-right: 10px;"></mat-datepicker-toggle>
       <mat-datepicker #dp></mat-datepicker>
-      <!--      <mat-error *ngIf="checkDate(this.dataNasterii.value!)">{{getErrorMessage()}}</mat-error>-->
     </mat-form-field>
     <button mat-flat-button color="primary" (click)="searchMedicalCases()"
             [disabled]="searchedLastName === '' || searchedFirstName === '' || searchedBirthDate === ''"
@@ -93,12 +92,10 @@
           Finalizeaza caz
         </button>
         <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'EXPERT'"
-                [disabled]="medicalCase.score === -1"
                 class="add-case">
           Salveaza evaluare
         </button>
         <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'EXPERT'"
-                [disabled]="medicalCase.score === -1"
                 class="add-case">
           Finalizeaza evaluare
         </button>
