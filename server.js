@@ -1,26 +1,17 @@
-const express = require('express');
-const path = require('path');
-
-const app = express();
-
-const forceSSL = function () {
-  return function (req, res, next) {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-      return res.redirect(
-        ['https://', req.get('Host'), req.url].join('')
-      );
-    }
-    next();
+function requireHTTPS(req, res, next) {
+  // The 'x-forwarded-proto' check is for Heroku
+  if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+    return res.redirect('https://' + req.get('host') + req.url);
   }
+  next();
 }
+const express = require('express');
+const app = express();
+app.use(requireHTTPS);
 
-app.use(forceSSL());
-
-app.use(express.static(__dirname + '/dist/cfp-application'));
-
-app.get('/*', function (req, res) {
-
-  res.sendFile(path.join(__dirname + '/dist/cfp-application/index.html'));
-});
-
-app.listen(process.env.PORT || 8082);
+app.use(express.static('./dist/cfp-application'));
+  app.get('/*', function(req, res) {
+    res.sendFile('index.html', {root: 'dist/cfp-application/'}
+    );
+  });
+    app.listen(process.env.PORT || 8080);
