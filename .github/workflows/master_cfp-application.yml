@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'CFP-application'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B09CFD9F47294CA1ADF05EBDADE6FEE8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_835AB4E5CE4749B18DA7D8EE5FBF59A7 }}
           package: .
