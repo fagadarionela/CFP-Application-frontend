@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cfp-frontend": {
+    "cfp-application": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/cfp-frontend",
+            "outputPath": "dist/cfp-application",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "cfp-frontend:build:production"
+              "browserTarget": "cfp-application:build:production"
             },
             "development": {
-              "browserTarget": "cfp-frontend:build:development"
+              "browserTarget": "cfp-application:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cfp-frontend:build"
+            "browserTarget": "cfp-application:build"
           }
         },
         "test": {
