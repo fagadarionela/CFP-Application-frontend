@@ -4,9 +4,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LayoutComponent} from "./layout/layout.component";
-import {IncompleteMedicalCasesComponent} from "./incomplete-medical-cases/incomplete-medical-cases.component";
+import {MedicalCasesComponent} from "./medical-cases/medical-cases.component";
 import {NavBarComponent} from "./nav-bar/nav-bar.component";
-import {FooterComponent} from "./footer/footer.component";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatMenuModule} from "@angular/material/menu";
@@ -30,7 +29,6 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatListModule} from "@angular/material/list";
 import {CompleteMedicalCasesComponent} from "./complete-medical-cases/complete-medical-cases.component";
 import {InsertMedicalCasesComponent} from "./insert-medical-cases/insert-medical-cases.component";
-import {ReviewMedicalCasesComponent} from "./review-medical-cases/review-medical-cases.component";
 import {ImageModalComponent} from "./modals/image-modal/image-modal.component";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatPaginatorModule} from "@angular/material/paginator";
@@ -38,16 +36,17 @@ import {MatRadioModule} from "@angular/material/radio";
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import {SliderModalComponent} from "./modals/slider-modal/slider-modal.component";
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { EvaluationFileComponent } from './evaluation-file/evaluation-file.component';
+import { EvaluationFileModalComponent } from './modals/evaluation-file-modal/evaluation-file-modal.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    IncompleteMedicalCasesComponent,
+    MedicalCasesComponent,
     CompleteMedicalCasesComponent,
     InsertMedicalCasesComponent,
-    ReviewMedicalCasesComponent,
-    FooterComponent,
     LayoutComponent,
     NavBarComponent,
     LoginComponent,
@@ -55,34 +54,37 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     SuccessModalComponent,
     ErrorModalComponent,
     ImageModalComponent,
-    SliderModalComponent
+    SliderModalComponent,
+    EvaluationFileComponent,
+    EvaluationFileModalComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    FormsModule,
-    MatSelectModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatChipsModule,
-    MatAutocompleteModule,
-    MatIconModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatMenuModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatListModule,
-    MatExpansionModule,
-    MatPaginatorModule,
-    MatRadioModule,
-    MdbCarouselModule,
-    CarouselModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        FormsModule,
+        MatSelectModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatChipsModule,
+        MatAutocompleteModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMenuModule,
+        MatCardModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatListModule,
+        MatExpansionModule,
+        MatPaginatorModule,
+        MatRadioModule,
+        MdbCarouselModule,
+        CarouselModule,
+        MatCheckboxModule
+    ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthenticationInterceptor,

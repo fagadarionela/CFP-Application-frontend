@@ -1,0 +1,118 @@
+<div class="content">
+
+  <br><br><br><br><br>
+  <div class="filters">
+    <mat-form-field class="small-input" appearance="fill">
+      <mat-label>Nume</mat-label>
+      <input matInput [(ngModel)]="searchedLastName">
+    </mat-form-field>
+    <mat-form-field class="small-input" appearance="fill">
+      <mat-label>Prenume</mat-label>
+      <input matInput [(ngModel)]="searchedFirstName">
+    </mat-form-field>
+    <mat-form-field class="small-input" appearance="fill">
+      <mat-label>Data nasterii</mat-label>
+      <input matInput [matDatepicker]="dp" [(ngModel)]="searchedBirthDate">
+      <mat-datepicker-toggle matIconSuffix [for]="dp" style="padding-right: 10px;"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+      <!--      <mat-error *ngIf="checkDate(this.dataNasterii.value!)">{{getErrorMessage()}}</mat-error>-->
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="searchMedicalCases()"
+            [disabled]="searchedLastName === '' || searchedFirstName === '' || searchedBirthDate === ''"
+            class="search-case">
+      Cauta caz medical
+    </button>
+  </div>
+  <mat-card *ngFor="let medicalCase of medicalCases;let i = index;" class="insert-medical-case">
+
+    <div>
+      <h1><b>Caz medical {{i + 1}} - {{formatDate(medicalCase.insertDate)}}</b>
+        <p style="float:right; display: inline"><b>Dificultate: {{medicalCase.difficultyScore}}</b></p></h1>
+
+      <div class="cfp-image-div">
+        <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="cfp-image" height="420px" width="420px"
+             alt="Imagine CFP" (click)="openImage(medicalCase.cfpimage)">
+        <mat-form-field appearance="fill" class="additional-info">
+          <mat-label>Informatii aditionale</mat-label>
+          <textarea matInput [(ngModel)]="medicalCase.additionalInformation"
+                    rows="{{medicalCase.residentDiagnosis?14:10}}"></textarea>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="fill" class="input" *ngIf="role==='RESIDENT'">
+        <mat-label>Diagnostic rezident</mat-label>
+        <mat-select [(ngModel)]="medicalCase.residentDiagnosis" (ngModelChange)="getDiseaseByName(medicalCase)"
+                    [disabled]="medicalCase.saved">
+          <mat-select-trigger>
+            {{medicalCase.residentDiagnosis}}
+          </mat-select-trigger>
+          <mat-option *ngFor="let disease of diseases" [value]="disease">{{disease}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="half-input" appearance="fill" *ngIf="role==='EXPERT'">
+        <mat-label class="black">Diagnostic rezident</mat-label>
+        <input matInput [(ngModel)]="medicalCase.residentDiagnosis" disabled class="black">
+      </mat-form-field>
+      <mat-form-field class="half-input" appearance="fill" *ngIf="role==='EXPERT'">
+        <mat-label class="black">Diagnostic prezis</mat-label>
+        <input matInput [(ngModel)]="medicalCase.presumptiveDiagnosis" disabled class="black">
+      </mat-form-field>
+      <br>
+      <div class="evaluation-file">
+        <app-evaluation-file [medicalCase]="medicalCase"></app-evaluation-file>
+      </div>
+
+
+      <br>
+
+    </div>
+    <br>
+    <div class="align">
+      <button class="link to-left" (click)="showOtherCases(medicalCase.encodedInfo)" style="align-self: start; ">
+        Vizualizeaza
+        cazuri medicale anterioare ale acestui pacient
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div class="to-right">
+        <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'RESIDENT'"
+                [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
+                class="add-case">
+          Salveaza caz medical
+        </button>
+        <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'RESIDENT'"
+                [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
+                class="add-case">
+          Finalizeaza caz
+        </button>
+        <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'EXPERT'"
+                [disabled]="medicalCase.score === -1"
+                class="add-case">
+          Salveaza evaluare
+        </button>
+        <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'EXPERT'"
+                [disabled]="medicalCase.score === -1"
+                class="add-case">
+          Finalizeaza evaluare
+        </button>
+      </div>
+
+    </div>
+  </mat-card>
+
+  <br><br><br><br>
+  <mat-paginator class="paginator" [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 [showFirstLastButtons]="true"
+                 [length]="totalSize"
+                 [pageIndex]="currentPage"
+                 (page)="handlePage($event.pageIndex, $event.pageSize, searchedEncodedInfo)">
+  </mat-paginator>
+</div>

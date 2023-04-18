@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {User} from '../models/user.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {REQUEST_HEADERS, SERVER_URL} from '../utils/http-constants';
@@ -11,8 +10,6 @@ import {UserCredentials} from '../models/user-credentials.model';
 })
 export class UserService {
 
-  public user: User;
-
   constructor(private http: HttpClient) {
 
   }
@@ -22,14 +19,6 @@ export class UserService {
     return this.http.get<any>(SERVER_URL + '/login', {headers: this.createLoginHeader(userCredentials)});
   }
 
-  public readUser(): Observable<any> {
-    return this.http.get<any>(SERVER_URL + '/login', REQUEST_HEADERS);
-  }
-
-  public saveUserDetails(user: User): void {
-    this.user = user;
-  }
-
   public logout(): Observable<any> {
     return this.http.get<any>(SERVER_URL + '/logout', REQUEST_HEADERS);
   }
@@ -37,7 +26,8 @@ export class UserService {
   private createLoginHeader(userCredentials: UserCredentials): HttpHeaders {
     return new HttpHeaders(userCredentials ?
       ({
-        authorization: 'Basic ' + btoa(userCredentials.username + ':' + userCredentials.password)}) : ({}));
+        authorization: 'Basic ' + btoa(userCredentials.username + ':' + userCredentials.password)
+      }) : ({}));
   }
 }
 

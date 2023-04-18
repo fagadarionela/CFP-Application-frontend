@@ -3,12 +3,12 @@ import {MedicalCase} from "../models/medical-case";
 import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {FormControl, Validators} from "@angular/forms";
 import {MedicalCaseService} from "../services/medical-case.service";
-import {Disease} from "../utils/disease";
 import * as bcrypt from 'bcryptjs';
 import {SALT} from "../utils/http-constants";
 import {MatDialog} from "@angular/material/dialog";
 import {SuccessModalComponent} from "../modals/success-modal/success-modal.component";
 import {ErrorModalComponent} from "../modals/error-modal/error-modal.component";
+import {DiseaseService} from "../services/disease.service";
 
 @Component({
   selector: 'app-insert-medical-cases',
@@ -31,10 +31,10 @@ export class InsertMedicalCasesComponent implements OnInit {
 
   presumptiveDiagnosisModality: string = 'withModel';
 
-  diseases = Object.values(Disease);
+  diseases: string[] = [];
 
-  constructor(private httpService: MedicalCaseService, private _adapter: DateAdapter<any>, private dialog: MatDialog,
-              @Inject(MAT_DATE_LOCALE) private _locale: string, private medicalCaseService: MedicalCaseService) {
+  constructor(private _adapter: DateAdapter<any>, private dialog: MatDialog, @Inject(MAT_DATE_LOCALE) private _locale: string,
+              private medicalCaseService: MedicalCaseService, private diseasesService: DiseaseService) {
     this.role = sessionStorage.getItem('role')!;
     this._locale = 'ro';
     this._adapter.setLocale(this._locale);
@@ -44,6 +44,9 @@ export class InsertMedicalCasesComponent implements OnInit {
     this.role = sessionStorage.getItem('role')!;
     this._locale = 'ro';
     this._adapter.setLocale(this._locale);
+    this.diseasesService.getAllDiseases().subscribe(data => {
+      this.diseases = data.sort((a, b) => (a.charAt(0) < b.charAt(0) ? -1 : 1))
+    });
   }
 
   getErrorMessage(): string {
@@ -51,7 +54,6 @@ export class InsertMedicalCasesComponent implements OnInit {
       return 'Trebuie sa introduci o valoare';
     }
     return '';
-    // return 'Data nasterii trebuie sa fie in trecut';
   }
 
   selectFiles(event: any): void {
@@ -116,7 +118,6 @@ export class InsertMedicalCasesComponent implements OnInit {
     this.lastName.setValue("");
     this.birthDate.setValue("");
     this.CFPImage.setValue("");
-    // this.selectedFiles = '';
     this.selectedFileName = "";
     this.previewImage = "";
     this.presumptiveDiagnosis.setValue("");

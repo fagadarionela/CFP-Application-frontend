@@ -1,0 +1,93 @@
+<div class="file-figure">
+  <div class="two-columns-min">
+    Fisa de evaluare
+  </div>
+  <div class="evaluation-file two-columns-min-inverse-triangle">
+
+  </div>
+  <div class="evaluation-file two-columns-min-triangle">
+  </div>
+  Fisa de evaluare <p *ngIf="medicalCase.residentDiagnosis" style="display: inline">
+  - </p>{{medicalCase.residentDiagnosis}}
+  <p style="float: right" *ngIf="role==='EXPERT' || role==='RESIDENT'"> Date: {{currentDate}} </p>
+  <p style="float: right" *ngIf="role==='EXPERT'"> Resident: {{medicalCase.resident.account.username}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+</div>
+<div>
+
+  <div class="evaluation-file two-columns two-columns-correct-wrong"
+       *ngIf="role=='EXPERT' || medicalCase.completedByResident">
+    <div>
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="medicalCase.correctDiagnosis"
+                    (change)="changeCorrect()" [disabled]="medicalCase.completedByExpert">
+        <b>Correct diagnosis pass (calculate score)</b>
+      </mat-checkbox>
+    </div>
+    <div>
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="!medicalCase.correctDiagnosis"
+                    (change)="changeWrong()" [disabled]="medicalCase.completedByExpert">
+        <b>Wrong diagnosis fail (0 points)</b>
+      </mat-checkbox>
+    </div>
+  </div>
+  <div class="evaluation-file two-columns two-columns-first">
+    <div *ngFor="let clinicalSignGrade of medicalCase.clinicalSignGrades; let i = index;">
+      <p *ngIf="i === 0" class="one-row evaluation-file">Clinical fundus signs:</p>
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="clinicalSignGrade.correct"
+                    (change)="clinicalSignGrade.correct = changeAndIncrementScore(clinicalSignGrade.correct)"
+                    *ngIf="role==='EXPERT' || medicalCase.completedByExpert"
+                    [disabled]="!medicalCase.correctDiagnosis || medicalCase.completedByExpert">
+      </mat-checkbox>
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="clinicalSignGrade.checked"
+                    (change)="clinicalSignGrade.checked = !clinicalSignGrade.checked"
+                    [disabled]="role==='EXPERT'|| medicalCase.completedByResident">
+        {{clinicalSignGrade.clinicalSign.name}}
+      </mat-checkbox>
+    </div>
+  </div>
+  <div class="two-columns">
+    <div *ngFor="let differentialDiagnosisGrade of medicalCase.differentialDiagnosisGrades; let i = index">
+      <p class="one-row evaluation-file"
+         *ngIf="i==0 || (i+1 < medicalCase.differentialDiagnosisGrades.length && medicalCase.differentialDiagnosisGrades[i-1].differentialDiagnosisSign.differentialDiagnosis.name != medicalCase.differentialDiagnosisGrades[i].differentialDiagnosisSign.differentialDiagnosis.name)">
+        <br>Differential diagnosis
+        of {{differentialDiagnosisGrade.differentialDiagnosisSign.differentialDiagnosis.name}}:
+      </p>
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="differentialDiagnosisGrade.correct"
+                    (change)="differentialDiagnosisGrade.correct = changeAndIncrementScore(differentialDiagnosisGrade.correct)"
+                    *ngIf="role==='EXPERT' || medicalCase.completedByExpert"
+                    [disabled]="!medicalCase.correctDiagnosis || medicalCase.completedByExpert">
+      </mat-checkbox>
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="differentialDiagnosisGrade.checked"
+                    (change)="differentialDiagnosisGrade.checked = !differentialDiagnosisGrade.checked"
+                    [disabled]="role==='EXPERT' || medicalCase.completedByResident">
+        {{differentialDiagnosisGrade.differentialDiagnosisSign.sign.name}}
+      </mat-checkbox>
+    </div>
+  </div>
+  <div class="two-columns-150px">
+    <div *ngFor="let therapeuticPlanGrade of medicalCase.therapeuticPlanGrades; let i = index">
+      <p class="one-row evaluation-file"
+         *ngIf="i==0 || (i+1 < medicalCase.therapeuticPlanGrades.length && medicalCase.therapeuticPlanGrades[i-1].therapeuticPlanMethod.therapeuticPlan.name != medicalCase.therapeuticPlanGrades[i].therapeuticPlanMethod.therapeuticPlan.name)">
+        <br>Management of {{therapeuticPlanGrade.therapeuticPlanMethod.therapeuticPlan.name}}:
+      </p>
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="therapeuticPlanGrade.correct"
+                    (change)="therapeuticPlanGrade.correct = changeAndIncrementScore(therapeuticPlanGrade.correct)"
+                    *ngIf="role==='EXPERT' || medicalCase.completedByExpert"
+                    [disabled]="!medicalCase.correctDiagnosis || medicalCase.completedByExpert">
+      </mat-checkbox>
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="therapeuticPlanGrade.checked"
+                    (change)="therapeuticPlanGrade.checked = !therapeuticPlanGrade.checked"
+                    [disabled]="role==='EXPERT' || medicalCase.completedByResident">
+        {{therapeuticPlanGrade.therapeuticPlanMethod.method.name}}
+      </mat-checkbox>
+    </div>
+    <br>
+  </div>
+  <div class="two-columns two-columns-last">
+    <div *ngIf="role=='EXPERT' || medicalCase.completedByExpert">
+      <b>Resident scored [ {{medicalCase.score}} ] points of a total
+        of {{medicalCase.therapeuticPlanGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.clinicalSignGrades.length}}</b>
+    </div>
+    <div>
+    </div>
+  </div>
+</div>

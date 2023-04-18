@@ -18,7 +18,7 @@ export class MedicalCase {
 
   residentDiagnosis: string;
 
-  differentialDiagnosis: string;
+  completedByResident: boolean;
 
-  therapeuticPlan: string;
+  completedByExpert: boolean;
 }

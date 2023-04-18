@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
-// import Swal from 'sweetalert2';
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../services/user.service";
 import {ErrorModalComponent} from "../modals/error-modal/error-modal.component";
-import {SuccessModalComponent} from "../modals/success-modal/success-modal.component";
 
 @Component({
   selector: 'app-login',
@@ -36,7 +34,7 @@ export class LoginComponent implements OnInit {
         if (role === 'OPERATOR') {
           this.router.navigate(['medical-cases/insert']);
         } else if (role === 'EXPERT') {
-          this.router.navigate(['medical-cases/review']);
+          this.router.navigate(['medical-cases/incomplete']);
         } else {
           this.router.navigate(['medical-cases/incomplete']);
         }
@@ -45,7 +43,7 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('role', role);
       },
       (error: any) => {
-         this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la logare!`});
+        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la logare!`});
       });
 
   }

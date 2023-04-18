@@ -12,27 +12,21 @@
   background-color: rgba(255, 255, 255, 0.75);
   border: 2px;
   border-radius: 15px;
-  height:100%;
+  height: 100%;
 }
 
 .input {
   position: relative;
   width: 66% !important;
-  /*left: 30px;*/
-  /*transform: scale(75%, 75%);*/
 }
-
 
 .cfp-image {
   left: 71%;
   height: 420px;
   width: 420px;
   position: absolute;
-  /*top:-660px;*/
   margin-top: 20px;
   border: rgb(0, 138, 140) 5px solid;
-  /*margin-bottom: 200px;*/
-  /*position: sticky;*/
 }
 
 button.add-case:enabled {
@@ -66,9 +60,11 @@ mat-datepicker-toggle {
   width: 20% !important;
   margin-right: 50px;
 }
+
 .align-left {
   display: inline-block;
 }
-.black{
+
+.black {
   color: #343434 !important;
 }

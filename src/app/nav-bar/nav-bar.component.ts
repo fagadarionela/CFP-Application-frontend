@@ -25,12 +25,12 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     this.role = sessionStorage.getItem('role')!;
     this.username = sessionStorage.getItem('username')!;
-    if (this.role !== null){
+    if (this.role !== null) {
       this.loggedIn = true;
     }
   }
 
-  goTo(link: string): void{
+  goTo(link: string): void {
     this.router.navigate([link]);
   }
 }

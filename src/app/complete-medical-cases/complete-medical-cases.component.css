@@ -12,20 +12,18 @@
   background-color: rgba(255, 255, 255, 0.75);
   border: 2px;
   border-radius: 15px;
+  min-height: 280px;
 }
 
 .input {
   position: relative;
   width: 80% !important;
-  /*left: 30px;*/
-  /*transform: scale(75%, 75%);*/
 }
+
 .half-input {
   position: relative;
   width: 39% !important;
   margin-right: 2%;
-  /*left: 30px;*/
-  /*transform: scale(75%, 75%);*/
 }
 
 .cfp-image {
@@ -43,6 +41,7 @@ button.add-case:enabled {
   height: 50px;
   background-color: rgb(0, 138, 140) !important;
   margin-left: 20px;
+  margin-right: 350px;
 }
 
 .upload-image {
@@ -51,6 +50,7 @@ button.add-case:enabled {
 
 button.add-case:disabled {
   align-self: end;
+  margin-right: 350px;
   width: 300px;
   height: 50px;
   margin-left: 20px;
@@ -69,15 +69,14 @@ mat-datepicker-toggle {
 }
 
 .small-input {
-  /*position: relative;*/
   width: 20% !important;
   margin-right: 50px;
-  /*transform: scale(80%, 80%);*/
-  /*align-self: start;*/
 }
-.black{
+
+.black {
   color: #343434 !important;
 }
+
 .search-case {
   align-self: end;
   width: 300px;
@@ -86,3 +85,13 @@ mat-datepicker-toggle {
   top: -30px;
 }
 
+.search-case:enabled {
+  background-color: rgb(0, 138, 140) !important;
+}
+
+.to-left {
+  position: relative;
+  top: 50px;
+  font-weight: bold;
+  left: 25px;
+}

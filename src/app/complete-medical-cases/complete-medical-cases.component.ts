@@ -1,12 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MedicalCase} from "../models/medical-case";
 import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
-import {FormControl, Validators} from "@angular/forms";
 import {MedicalCaseService} from "../services/medical-case.service";
 import {ImageModalComponent} from "../modals/image-modal/image-modal.component";
 import {MatDialog} from "@angular/material/dialog";
-import * as bcrypt from "bcryptjs";
-import {SALT} from "../utils/http-constants";
+import {MedicalCaseFull} from "../models/medical-case-full";
+import {EvaluationFileModalComponent} from "../modals/evaluation-file-modal/evaluation-file-modal.component";
 
 @Component({
   selector: 'app-complete-medical-cases',
@@ -15,7 +13,7 @@ import {SALT} from "../utils/http-constants";
 })
 export class CompleteMedicalCasesComponent implements OnInit {
 
-  medicalCases: MedicalCase[] = [];
+  medicalCases: MedicalCaseFull[] = [];
 
   role: string = '';
 
@@ -25,16 +23,16 @@ export class CompleteMedicalCasesComponent implements OnInit {
   public searchedDiagnostic = "";
 
   constructor(private httpService: MedicalCaseService, private _adapter: DateAdapter<any>,
-              @Inject(MAT_DATE_LOCALE) private _locale: string, private medicalCaseService: MedicalCaseService, private dialog: MatDialog) {
+              @Inject(MAT_DATE_LOCALE) private locale: string, private medicalCaseService: MedicalCaseService, private dialog: MatDialog) {
     this.role = sessionStorage.getItem('role')!;
-    this._locale = 'ro';
-    this._adapter.setLocale(this._locale);
+    this.locale = 'ro';
+    this._adapter.setLocale(this.locale);
     this.searchedDiagnostic = "";
   }
 
   ngOnInit(): void {
-    this._locale = 'ro';
-    this._adapter.setLocale(this._locale);
+    this.locale = 'ro';
+    this._adapter.setLocale(this.locale);
     this.role = sessionStorage.getItem('role')!;
     this.searchedDiagnostic = "";
     if (this.role === 'RESIDENT') {
@@ -42,7 +40,7 @@ export class CompleteMedicalCasesComponent implements OnInit {
     }
   }
 
-  openImage(image: File){
+  openImage(image: File) {
     this.dialog.open(ImageModalComponent, {data: `data:image/jpeg;base64,` + image});
   }
 
@@ -66,5 +64,10 @@ export class CompleteMedicalCasesComponent implements OnInit {
   searchMedicalCases() {
     console.log(this.searchedDiagnostic);
     this.handlePage(this.currentPage, this.pageSize, this.searchedDiagnostic);
+  }
+
+  openEvaluationFile(medicalCase: MedicalCaseFull) {
+    const activeModal = this.dialog.open(EvaluationFileModalComponent);
+    activeModal.componentInstance.medicalCase = medicalCase;
   }
 }

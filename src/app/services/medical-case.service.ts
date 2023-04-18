@@ -50,12 +50,19 @@ export class MedicalCaseService {
     return this.http.put<any>(SERVER_URL + '/cases', medicalCase, REQUEST_HEADERS);
   }
 
-  public completeMedicalCase(id: string): Observable<any> {
-    return this.http.put<any>(SERVER_URL + '/cases/' + id, REQUEST_HEADERS);
-  }
-
-  public getAllCompletedMedicalCases(): Observable<MedicalCase[]> {
-    return this.http.get<MedicalCase[]>(SERVER_URL + '/cases/completed', REQUEST_HEADERS);
+  public getAllCompletedMedicalCases(page: number, size: number, encodedInfo: string): Observable<any> {
+    return this.http.get<any>(SERVER_URL + '/cases/completed', {
+      'headers': {
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }, 'params': {
+        'page': page,
+        "size": size,
+        "encodedInfo": encodedInfo
+      }
+    });
   }
 
   public getAllMedicalCasesAssignedTo(encodedInfo: string): Observable<MedicalCaseCustomized[]> {

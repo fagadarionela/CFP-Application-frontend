@@ -1,21 +1,8 @@
-<!--<div class="modal">-->
-<!--  <mdb-carousel [controls]="true">-->
-<!--    <mdb-carousel-item >-->
-<!--      <img-->
-<!--        src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"-->
-<!--        class="d-block w-100"-->
-<!--        alt="..."-->
-<!--      />-->
-<!--    </mdb-carousel-item>-->
-<!--  </mdb-carousel>-->
-<!--  &lt;!&ndash;  <ng-image-slider [images]="images" #nav></ng-image-slider>&ndash;&gt;-->
-<!--</div>-->
-
 <div class="modal">
   <owl-carousel-o [options]="customOptions">
 
     <ng-container *ngFor="let slide of images">
-      <ng-template carouselSlide [id]="slide.id" >
+      <ng-template carouselSlide [id]="slide.id">
         <img [src]="slide.img" title="{{slide.insertDate}}" class="cfp-image">
         <h2 class="center">{{slide.insertDate}}</h2>
       </ng-template>

@@ -15,27 +15,23 @@
   position: relative;
 }
 
-.input {
-  position: relative;
-  width: 66% !important;
-  /*left: 30px;*/
-  /*transform: scale(75%, 75%);*/
-}
-
 .cfp-image {
   left: 71%;
-  height: 420px;
   width: 420px;
-  /*position: relative;*/
-  /*top:-10px;*/
   float: right;
-  /*margin: 5px;*/
-  /*margin-top: -10px;*/
   border: rgb(0, 138, 140) 5px solid;
 }
 
 .upload-image {
   color: rgb(0, 138, 140) !important;
+}
+
+button.add-case:enabled {
+  align-self: end;
+  width: 300px;
+  height: 50px;
+  margin-left: 20px;
+  background-color: rgb(0, 138, 140) !important;
 }
 
 button.add-case:disabled {
@@ -49,22 +45,13 @@ mat-datepicker-toggle {
   color: rgb(0, 138, 140) !important;
 }
 
-.align {
-  width: 100%;
-  /*align-self: end;*/
-  /*border: solid black 1px;*/
-}
-
 .align-left {
   display: inline-block;
 }
 
 .small-input {
-  /*position: relative;*/
   width: 20% !important;
   margin-right: 50px;
-  /*transform: scale(80%, 80%);*/
-  /*align-self: start;*/
 }
 
 .black {
@@ -82,6 +69,29 @@ mat-datepicker-toggle {
   cursor: pointer;
 }
 
+
+.to-right {
+  float: right;
+}
+
+.to-left {
+  position: relative;
+  top: 40px;
+}
+
+.additional-info {
+  width: 100%;
+  margin-left: -5px;
+  margin-bottom: -20px;
+  height: 100%;
+}
+
+
+.small-input {
+  width: 20% !important;
+  margin-right: 50px;
+}
+
 .search-case {
   align-self: end;
   width: 300px;
@@ -89,6 +99,15 @@ mat-datepicker-toggle {
   margin-left: 20px;
   top: -30px;
 }
+
+.search-case:disabled {
+  align-self: end;
+  width: 300px;
+  height: 50px;
+  margin-left: 20px;
+  top: -30px;
+}
+
 .search-case:enabled {
   align-self: end;
   width: 300px;
@@ -98,10 +117,28 @@ mat-datepicker-toggle {
   background-color: rgb(0, 138, 140) !important;
 }
 
-.to-right{
+.cfp-image-div {
+  left: 71%;
+  width: 420px;
+  height: 100%;
   float: right;
 }
-.to-left{
+
+.input {
   position: relative;
-  top:40px;
+  width: 71% !important;
+}
+
+.align {
+  width: 100%;
+}
+
+.evaluation-file {
+  width: 70%;
+}
+
+.half-input {
+  position: relative;
+  width: 34% !important;
+  margin-right: 2%;
 }

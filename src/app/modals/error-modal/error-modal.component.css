@@ -4,6 +4,7 @@ h1 {
   top: -10px;
   color: rgb(234, 31, 39);
 }
+
 .div-icon {
   text-align: center;
   overflow: hidden;
@@ -11,13 +12,14 @@ h1 {
   width: 100%;
   background-color: rgb(234, 31, 39);
 }
+
 .icon {
   position: relative;
   text-align: center;
   overflow: hidden;
   height: 50px;
   width: 50px;
-  z-index:1000;
+  z-index: 1000;
 }
 
 .material-icons {
@@ -26,7 +28,7 @@ h1 {
 
 .content {
   text-align: center;
-  font-size:16px;
+  font-size: 16px;
   color: black;
   font-weight: bold;
 }
@@ -34,12 +36,14 @@ h1 {
 .mat-button {
 }
 
-.modal{
-  width:250px;
+.modal {
+  width: 250px;
 }
-.modal{
-  width:750px;
+
+.modal {
+  width: 750px;
 }
+
 button.close-button {
   width: 300px;
   align-self: end;
@@ -47,22 +51,24 @@ button.close-button {
   background-color: rgb(234, 31, 39);
   margin-left: 20px;
 }
-.title{
+
+.title {
   position: relative;
-  top:-35px;
+  top: -35px;
   align-content: center;
   align-self: center;
   align-items: center;
   height: 50px;
 }
-.title-content{
+
+.title-content {
   position: relative;
   margin-left: auto;
   margin-right: auto;
   font-weight: bold;
   width: 110px;
-  top:-35px;
-  color:white;
+  top: -35px;
+  color: white;
   background-color: rgb(234, 31, 39);
-  border-radius:30px;
+  border-radius: 30px;
 }

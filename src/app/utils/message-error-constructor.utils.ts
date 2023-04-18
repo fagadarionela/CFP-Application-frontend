@@ -3,7 +3,7 @@ export class MessageErrorConstructorUtils {
     return 'The ' + field + ' is required!';
   }
 
-  public static constructEmailError(): string{
+  public static constructEmailError(): string {
     return 'This is not a valid email address!';
   }
 
