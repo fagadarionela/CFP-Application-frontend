@@ -1,4 +1,4 @@
-export const SERVER_URL = 'http://localhost:8082';
+export const SERVER_URL = 'https://cfp-application-backend.herokuapp.com';
 
 export const SALT = "$2a$12$MDnofLJT8LrIILyh8SCle.";
 export const REQUEST_HEADERS = {
