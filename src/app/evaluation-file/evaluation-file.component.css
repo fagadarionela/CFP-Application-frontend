@@ -82,3 +82,13 @@
   margin-top: -10px;
   margin-bottom: -10px;
 }
+
+.mat-checkbox:disabled {
+  margin-top: -10px;
+  margin-bottom: -10px;
+  color: black;
+}
+
+.black :disabled {
+  color: black !important;
+}

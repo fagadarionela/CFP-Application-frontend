@@ -1,5 +1,5 @@
 export class DifferentialDiagnosis {
   name: string;
 
-  signs: string[];
+  signs: string[] = [];
 }

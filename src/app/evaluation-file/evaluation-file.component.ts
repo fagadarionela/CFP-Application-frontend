@@ -11,10 +11,12 @@ import {formatDate} from "@angular/common";
 export class EvaluationFileComponent {
   @Input('medicalCase') medicalCase: MedicalCaseFull;
 
-  currentDate: string = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
+  currentDate: string = formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss', this.locale);
   resident: string = '';
 
   role: string = '';
+
+  correctDiagnosis = false;
 
   constructor(@Inject(LOCALE_ID) public locale: string) {
   }
@@ -28,29 +30,42 @@ export class EvaluationFileComponent {
 
     this.medicalCase.therapeuticPlanGrades.sort((a, b) => (a.therapeuticPlanMethod.method.name < b.therapeuticPlanMethod.method.name ? -1 : 1))
       .sort((a, b) => (a.therapeuticPlanMethod.therapeuticPlan.name < b.therapeuticPlanMethod.therapeuticPlan.name ? -1 : 1));
+    if (this.medicalCase.correctDiagnosis === this.medicalCase.residentDiagnosis) {
+      this.correctDiagnosis = true;
+      console.log(this.medicalCase)
+    }
+  }
 
+  initFields() {
+    this.medicalCase.clinicalSignGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
+    this.medicalCase.differentialDiagnosisGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
+    this.medicalCase.therapeuticPlanGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
   }
 
   changeWrong() {
-    this.medicalCase.correctDiagnosis = !this.medicalCase.correctDiagnosis;
-    if (!this.medicalCase.correctDiagnosis) {
-      this.medicalCase.clinicalSignGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
-      this.medicalCase.differentialDiagnosisGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
-      this.medicalCase.therapeuticPlanGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
+    this.correctDiagnosis = !this.correctDiagnosis;
+    if (this.correctDiagnosis) {
+      this.medicalCase.correctDiagnosis = this.medicalCase.residentDiagnosis;
+      this.initFields();
       this.medicalCase.score = 0;
     } else {
+      this.medicalCase.correctDiagnosis = '';
+      this.initFields();
       this.medicalCase.score = -1;
     }
   }
 
   changeCorrect() {
-    this.medicalCase.correctDiagnosis = !this.medicalCase.correctDiagnosis;
-    if (this.medicalCase.correctDiagnosis) {
+    this.correctDiagnosis = !this.correctDiagnosis;
+    if (this.correctDiagnosis) {
+      this.medicalCase.correctDiagnosis = this.medicalCase.residentDiagnosis;
+      this.initFields();
       this.medicalCase.score = 0;
     } else {
-      this.medicalCase.score = -1;
+      this.medicalCase.correctDiagnosis = '';
+      this.initFields();
+      this.medicalCase.score = 0;
     }
-
   }
 
 

@@ -21,4 +21,6 @@ export class MedicalCase {
   completedByResident: boolean;
 
   completedByExpert: boolean;
+
+  saved: boolean;
 }

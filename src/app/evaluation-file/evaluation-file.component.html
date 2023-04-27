@@ -17,13 +17,13 @@
   <div class="evaluation-file two-columns two-columns-correct-wrong"
        *ngIf="role=='EXPERT' || medicalCase.completedByResident">
     <div>
-      <mat-checkbox color="black" class="mat-checkbox" [checked]="medicalCase.correctDiagnosis"
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="correctDiagnosis"
                     (change)="changeCorrect()" [disabled]="medicalCase.completedByExpert">
         <b>Correct diagnosis pass (calculate score)</b>
       </mat-checkbox>
     </div>
     <div>
-      <mat-checkbox color="black" class="mat-checkbox" [checked]="!medicalCase.correctDiagnosis"
+      <mat-checkbox color="black" class="mat-checkbox" [checked]="!correctDiagnosis"
                     (change)="changeWrong()" [disabled]="medicalCase.completedByExpert">
         <b>Wrong diagnosis fail (0 points)</b>
       </mat-checkbox>
@@ -35,7 +35,7 @@
       <mat-checkbox color="black" class="mat-checkbox" [checked]="clinicalSignGrade.correct"
                     (change)="clinicalSignGrade.correct = changeAndIncrementScore(clinicalSignGrade.correct)"
                     *ngIf="role==='EXPERT' || medicalCase.completedByExpert"
-                    [disabled]="!medicalCase.correctDiagnosis || medicalCase.completedByExpert">
+                    [disabled]="!correctDiagnosis || medicalCase.completedByExpert">
       </mat-checkbox>
       <mat-checkbox color="black" class="mat-checkbox" [checked]="clinicalSignGrade.checked"
                     (change)="clinicalSignGrade.checked = !clinicalSignGrade.checked"
@@ -54,7 +54,7 @@
       <mat-checkbox color="black" class="mat-checkbox" [checked]="differentialDiagnosisGrade.correct"
                     (change)="differentialDiagnosisGrade.correct = changeAndIncrementScore(differentialDiagnosisGrade.correct)"
                     *ngIf="role==='EXPERT' || medicalCase.completedByExpert"
-                    [disabled]="!medicalCase.correctDiagnosis || medicalCase.completedByExpert">
+                    [disabled]="!correctDiagnosis || medicalCase.completedByExpert">
       </mat-checkbox>
       <mat-checkbox color="black" class="mat-checkbox" [checked]="differentialDiagnosisGrade.checked"
                     (change)="differentialDiagnosisGrade.checked = !differentialDiagnosisGrade.checked"
@@ -72,7 +72,7 @@
       <mat-checkbox color="black" class="mat-checkbox" [checked]="therapeuticPlanGrade.correct"
                     (change)="therapeuticPlanGrade.correct = changeAndIncrementScore(therapeuticPlanGrade.correct)"
                     *ngIf="role==='EXPERT' || medicalCase.completedByExpert"
-                    [disabled]="!medicalCase.correctDiagnosis || medicalCase.completedByExpert">
+                    [disabled]="!correctDiagnosis || medicalCase.completedByExpert">
       </mat-checkbox>
       <mat-checkbox color="black" class="mat-checkbox" [checked]="therapeuticPlanGrade.checked"
                     (change)="therapeuticPlanGrade.checked = !therapeuticPlanGrade.checked"

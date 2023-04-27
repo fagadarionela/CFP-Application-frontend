@@ -7,9 +7,9 @@ export class Disease {
 
   name: string;
 
-  clinicalSigns: string[];
+  clinicalSigns: string[] = [];
 
-  differentialDiagnosis: DifferentialDiagnosis[];
+  differentialDiagnosis: DifferentialDiagnosis[] = [];
 
-  therapeuticPlans: TherapeuticPlan[];
+  therapeuticPlans: TherapeuticPlan[] = [];
 }

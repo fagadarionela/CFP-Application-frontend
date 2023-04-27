@@ -1,0 +1,33 @@
+<div class="modal">
+  <div class="title">
+    <div mat-dialog-title class="title-content"> Adauga diagnostic</div>
+  </div>
+  <br>
+  <div class="content">
+    <mat-form-field class="input" appearance="fill">
+      <mat-label>Username</mat-label>
+      <input class="input" matInput [(ngModel)]="account.username">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="input" appearance="fill">
+      <mat-label>Parola</mat-label>
+      <input class="input" matInput type="password" [(ngModel)]="account.password">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill" class="input">
+      <mat-label>Rol</mat-label>
+      <mat-select [(ngModel)]="account.role">
+        <mat-select-trigger>
+          {{account.role}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let account of accounts" [value]="account">{{account}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <div mat-dialog-actions align="center">
+      <button class="close-button" mat-flat-button color="primary" mat-dialog-close (click)="addAccount()">Adauga
+      </button>
+      <button class="close-button" mat-flat-button color="primary" mat-dialog-close>Inchide</button>
+    </div>
+  </div>
+</div>

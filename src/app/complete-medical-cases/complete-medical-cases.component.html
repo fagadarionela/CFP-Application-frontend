@@ -24,22 +24,21 @@
       </mat-form-field>
       <mat-form-field class="half-input" appearance="fill">
         <mat-label class="black">Data adaugarii</mat-label>
-        <input matInput [matDatepicker]="dp" [(ngModel)]="medicalCase.insertDate" disabled class="black">
-        <mat-datepicker-toggle matIconSuffix [for]="dp" style="padding-right: 10px;"></mat-datepicker-toggle>
-        <mat-datepicker #dp></mat-datepicker>
+        <input matInput [ngModel]="formatDate(medicalCase.insertDate)" disabled class="black">
       </mat-form-field>
       <mat-form-field class="half-input" appearance="fill">
-        <mat-label class="black">Dificultate</mat-label>
-        <input matInput [(ngModel)]="medicalCase.difficultyScore" disabled class="black">
+        <mat-label class="black">Diagnostic expert</mat-label>
+        <input matInput [(ngModel)]="medicalCase.correctDiagnosis" disabled class="black">
       </mat-form-field>
-    </div>
+     </div>
 
     <div class="cfp-image">
       <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="preview" width="100%" height="100%"
-           alt="Imagine CFP" (click)="openImage(medicalCase.cfpimage)">
+           alt="Imagine CFP" (click)="openImage(medicalCase)">
     </div>
     <p class="to-left">
-      Scor: {{medicalCase.completedByExpert ? medicalCase.score : "Neevaluat"}}
+      Dificultate: {{medicalCase.difficultyScore}}
+      &nbsp;&nbsp;&nbsp;&nbsp;Scor: {{medicalCase.completedByExpert ? medicalCase.score : "Neevaluat"}}
     </p>
     <button mat-flat-button color="primary" (click)="openEvaluationFile(medicalCase)"
             [disabled]="medicalCase.score === -1 || !medicalCase.completedByExpert"

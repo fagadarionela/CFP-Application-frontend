@@ -1,0 +1,127 @@
+.example-chip-list {
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  position: relative;
+  top: -10px;
+  color: rgb(234, 31, 39);
+}
+
+.div-icon {
+  text-align: center;
+  overflow: hidden;
+  height: 60px;
+  width: 100%;
+  background-color: rgb(234, 31, 39);
+}
+
+.icon {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  height: 50px;
+  width: 50px;
+  z-index: 1000;
+}
+
+.material-icons {
+  font-size: 48px;
+}
+
+.content {
+  text-align: center;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  width: 90%;
+  height: auto;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+}
+
+.modal {
+  width: 1400px;
+  max-height: 800px;
+  overflow: auto;
+}
+
+button.close-button:enabled {
+  width: 300px;
+  align-self: end;
+  height: 50px;
+  background-color: rgb(0, 138, 140);
+  margin-left: 20px;
+}
+
+button.close-button:disabled {
+  width: 300px;
+  align-self: end;
+  height: 50px;
+  margin-left: 20px;
+}
+
+.title {
+  position: relative;
+  top: -5px;
+  align-content: center;
+  align-self: center;
+  align-items: center;
+  height: 50px;
+}
+
+.title-content {
+  position: fixed;
+  z-index: 100;
+  width: 1400px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  background-color: rgb(0, 138, 140);
+}
+
+.input {
+  width: 90%;
+}
+
+.input-full {
+  width: 100%;
+}
+
+.example-button-container {
+  /*display: flex;*/
+  justify-content: center;
+  width: 100%;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.add-button {
+  background-color: rgb(0, 138, 140);
+}
+
+.add-button-clinical-sign:enabled {
+  background-color: rgb(0, 138, 140);
+}
+
+.add-button-clinical-sign:disabled {
+  background-color: white;
+  color: white;
+}

@@ -1,0 +1,89 @@
+<br><br><br><br><br><br>
+<mat-form-field class="input">
+  <mat-label>Filtru</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Exemplu: Diabetic Rethinopathy" #input>
+</mat-form-field>
+
+<button mat-flat-button color="primary" class="add-button" (click)="openDialog()"> Adauga diagnostic</button>
+<div class="mat-elevation-z8 div-table">
+  <table mat-table
+         [dataSource]="dataSource" multiTemplateDataRows
+         class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef><b>Denumire</b></th>
+      <td mat-cell *matCellDef="let element"><b>{{element['name']}} </b></td>
+    </ng-container>
+    <ng-container matColumnDef="clinicalSigns">
+      <th mat-header-cell *matHeaderCellDef><b>Semne clinice</b></th>
+      <td mat-cell *matCellDef="let element"></td>
+    </ng-container>
+    <ng-container matColumnDef="differentialDiagnosis">
+      <th mat-header-cell *matHeaderCellDef><b>Diagnostice diferentiale</b></th>
+      <td mat-cell *matCellDef="let element"></td>
+    </ng-container>
+    <ng-container matColumnDef="therapeuticPlan">
+      <th mat-header-cell *matHeaderCellDef><b>Planuri terapeutice</b></th>
+      <td mat-cell *matCellDef="let element"></td>
+    </ng-container>
+    <ng-container matColumnDef="star" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon (click)="deleteDisease(element.name)" class="link">delete</mat-icon>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expand">
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button aria-label="expand row"
+                (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+          <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" class="border">
+        <div class="example-element-detail"
+             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <table>
+            <td></td>
+            <td class="td-padding">
+              <b>Semne clinice generale :</b>
+              <ul class="two-columns">
+                <li *ngFor="let sign of element.clinicalSigns"> {{sign}}</li>
+              </ul>
+            </td>
+            <td>
+              <div *ngFor="let differentialDiagnosis of element.differentialDiagnosis" class="td-padding">
+                <b>{{differentialDiagnosis.name}} :</b>
+                <ul class="two-columns">
+                  <li *ngFor="let sign of differentialDiagnosis.signs"> {{sign}}</li>
+                </ul>
+              </div>
+            </td>
+            <td>
+              <div *ngFor="let therapeuticPlan of element.therapeuticPlans" class="td-padding">
+                <b>{{therapeuticPlan.name}} :</b>
+                <ul class="two-columns">
+                  <li *ngFor="let method of therapeuticPlan.methods"> {{method}}</li>
+                </ul>
+              </div>
+            </td>
+          </table>
+
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of diseases"></mat-paginator>
+</div>
+

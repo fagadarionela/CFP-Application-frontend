@@ -33,13 +33,22 @@ import {ImageModalComponent} from "./modals/image-modal/image-modal.component";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatRadioModule} from "@angular/material/radio";
-import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
+import {MdbCarouselModule} from 'mdb-angular-ui-kit/carousel';
 import {SliderModalComponent} from "./modals/slider-modal/slider-modal.component";
-import { CarouselModule } from 'ngx-owl-carousel-o';
+import {CarouselModule} from 'ngx-owl-carousel-o';
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import { EvaluationFileComponent } from './evaluation-file/evaluation-file.component';
-import { EvaluationFileModalComponent } from './modals/evaluation-file-modal/evaluation-file-modal.component';
-
+import {EvaluationFileComponent} from './evaluation-file/evaluation-file.component';
+import {EvaluationFileModalComponent} from './modals/evaluation-file-modal/evaluation-file-modal.component';
+import {AccountsComponent} from './accounts/accounts.component';
+import {DiseasesComponent} from './diseases/diseases.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
+import {AddAccountModalComponent} from './modals/add-account-modal/add-account-modal.component';
+import {AddDiseaseModalComponent} from './modals/add-disease-modal/add-disease-modal.component';
+import {ChipsComponent} from './modals/add-disease-modal/chips/chips.component';
+import {ImageDrawingModule} from 'ngx-image-drawing';
+import {NgChartsModule} from 'ng2-charts';
+import {MedicalCasesChartComponent} from './medical-cases-chart/medical-cases-chart.component';
 
 @NgModule({
   declarations: [
@@ -56,35 +65,45 @@ import { EvaluationFileModalComponent } from './modals/evaluation-file-modal/eva
     ImageModalComponent,
     SliderModalComponent,
     EvaluationFileComponent,
-    EvaluationFileModalComponent
+    EvaluationFileModalComponent,
+    AccountsComponent,
+    DiseasesComponent,
+    AddAccountModalComponent,
+    AddDiseaseModalComponent,
+    ChipsComponent,
+    MedicalCasesChartComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        FormsModule,
-        MatSelectModule,
-        MatDialogModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatChipsModule,
-        MatAutocompleteModule,
-        MatIconModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatMenuModule,
-        MatCardModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatListModule,
-        MatExpansionModule,
-        MatPaginatorModule,
-        MatRadioModule,
-        MdbCarouselModule,
-        CarouselModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    MatSelectModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMenuModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatListModule,
+    MatExpansionModule,
+    MatPaginatorModule,
+    MatRadioModule,
+    MdbCarouselModule,
+    CarouselModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatSortModule,
+    ImageDrawingModule,
+    NgChartsModule
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -1,0 +1,76 @@
+h1 {
+  text-align: center;
+  position: relative;
+  top: -10px;
+  color: rgb(234, 31, 39);
+}
+
+.div-icon {
+  text-align: center;
+  overflow: hidden;
+  height: 60px;
+  width: 100%;
+  background-color: rgb(234, 31, 39);
+}
+
+.icon {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  height: 50px;
+  width: 50px;
+  z-index: 1000;
+}
+
+.material-icons {
+  font-size: 48px;
+}
+
+.content {
+  text-align: center;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+}
+
+.modal {
+  width: 750px;
+}
+
+button.close-button {
+  width: 300px;
+  align-self: end;
+  height: 50px;
+  background-color: rgb(0, 138, 140);
+  margin-left: 20px;
+}
+
+.title {
+  position: relative;
+  /*top: -35px;*/
+  align-content: center;
+  align-self: center;
+  align-items: center;
+  height: 50px;
+}
+
+.title-content {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bold;
+  text-align: center;
+  /*width: 180px;*/
+  /*top: -35px;*/
+  color: white;
+  background-color: rgb(0, 138, 140);
+  /*border-radius: 30px;*/
+}
+
+.input {
+  width: 100%;
+}
+
+.content {
+  margin: 10px;
+}

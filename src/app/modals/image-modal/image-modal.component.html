@@ -1,4 +1,10 @@
 <div class="modal">
-  <img src="{{message}}">
+  <image-drawing [src]="image"
+                 outputMimeType="'image/jpeg'"
+                 [outputQuality]=outputQuality
+                 (save)="save($event)"
+                 (cancel)="reset()"
+                 [colors]="colors"
+                 [drawingSizes]="drawingSizes">
+  </image-drawing>
 </div>
-

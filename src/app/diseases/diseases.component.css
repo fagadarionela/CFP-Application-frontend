@@ -1,0 +1,98 @@
+.two-columns {
+  column-count: 2;
+}
+
+.div-table {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 25px;
+}
+
+button.add-button {
+  width: 300px;
+  height: 50px;
+  background-color: rgb(0, 138, 140) !important;
+  margin-left: 70px;
+}
+
+td, th {
+  width: 25%;
+}
+
+.input {
+  margin-left: 50px;
+  width: 70%;
+}
+
+.not-found {
+  padding: 20px;
+}
+
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+  padding: 0;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.border {
+  margin: 0;
+  left: 0;
+  padding: 0;
+}
+
+.td-padding {
+  padding: 5px;
+}
+
+.mat-column-star {
+  width: 3%;
+  padding-right: 8px;
+}
+
+.link {
+  cursor: pointer;
+}

@@ -19,6 +19,8 @@ export class MedicalCaseFull {
 
   cfpimage: File;
 
+  cfpimageCustomized: File;
+
   presumptiveDiagnosis: string;
 
   residentDiagnosis: string;
@@ -29,8 +31,6 @@ export class MedicalCaseFull {
 
   therapeuticPlanGrades: TherapeuticPlanGrade[] = [];
 
-  saved: boolean;
-
   resident: Resident;
 
   score: number;
@@ -39,5 +39,7 @@ export class MedicalCaseFull {
 
   completedByExpert: boolean;
 
-  correctDiagnosis: boolean;
+  correctDiagnosis: string;
+
+  saved: boolean;
 }

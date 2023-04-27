@@ -1,5 +1,5 @@
 export class TherapeuticPlan {
   name: string;
 
-  methods: string[];
+  methods: string[] = [];
 }

@@ -36,15 +36,22 @@
       <a href="medical-cases/insert">Inserare cazuri medicale</a>
     </li>
     <li class="nav-bar-item" *ngIf="role=='RESIDENT'" id="elements">
+      <a href="medical-cases/charts">Statistici cazuri medicale</a>
+    </li>
+    <li class="nav-bar-item" *ngIf="role=='RESIDENT'" id="elements">
       <a href="medical-cases/completed">Cazuri medicale completate</a>
     </li>
     <li class="nav-bar-item" *ngIf="role=='RESIDENT'" id="elements">
       <a href="medical-cases/incomplete">Cazuri medicale necompletate</a>
     </li>
-
+    <li class="nav-bar-item" *ngIf="role=='EXPERT'" id="elements">
+      <a href="medical-cases/incomplete">Cazuri medicale</a>
+    </li>
+    <li class="nav-bar-item" *ngIf="role=='ADMIN'" id="elements">
+      <a href="diseases">Diagnostice</a>
+    </li>
+    <li class="nav-bar-item" *ngIf="role=='ADMIN'" id="elements">
+      <a href="users">Utilizatori</a>
+    </li>
   </ul>
 </div>
-
-
-
-

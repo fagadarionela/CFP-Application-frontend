@@ -30,7 +30,7 @@
 
       <div class="cfp-image-div">
         <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="cfp-image" height="420px" width="420px"
-             alt="Imagine CFP" (click)="openImage(medicalCase.cfpimage)">
+             alt="Imagine CFP" (click)="openImage(medicalCase)">
         <mat-form-field appearance="fill" class="additional-info">
           <mat-label>Informatii aditionale</mat-label>
           <textarea matInput [(ngModel)]="medicalCase.additionalInformation"
@@ -41,7 +41,7 @@
       <mat-form-field appearance="fill" class="input" *ngIf="role==='RESIDENT'">
         <mat-label>Diagnostic rezident</mat-label>
         <mat-select [(ngModel)]="medicalCase.residentDiagnosis" (ngModelChange)="getDiseaseByName(medicalCase)"
-                    [disabled]="medicalCase.saved">
+                    [disabled]="medicalCase.residentDiagnosis != null && medicalCase.saved">
           <mat-select-trigger>
             {{medicalCase.residentDiagnosis}}
           </mat-select-trigger>
@@ -55,6 +55,16 @@
       <mat-form-field class="half-input" appearance="fill" *ngIf="role==='EXPERT'">
         <mat-label class="black">Diagnostic prezis</mat-label>
         <input matInput [(ngModel)]="medicalCase.presumptiveDiagnosis" disabled class="black">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="input" *ngIf="role==='EXPERT'" >
+        <mat-label>Diagnostic corect</mat-label>
+        <mat-select [(ngModel)]="medicalCase.correctDiagnosis" (ngModelChange)="checkCorrectDiagnosis(medicalCase)"
+                    [disabled]="role!='EXPERT'" >
+          <mat-select-trigger>
+            {{medicalCase.correctDiagnosis}}
+          </mat-select-trigger>
+          <mat-option *ngFor="let disease of diseases" [value]="disease">{{disease}}</mat-option>
+        </mat-select>
       </mat-form-field>
       <br>
       <div class="evaluation-file">

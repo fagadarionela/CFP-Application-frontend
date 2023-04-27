@@ -1,0 +1,82 @@
+<div class="modal">
+  <div class="title">
+    <div mat-dialog-title class="title-content"> Adauga Diagnostic</div>
+  </div>
+  <br>
+  <div class="content" *ngIf="clinicalSigns && signs && methods">
+    <mat-form-field class="input-full" appearance="fill">
+      <mat-label>Nume</mat-label>
+      <input class="input" matInput [(ngModel)]="disease.name">
+    </mat-form-field>
+    <br>
+    <div class="example-button-row">
+      <div class="example-flex-container">
+        <div class="example-button-container border">
+          Semne clinice
+          <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon"
+                  class="add-button-clinical-sign"
+                  (click)="addClinicalSign()" [disabled]="clinicalSignVisible">
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="clinicalSignVisible">
+      <app-chips class="input" [(list)]="disease.clinicalSigns" [allElements]="clinicalSigns"
+                 [title]="'Adauga semne clinice'"></app-chips>
+    </div>
+    <div *ngIf="!clinicalSignVisible">
+    </div>
+    <div class="example-button-row">
+      <div class="example-flex-container">
+        <div class="example-button-container">
+          Diagnostic diferential
+          <button mat-mini-fab color="primary" class="add-button"
+                  (click)="addDifferentialDiagnosisAndTherapeuticPlan()">
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let differetialDiagnostic of disease.differentialDiagnosis; let i = index">
+      <mat-form-field class="input-full" appearance="fill">
+        <mat-label>Nume diagnostic diferential</mat-label>
+        <input matInput [(ngModel)]="differetialDiagnostic.name"
+               (input)="changeTherapeuticPlanName(i, differetialDiagnostic.name)">
+      </mat-form-field>
+      <app-chips class="input" [(list)]="differetialDiagnostic.signs" [allElements]="signs"
+                 [title]="'Adauga semn'"></app-chips>
+      <br>
+    </div>
+    <div *ngIf="disease.differentialDiagnosis.length === 0">
+    </div>
+    <div class="example-button-row">
+      <div class="example-flex-container">
+        <div class="example-button-container border">
+          Plan terapeutic
+          <button mat-mini-fab color="primary" class="add-button"
+                  (click)="addDifferentialDiagnosisAndTherapeuticPlan()">
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let therapeuticPlan of disease.therapeuticPlans;let i=index">
+      <mat-form-field class="input-full" appearance="fill">
+        <mat-label>Nume plan terapeutic</mat-label>
+        <input matInput [(ngModel)]="therapeuticPlan.name"
+               (input)="changeDifferentialDiagnosisName(i, therapeuticPlan.name)">
+      </mat-form-field>
+      <app-chips class="input" [(list)]="therapeuticPlan.methods" [allElements]="methods"
+                 [title]="'Adauga metoda'"></app-chips>
+      <br>
+    </div>
+    <br>
+    <div mat-dialog-actions align="center">
+      <button class="close-button" mat-flat-button color="primary" mat-dialog-close (click)="addDisease()"
+              [disabled]="disease.name === '' || disease.name === undefined">Adauga
+      </button>
+      <button class="close-button" mat-flat-button color="primary" mat-dialog-close>Inchide</button>
+    </div>
+  </div>
+</div>

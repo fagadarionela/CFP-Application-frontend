@@ -3,6 +3,7 @@ import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
 import {SuccessModalComponent} from "../modals/success-modal/success-modal.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ErrorModalComponent} from "../modals/error-modal/error-modal.component";
 
 @Component({
   selector: 'app-logout',
@@ -28,17 +29,15 @@ export class LogoutComponent implements OnInit {
 
     this.userServive.logout().subscribe(() => {
         this.dialog.open(SuccessModalComponent, {data: succesMessage})
+          .afterClosed().subscribe(() => {
+          sessionStorage.removeItem('role');
+          sessionStorage.removeItem('username');
+          this.router.navigate(['/login']).then(() => window.location.reload());
+        })
       },
       error => {
         console.log(error)
-        window.alert(errorMessage);
-      },
-      () => {
-        sessionStorage.removeItem('role');
-        sessionStorage.removeItem('username');
-        this.router.navigate(['/login']).then(() => {
-          window.location.reload();
-        });
+        this.dialog.open(ErrorModalComponent, {data: errorMessage})
       });
   }
 }

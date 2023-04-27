@@ -27,7 +27,7 @@ export class MedicalCaseService {
     });
   }
 
-  public getAllAssigendComplete(page: number, size: number, searchedDiagnostic: string): Observable<any> {
+  public getAllAssignedComplete(page: number, size: number, searchedDiagnostic: string): Observable<any> {
     return this.http.get<any>(SERVER_URL + '/cases/assigned/completed', {
       'headers': {
         'Cache-Control': 'no-cache',
@@ -42,8 +42,16 @@ export class MedicalCaseService {
     });
   }
 
+  public getAllAssigned(): Observable<any> {
+    return this.http.get<any>(SERVER_URL + '/cases/assigned/all', REQUEST_HEADERS);
+  }
+
   public addMedicalCase(medicalCase: any): Observable<any> {
     return this.http.post<any>(SERVER_URL + '/cases', medicalCase, REQUEST_HEADERS_IMAGE);
+  }
+
+  public addDrawing(medicalCase: any): Observable<any> {
+    return this.http.post<any>(SERVER_URL + '/cases/drawing', medicalCase, REQUEST_HEADERS_IMAGE);
   }
 
   public updateMedicalCase(medicalCase: MedicalCase): Observable<any> {

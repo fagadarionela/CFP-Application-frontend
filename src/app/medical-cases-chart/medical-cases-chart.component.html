@@ -1,0 +1,22 @@
+<div class="content">
+
+  <br><br><br><br><br>
+  <h1>Cazuri corecte/incorecte in functie de diagnostic</h1>
+  <div *ngIf="barChartDataDiagnostics.labels!.length>0">
+    <canvas baseChart
+            [data]="barChartDataDiagnostics"
+            [options]="barChartOptions"
+            [type]="'bar'">
+    </canvas>
+  </div>
+  <br>
+  <h1>Statusul cazurilor medicale</h1>
+  <div
+    *ngIf="barChartDataCompleteIncomplete.labels!.length>0 && barChartDataCompleteIncomplete.datasets[0].data.length > 0">
+    <canvas baseChart
+            [data]="barChartDataCompleteIncomplete"
+            [options]="barChartOptions"
+            [type]="'bar'">
+    </canvas>
+  </div>
+</div>

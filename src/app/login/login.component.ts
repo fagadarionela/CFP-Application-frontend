@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
         let role = res['authorities'][0]['authority'].split(/_(.+)/)[1];
         if (role === 'OPERATOR') {
           this.router.navigate(['medical-cases/insert']);
-        } else if (role === 'EXPERT') {
-          this.router.navigate(['medical-cases/incomplete']);
+        } else if (role === 'ADMIN') {
+          this.router.navigate(['users']);
         } else {
           this.router.navigate(['medical-cases/incomplete']);
         }

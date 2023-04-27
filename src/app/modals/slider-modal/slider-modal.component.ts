@@ -43,7 +43,7 @@ export class SliderModalComponent implements OnInit {
     this.httpService.getAllMedicalCasesAssignedTo(this.data).subscribe(medicalCases => {
       medicalCases.forEach(medicalCase => {
         console.log(medicalCase);
-        this.images.push(new CustomizedImage('data:image/jpeg;base64,' + medicalCase.cfpimage, "2", formatDate(medicalCase.insertDate, 'yyyy-MM-dd hh:mm:ss', this.locale)))
+        this.images.push(new CustomizedImage('data:image/jpeg;base64,' + medicalCase.cfpimage, "2", formatDate(medicalCase.insertDate, 'yyyy-MM-dd HH:mm:ss', this.locale)))
       });
       this.images.sort((a, b) => (a.insertDate < b.insertDate ? -1 : 1))
     })

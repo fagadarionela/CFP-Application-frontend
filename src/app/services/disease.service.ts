@@ -11,6 +11,10 @@ export class DiseaseService {
   constructor(public http: HttpClient) {
   }
 
+  public addDisease(disease: Disease): Observable<any> {
+    return this.http.post<any>(SERVER_URL + '/disease', disease, REQUEST_HEADERS);
+  }
+
   public getAllDiseases(): Observable<string[]> {
     return this.http.get<string[]>(SERVER_URL + '/disease', REQUEST_HEADERS);
   }
@@ -19,4 +23,11 @@ export class DiseaseService {
     return this.http.get<Disease>(SERVER_URL + '/disease/' + name, REQUEST_HEADERS);
   }
 
+  public getAllDiseasesInfo(): Observable<any> {
+    return this.http.get<any>(SERVER_URL + '/disease/all', REQUEST_HEADERS);
+  }
+
+  public deleteDisease(nume: string): Observable<any> {
+    return this.http.delete<any>(SERVER_URL + '/disease/' + nume, REQUEST_HEADERS);
+  }
 }

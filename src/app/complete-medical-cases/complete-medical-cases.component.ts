@@ -5,6 +5,7 @@ import {ImageModalComponent} from "../modals/image-modal/image-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MedicalCaseFull} from "../models/medical-case-full";
 import {EvaluationFileModalComponent} from "../modals/evaluation-file-modal/evaluation-file-modal.component";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-complete-medical-cases',
@@ -25,13 +26,13 @@ export class CompleteMedicalCasesComponent implements OnInit {
   constructor(private httpService: MedicalCaseService, private _adapter: DateAdapter<any>,
               @Inject(MAT_DATE_LOCALE) private locale: string, private medicalCaseService: MedicalCaseService, private dialog: MatDialog) {
     this.role = sessionStorage.getItem('role')!;
-    this.locale = 'ro';
+    // this.locale = 'ro';
     this._adapter.setLocale(this.locale);
     this.searchedDiagnostic = "";
   }
 
   ngOnInit(): void {
-    this.locale = 'ro';
+    // this.locale = 'ro';
     this._adapter.setLocale(this.locale);
     this.role = sessionStorage.getItem('role')!;
     this.searchedDiagnostic = "";
@@ -40,13 +41,15 @@ export class CompleteMedicalCasesComponent implements OnInit {
     }
   }
 
-  openImage(image: File) {
-    this.dialog.open(ImageModalComponent, {data: `data:image/jpeg;base64,` + image});
+  openImage(medicalCase: MedicalCaseFull) {
+    const activeModal = this.dialog.open(ImageModalComponent);
+    activeModal.componentInstance.medicalCase = medicalCase;
   }
 
   handlePage(page: number, size: number, searchedDiagnostic: string) {
-    this.medicalCaseService.getAllAssigendComplete(page, size, searchedDiagnostic).subscribe(
+    this.medicalCaseService.getAllAssignedComplete(page, size, searchedDiagnostic).subscribe(
       response => {
+        console.log(response);
         if (response.error) {
           console.log(response.error);
         } else {
@@ -70,4 +73,9 @@ export class CompleteMedicalCasesComponent implements OnInit {
     const activeModal = this.dialog.open(EvaluationFileModalComponent);
     activeModal.componentInstance.medicalCase = medicalCase;
   }
+
+  formatDate(insertDate: Date): string {
+    return formatDate(insertDate, 'yyyy-MM-dd HH:mm:ss', this.locale);
+  }
+
 }
