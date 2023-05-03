@@ -1,22 +1,33 @@
 <div class="content">
 
   <br><br><br><br><br>
-  <h1>Cazuri corecte/incorecte in functie de diagnostic</h1>
-  <div *ngIf="barChartDataDiagnostics.labels!.length>0">
-    <canvas baseChart
+
+  <div *ngIf="barChartDataDiagnostics.labels!.length>0" class="div-charts">
+    <h1>Cazuri corecte/incorecte in functie de diagnostic</h1>
+    <canvas baseChart class="canvas"
             [data]="barChartDataDiagnostics"
             [options]="barChartOptions"
             [type]="'bar'">
     </canvas>
   </div>
-  <br>
-  <h1>Statusul cazurilor medicale</h1>
-  <div
-    *ngIf="barChartDataCompleteIncomplete.labels!.length>0 && barChartDataCompleteIncomplete.datasets[0].data.length > 0">
-    <canvas baseChart
+
+  <div class="div-charts"
+       *ngIf="barChartDataCompleteIncomplete.labels!.length>0 && barChartDataCompleteIncomplete.datasets[0].data.length > 0">
+    <h1>Statusul cazurilor medicale</h1>
+    <canvas baseChart class="canvas"
             [data]="barChartDataCompleteIncomplete"
             [options]="barChartOptions"
             [type]="'bar'">
     </canvas>
   </div>
+  <div class="div-charts"
+       *ngIf="pieChartData.labels!.length>0 && pieChartData.datasets[0].data.length > 0">
+    <h1>Statusul cazurilor medicale</h1>
+    <canvas baseChart class="canvas-pie"
+            [data]="pieChartData"
+            [type]="'pie'"
+            [options]="pieChartOptions">
+    </canvas>
+  </div>
+
 </div>

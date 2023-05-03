@@ -1,7 +1,19 @@
-canvas {
+.canvas {
+  /*min-width: 500px;*/
+  min-height: 300px;
+}
+
+.canvas-pie {
   min-width: 500px;
+  min-height: 150px;
 }
 
 .content {
   padding: 50px;
+  text-align: center;
+}
+
+.div-charts {
+  float: left;
+  margin: 30px;
 }

@@ -86,12 +86,12 @@ export class MedicalCasesComponent implements OnInit {
       (res) => {
         console.log(res);
         this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost salvat cu succes!`})
-          .afterClosed().subscribe(() => window.location.reload());
+          .afterClosed().subscribe(() => this.dialog.closeAll());
       },
       (error) => {
         console.log(error);
         this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la salvarea cazului medical!`})
-          .afterClosed().subscribe(() => window.location.reload());
+          .afterClosed().subscribe(() => this.dialog.closeAll());
       });
   }
 
@@ -101,18 +101,8 @@ export class MedicalCasesComponent implements OnInit {
     } else if (this.role === 'EXPERT') {
       medicalCase.completedByExpert = true;
     }
-    medicalCase.saved = true;
-    this.medicalCaseService.updateMedicalCase(medicalCase).subscribe(
-      (res) => {
-        console.log(res);
-        this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost salvat cu succes!`})
-          .afterClosed().subscribe(() => window.location.reload());
-      },
-      (error) => {
-        console.log(error);
-        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la salvarea cazului medical!`})
-          .afterClosed().subscribe(() => window.location.reload());
-      });
+    this.updateMedicalCase(medicalCase);
+    window.location.reload();
   }
 
   openImage(medicalCase: MedicalCaseFull) {
@@ -177,13 +167,11 @@ export class MedicalCasesComponent implements OnInit {
   }
 
   getDiseaseByName(medicalCase: MedicalCaseFull) {
-    medicalCase.clinicalSignGrades.length = 0;
-    medicalCase.differentialDiagnosisGrades.length = 0;
-    medicalCase.therapeuticPlanGrades.length = 0;
-
     this.diseasesService.getDiseaseByName(medicalCase.residentDiagnosis).subscribe(
       data => {
-
+        medicalCase.clinicalSignGrades.length = 0;
+        medicalCase.differentialDiagnosisGrades.length = 0;
+        medicalCase.therapeuticPlanGrades.length = 0;
         for (var differentialDiagnosis of data.differentialDiagnosis) {
           for (var signName of differentialDiagnosis.signs) {
             medicalCase.differentialDiagnosisGrades.push(new DifferentialDiagnosisGrade(new DifferentialDiagnosisSign(new DifferentialDiagnosisPartial(differentialDiagnosis.name), new Sign(signName))));

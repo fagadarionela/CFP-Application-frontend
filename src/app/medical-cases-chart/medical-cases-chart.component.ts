@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ChartConfiguration} from "chart.js";
+import {ChartConfiguration, ChartData} from "chart.js";
 import {MedicalCaseFull} from "../models/medical-case-full";
 import {MedicalCaseService} from "../services/medical-case.service";
 import {DiseaseService} from "../services/disease.service";
@@ -30,8 +30,23 @@ export class MedicalCasesChartComponent {
     ]
   };
 
+  public pieChartData: ChartData<'pie', number[], string | string[]> = {
+    labels: [],
+    datasets: [{data: []}]
+  };
+
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: false,
+  };
+
+  public pieChartOptions: ChartConfiguration<'pie'>['options'] = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      }
+    }
   };
 
   constructor(private medicalCaseService: MedicalCaseService, private diseaseService: DiseaseService) {
@@ -57,30 +72,33 @@ export class MedicalCasesChartComponent {
                 } else {
                   numberOfIncompleteCases++;
                 }
+                if (correctDiagnosis.get(medicalCase.correctDiagnosis) === undefined) {
+                  correctDiagnosis.set(medicalCase.correctDiagnosis, 0);
+                }
+                if (incorrectDiagnosis.get(medicalCase.correctDiagnosis) === undefined) {
+                  incorrectDiagnosis.set(medicalCase.correctDiagnosis, 0);
+                }
+                console.log(medicalCase);
                 if (medicalCase.correctDiagnosis != medicalCase.residentDiagnosis) {
-                  let numberOfCases = incorrectDiagnosis.get(medicalCase.correctDiagnosis);
-                  if (numberOfCases != undefined) {
-                    incorrectDiagnosis.set(medicalCase.correctDiagnosis, numberOfCases + 1);
-                  } else {
-                    incorrectDiagnosis.set(medicalCase.correctDiagnosis, 1);
-                  }
+                  let numberOfCases = incorrectDiagnosis.get(medicalCase.correctDiagnosis)!;
+                  incorrectDiagnosis.set(medicalCase.correctDiagnosis, numberOfCases + 1);
                 } else {
-                  let numberOfCases = correctDiagnosis.get(medicalCase.correctDiagnosis);
-                  if (numberOfCases != undefined) {
-                    correctDiagnosis.set(medicalCase.correctDiagnosis, numberOfCases + 1);
-                  } else {
-                    correctDiagnosis.set(medicalCase.correctDiagnosis, 1);
-                  }
+                  let numberOfCases = correctDiagnosis.get(medicalCase.correctDiagnosis)!;
+                  correctDiagnosis.set(medicalCase.correctDiagnosis, numberOfCases + 1);
                 }
               }
             );
             this.diseases.forEach(disease => {
               this.barChartDataDiagnostics.labels?.push(disease);
-              let numberOfCorrectDiagnosis = correctDiagnosis.get(disease);
-              let numberOfIncorrectDiagnosis = incorrectDiagnosis.get(disease);
-              this.barChartDataDiagnostics.datasets[1].data.push(numberOfCorrectDiagnosis != undefined ? numberOfCorrectDiagnosis : 0);
-              this.barChartDataDiagnostics.datasets[0].data.push(numberOfIncorrectDiagnosis != undefined ? numberOfIncorrectDiagnosis : 0);
+              this.pieChartData.labels?.push(disease);
+              let numberOfCorrectDiagnosis = correctDiagnosis.get(disease)!;
+              let numberOfIncorrectDiagnosis = incorrectDiagnosis.get(disease)!;
+              let totalNumberOfCasesPerDiagnosis = numberOfCorrectDiagnosis + numberOfIncorrectDiagnosis;
+              this.pieChartData.datasets[0].data.push(totalNumberOfCasesPerDiagnosis);
+              this.barChartDataDiagnostics.datasets[1].data.push(numberOfCorrectDiagnosis);
+              this.barChartDataDiagnostics.datasets[0].data.push(numberOfIncorrectDiagnosis);
             });
+            console.log(this.pieChartData)
             this.barChartDataCompleteIncomplete.datasets[2].data.push(numberOfCompleteCases);
             this.barChartDataCompleteIncomplete.datasets[1].data.push(numberOfInProgressCases);
             this.barChartDataCompleteIncomplete.datasets[0].data.push(numberOfIncompleteCases);

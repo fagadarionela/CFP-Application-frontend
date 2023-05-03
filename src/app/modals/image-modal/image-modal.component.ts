@@ -4,6 +4,7 @@ import {MedicalCaseService} from "../../services/medical-case.service";
 import {SuccessModalComponent} from "../success-modal/success-modal.component";
 import {ErrorModalComponent} from "../error-modal/error-modal.component";
 import {MatDialog} from "@angular/material/dialog";
+import {DialogRef} from "@angular/cdk/dialog";
 
 @Component({
   selector: 'app-image-modal',
@@ -16,17 +17,20 @@ export class ImageModalComponent implements OnInit {
   outputQuality: number = 0.8;
   image: string = '';
 
+  role: string = '';
+
   colors = {};
 
   drawingSizes = {small: 1, medium: 5}
 
   constructor(private medicalCaseService: MedicalCaseService, private dialog: MatDialog) {
+    this.role = sessionStorage.getItem('role')!;
   }
 
   ngOnInit(): void {
-    let role = sessionStorage.getItem('role');
     this.image = this.medicalCase.cfpimageCustomized ? 'data:image/jpeg;base64,' + this.medicalCase.cfpimageCustomized : 'data:image/jpeg;base64,' + this.medicalCase.cfpimage;
-    if (role === 'EXPERT')
+    console.log(this.image);
+    if (this.role === 'EXPERT')
       this.colors = {
         'black': 'black',
         'red': 'red'
@@ -43,35 +47,28 @@ export class ImageModalComponent implements OnInit {
   }
 
   public save($event: any) {
-    const uploadImageData = new FormData();
     let file = new File([$event], "name");
+    this.addImage(file);
+  }
+
+  reset() {
+    this.dialog.closeAll()
+  }
+
+  addImage(file: File){
+    const uploadImageData = new FormData();
     uploadImageData.append('image', file);
-    uploadImageData.append('medicalCase', JSON.stringify(this.medicalCase));
+    uploadImageData.append('id', this.medicalCase.id);
     this.medicalCaseService.addDrawing(uploadImageData).subscribe(
       (res) => {
         console.log(res);
         this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost actualizat cu succes!`})
-          .afterClosed().subscribe(() => window.location.reload());
+          .afterClosed().subscribe(() => this.dialog.closeAll());
       },
       (error) => {
         console.log(error);
         this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la actualizarea cazului!`})
-          .afterClosed().subscribe(() => window.location.reload());
-      });
-  }
-
-  reset() {
-    this.medicalCase.cfpimageCustomized = this.medicalCase.cfpimage;
-    this.medicalCaseService.updateMedicalCase(this.medicalCase).subscribe(
-      (res) => {
-        console.log(res);
-        this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost resetat cu succes!`})
-          .afterClosed().subscribe(() => window.location.reload());
-      },
-      (error) => {
-        console.log(error);
-        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la resetarea cazului!`})
-          .afterClosed().subscribe(() => window.location.reload());
+          .afterClosed().subscribe(() => this.dialog.closeAll());
       });
   }
 }

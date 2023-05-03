@@ -4,7 +4,6 @@ export class MedicalCase {
 
   encodedInfo: string;
 
-  birthDate: Date;
 
   additionalInformation: string;
 

@@ -1,5 +1,7 @@
 <div class="modal">
-  <image-drawing [src]="image"
+  <img [src]="image" *ngIf="role === 'RESIDENT' && medicalCase.completedByExpert">
+  <image-drawing *ngIf="role != 'RESIDENT' || !medicalCase.completedByExpert"
+                 [src]="image"
                  outputMimeType="'image/jpeg'"
                  [outputQuality]=outputQuality
                  (save)="save($event)"

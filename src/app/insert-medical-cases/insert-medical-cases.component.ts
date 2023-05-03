@@ -81,7 +81,6 @@ export class InsertMedicalCasesComponent implements OnInit {
     let medicalCase: MedicalCase = new MedicalCase();
     medicalCase.encodedInfo = bcrypt.hashSync(this.firstName.value! + this.lastName.value! + this.birthDate.value!, SALT);
 
-    medicalCase.birthDate = new Date(this.birthDate.value!);
     medicalCase.additionalInformation = this.additionalInformation.value!;
     medicalCase.presumptiveDiagnosis = this.presumptiveDiagnosis.value!;
 
@@ -98,13 +97,13 @@ export class InsertMedicalCasesComponent implements OnInit {
       (res) => {
         console.log(res);
         this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost inserat cu succes!`})
-          .afterClosed().subscribe(() => window.location.reload());
-        this.resetFields();
+          // .afterClosed().subscribe(() => window.location.reload());
+        // this.resetFields();
       },
       (error) => {
         console.log(error);
         this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la inserarea cazului!`})
-          .afterClosed().subscribe(() => window.location.reload());
+          // .afterClosed().subscribe(() => window.location.reload());
       });
   }
 
