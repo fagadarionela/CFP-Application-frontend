@@ -4,10 +4,11 @@ export class MedicalCase {
 
   encodedInfo: string;
 
-
   additionalInformation: string;
 
   insertDate: Date;
+
+  beginDate: string;
 
   difficultyScore: number;
 
@@ -22,4 +23,6 @@ export class MedicalCase {
   completedByExpert: boolean;
 
   saved: boolean;
+
+  allocationDate: Date;
 }

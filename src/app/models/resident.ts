@@ -6,6 +6,8 @@ export class Resident {
 
   account: Account;
 
+  grade: number;
+
   constructor(account: Account) {
     this.account = account;
   }

@@ -1,6 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MedicalCase} from "../models/medical-case";
-import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {FormControl, Validators} from "@angular/forms";
 import {MedicalCaseService} from "../services/medical-case.service";
 import * as bcrypt from 'bcryptjs';
@@ -9,6 +8,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {SuccessModalComponent} from "../modals/success-modal/success-modal.component";
 import {ErrorModalComponent} from "../modals/error-modal/error-modal.component";
 import {DiseaseService} from "../services/disease.service";
+import {Disease} from "../models/disease";
+import {SystemService} from "../services/system.service";
 
 @Component({
   selector: 'app-insert-medical-cases',
@@ -31,22 +32,22 @@ export class InsertMedicalCasesComponent implements OnInit {
 
   presumptiveDiagnosisModality: string = 'withModel';
 
-  diseases: string[] = [];
+  diseases: Disease[] = [];
 
-  constructor(private _adapter: DateAdapter<any>, private dialog: MatDialog, @Inject(MAT_DATE_LOCALE) private _locale: string,
-              private medicalCaseService: MedicalCaseService, private diseasesService: DiseaseService) {
+  today = new Date();
+
+  started: boolean;
+
+  constructor(private dialog: MatDialog, private medicalCaseService: MedicalCaseService, private systemService: SystemService, private diseasesService: DiseaseService) {
     this.role = sessionStorage.getItem('role')!;
-    this._locale = 'ro';
-    this._adapter.setLocale(this._locale);
   }
 
   ngOnInit(): void {
     this.role = sessionStorage.getItem('role')!;
-    this._locale = 'ro';
-    this._adapter.setLocale(this._locale);
     this.diseasesService.getAllDiseases().subscribe(data => {
-      this.diseases = data.sort((a, b) => (a.charAt(0) < b.charAt(0) ? -1 : 1))
+      this.diseases = data.sort((a, b) => (a.name.charAt(0) < b.name.charAt(0) ? -1 : 1))
     });
+    this.systemService.getAllTempMedicalCases().subscribe((data) => this.started = data > 0);
   }
 
   getErrorMessage(): string {
@@ -79,6 +80,7 @@ export class InsertMedicalCasesComponent implements OnInit {
 
   addMedicalCase(): void {
     let medicalCase: MedicalCase = new MedicalCase();
+    console.log(this.birthDate.value, 'birthdate');
     medicalCase.encodedInfo = bcrypt.hashSync(this.firstName.value! + this.lastName.value! + this.birthDate.value!, SALT);
 
     medicalCase.additionalInformation = this.additionalInformation.value!;
@@ -96,14 +98,14 @@ export class InsertMedicalCasesComponent implements OnInit {
     this.medicalCaseService.addMedicalCase(uploadImageData).subscribe(
       (res) => {
         console.log(res);
-        this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost inserat cu succes!`})
-          // .afterClosed().subscribe(() => window.location.reload());
-        // this.resetFields();
+        this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost asignat rezidentului: ` + res.resident.account.username + `!`})
+          .afterClosed().subscribe(() => window.location.reload());
+        this.resetFields();
       },
       (error) => {
         console.log(error);
         this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la inserarea cazului!`})
-          // .afterClosed().subscribe(() => window.location.reload());
+          .afterClosed().subscribe(() => window.location.reload());
       });
   }
 
@@ -123,5 +125,13 @@ export class InsertMedicalCasesComponent implements OnInit {
     this.previewImage = "";
     this.presumptiveDiagnosis.setValue("");
     this.additionalInformation.setValue("");
+  }
+
+  automaticallyAddMedicalCases() {
+    this.systemService.getImages().subscribe(()=> this.started = true);
+  }
+
+  stopAutomaticallyAddMedicalCases(){
+    this.systemService.deleteTempMedicalCases().subscribe(()=> this.started = false);
   }
 }

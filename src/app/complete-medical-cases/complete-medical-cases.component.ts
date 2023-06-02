@@ -26,14 +26,10 @@ export class CompleteMedicalCasesComponent implements OnInit {
   constructor(private httpService: MedicalCaseService, private _adapter: DateAdapter<any>,
               @Inject(MAT_DATE_LOCALE) private locale: string, private medicalCaseService: MedicalCaseService, private dialog: MatDialog) {
     this.role = sessionStorage.getItem('role')!;
-    // this.locale = 'ro';
-    this._adapter.setLocale(this.locale);
     this.searchedDiagnostic = "";
   }
 
   ngOnInit(): void {
-    // this.locale = 'ro';
-    this._adapter.setLocale(this.locale);
     this.role = sessionStorage.getItem('role')!;
     this.searchedDiagnostic = "";
     if (this.role === 'RESIDENT') {

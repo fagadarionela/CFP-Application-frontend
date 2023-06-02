@@ -12,6 +12,8 @@ import {DiseaseService} from "../../services/disease.service";
 import {SuccessModalComponent} from "../success-modal/success-modal.component";
 import {ErrorModalComponent} from "../error-modal/error-modal.component";
 import {MatDialog} from "@angular/material/dialog";
+import {EducationalTopicService} from "../../services/educational-topic.service";
+import {EducationalTopic} from "../../models/educational-topic";
 
 @Component({
   selector: 'app-add-disease-modal',
@@ -25,10 +27,11 @@ export class AddDiseaseModalComponent {
   clinicalSigns: ClinicalSign[];
   signs: Sign[];
   methods: Method[];
+  educationalTopics: EducationalTopic[];
   clinicalSignVisible: boolean = false;
 
   constructor(private clinicalSignService: ClinicalSignService, private signService: SignService, private methodService: MethodService,
-              private diseaseService: DiseaseService, private dialog: MatDialog) {
+              private diseaseService: DiseaseService, private educationalTopicService: EducationalTopicService, private dialog: MatDialog) {
     clinicalSignService.getAllClinicalSigns().subscribe(
       (data) => this.clinicalSigns = data
     )
@@ -38,6 +41,10 @@ export class AddDiseaseModalComponent {
     methodService.getAllMethods().subscribe(
       (data) => this.methods = data
     )
+    educationalTopicService.getAllEducationalTopics().subscribe(
+      (data) => this.educationalTopics = data
+    )
+    this.disease.educationalTopic = new EducationalTopic('');
     console.log(this.disease, "D");
   }
 
@@ -59,6 +66,8 @@ export class AddDiseaseModalComponent {
   }
 
   addDisease() {
+    console.log(this.disease, 'disease');
+    this.disease.retinalCondition = true;
     this.diseaseService.addDisease(this.disease).subscribe(() => {
         this.dialog.open(SuccessModalComponent, {data: `Diagnosticul a fost adaugat cu succes!`})
           .afterClosed().subscribe(() => window.location.reload())
@@ -66,7 +75,7 @@ export class AddDiseaseModalComponent {
       error => {
         console.log(error)
         this.dialog.open(ErrorModalComponent, {data: `A existat o problema la adaugarea diagnosticului!`})
-          .afterClosed().subscribe(() => window.location.reload())
+          // .afterClosed().subscribe(() => window.location.reload())
       });
   }
 }

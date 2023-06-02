@@ -1,19 +1,56 @@
 .canvas {
   /*min-width: 500px;*/
-  min-height: 300px;
+  min-height: 350px;
 }
 
 .canvas-pie {
-  min-width: 500px;
-  min-height: 150px;
+  min-width: 100px;
+  min-height: 100px;
 }
 
 .content {
   padding: 50px;
   text-align: center;
+  background-color: rgba(255,255,255,0.8);
+  height: 100%;
 }
 
 .div-charts {
-  float: left;
-  margin: 30px;
+  margin: 8px;
+}
+.div-charts-inline{
+  display: inline-block;
+}
+.canvas-line{
+  width: 92%;
+}
+canvas{
+  margin-left:50px;
+  margin-right: 50px;
+}
+.div-charts-line{
+  /*margin-right: -100px;*/
+  /*margin-left: 60px;*/
+  /*height: 450px;*/
+  width: 100%;
+}
+.div-charts-pie{
+  width: 500px;
+}
+.div-charts-barchart{
+  width: 100%;
+}
+.canvas-barchar{
+  width: 90%;
+  height: 10px;
+}
+.div-charts-base{
+  margin-left: 200px;
+}
+#hover-content {
+  position: fixed;
+  display:none;
+}
+#parent:hover #hover-content {
+  display:block;
 }

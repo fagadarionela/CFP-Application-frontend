@@ -9,9 +9,9 @@
 .insert-medical-case {
   padding: 50px;
   margin: 30px;
-  background-color: rgba(255, 255, 255, 0.75);
+  /*background-color: rgba(255, 255, 255, 0.75);*/
   border: 2px;
-  border-radius: 15px;
+  /*border-radius: 15px;*/
   position: relative;
 }
 
@@ -85,7 +85,6 @@ mat-datepicker-toggle {
   margin-bottom: -20px;
   height: 100%;
 }
-
 
 .small-input {
   width: 20% !important;

@@ -42,4 +42,10 @@ export class MedicalCaseFull {
   correctDiagnosis: string;
 
   saved: boolean;
+
+  grade: number;
+
+  allocationDate: Date;
+
+  beginDate: string;
 }

@@ -9,7 +9,7 @@ import {NavBarComponent} from "./nav-bar/nav-bar.component";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatMenuModule} from "@angular/material/menu";
-import {MatNativeDateModule} from "@angular/material/core";
+import {DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule} from "@angular/material/core";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatIconModule} from "@angular/material/icon";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
@@ -49,6 +49,21 @@ import {ChipsComponent} from './modals/add-disease-modal/chips/chips.component';
 import {ImageDrawingModule} from 'ngx-image-drawing';
 import {NgChartsModule} from 'ng2-charts';
 import {MedicalCasesChartComponent} from './medical-cases-chart/medical-cases-chart.component';
+import {TimerComponent} from './timer/timer.component';
+import {MyDateAdapter} from "./shared/my-date-adapter";
+
+let MY_DATE_FORMATS = {
+  parse: {
+    dateInput: {month: 'numeric', year: 'numeric', day: 'numeric'}
+  },
+  display: {
+    // dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
+    dateInput: 'input',
+    monthYearLabel: {year: 'numeric', month: 'numeric'},
+    dateA11yLabel: {year: 'numeric', month: 'numeric', day: 'numeric'},
+    monthYearA11yLabel: {year: 'numeric', month: 'numeric'},
+  }
+};
 
 @NgModule({
   declarations: [
@@ -71,7 +86,8 @@ import {MedicalCasesChartComponent} from './medical-cases-chart/medical-cases-ch
     AddAccountModalComponent,
     AddDiseaseModalComponent,
     ChipsComponent,
-    MedicalCasesChartComponent
+    MedicalCasesChartComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,
@@ -109,7 +125,10 @@ import {MedicalCasesChartComponent} from './medical-cases-chart/medical-cases-ch
     provide: HTTP_INTERCEPTORS,
     useClass: AuthenticationInterceptor,
     multi: true
-  },],
+  },
+    {provide: DateAdapter, useClass: MyDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS},
+  ],
   bootstrap: [AppComponent]
 })
 

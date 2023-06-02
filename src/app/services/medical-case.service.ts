@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {REQUEST_HEADERS, REQUEST_HEADERS_IMAGE, SERVER_URL} from '../utils/http-constants';
 import {MedicalCase} from "../models/medical-case";
 import {MedicalCaseCustomized} from "../models/medical-case-customized";
+import {MedicalCaseFull} from "../models/medical-case-full";
 
 @Injectable(
   {providedIn: 'root'}
@@ -46,7 +47,7 @@ export class MedicalCaseService {
     return this.http.get<any>(SERVER_URL + '/cases/assigned/all', REQUEST_HEADERS);
   }
 
-  public addMedicalCase(medicalCase: any): Observable<any> {
+  public addMedicalCase(medicalCase: any): Observable<MedicalCaseFull> {
     return this.http.post<any>(SERVER_URL + '/cases', medicalCase, REQUEST_HEADERS_IMAGE);
   }
 

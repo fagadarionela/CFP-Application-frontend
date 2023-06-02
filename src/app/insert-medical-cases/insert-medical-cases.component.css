@@ -37,6 +37,14 @@ button.add-case:enabled {
   margin-left: 20px;
 }
 
+button.auto-add-case {
+  width: 97%;
+  align-self: end;
+  height: 50px;
+  background-color: rgb(0, 138, 140) !important;
+  margin-left: 30px;
+}
+
 .upload-image {
   color: rgb(0, 138, 140) !important;
 }

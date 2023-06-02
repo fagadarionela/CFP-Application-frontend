@@ -1,4 +1,14 @@
-import {Component, Inject, LOCALE_ID, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  LOCALE_ID,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation
+} from '@angular/core';
 import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MedicalCaseService} from "../services/medical-case.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -23,6 +33,10 @@ import {Method} from "../models/method";
 import {ClinicalSign} from "../models/clinical-sign";
 import {ClinicalSignGrade} from "../models/clinical-sign-grade";
 import {EvaluationFileComponent} from "../evaluation-file/evaluation-file.component";
+import {Disease} from "../models/disease";
+import {MatDatepickerInputEvent} from "@angular/material/datepicker";
+import {TimerComponent} from "../timer/timer.component";
+import moment from "moment";
 
 @Component({
   selector: 'app-medical-cases',
@@ -30,13 +44,13 @@ import {EvaluationFileComponent} from "../evaluation-file/evaluation-file.compon
   styleUrls: ['./medical-cases.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class MedicalCasesComponent implements OnInit {
+export class MedicalCasesComponent implements OnInit, AfterViewInit {
 
   medicalCases: MedicalCaseFull[] = [];
 
   role: string = '';
 
-  diseases: string[] = [];
+  diseases: Disease[] = [];
 
   public pageSize = 10;
   public currentPage = 0;
@@ -50,19 +64,16 @@ export class MedicalCasesComponent implements OnInit {
 
   public searchedEncodedInfo = "$2a";
 
+  @ViewChildren('timerComponent') timerComponents:QueryList<TimerComponent>;
+
   @ViewChild(EvaluationFileComponent) evaluationFileComponent: EvaluationFileComponent;
 
-  constructor(private medicalCaseService: MedicalCaseService, private _adapter: DateAdapter<any>,
-              @Inject(MAT_DATE_LOCALE) private _locale: string, private dialog: MatDialog, private router: Router,
+  constructor(private medicalCaseService: MedicalCaseService, private dialog: MatDialog, private router: Router,
               @Inject(LOCALE_ID) public locale: string, private diseasesService: DiseaseService) {
     this.role = sessionStorage.getItem('role')!;
-    this._locale = 'ro';
-    this._adapter.setLocale(this._locale);
   }
 
   ngOnInit(): void {
-    this._locale = 'ro';
-    this._adapter.setLocale(this._locale);
     this.role = sessionStorage.getItem('role')!;
     this.searchedFirstName = "";
     this.searchedLastName = "";
@@ -74,10 +85,16 @@ export class MedicalCasesComponent implements OnInit {
     if (this.role === 'RESIDENT' || this.role === 'EXPERT') {
       console.log('aici2')
       this.diseasesService.getAllDiseases().subscribe(data => {
-        this.diseases = data.sort((a, b) => (a.charAt(0) < b.charAt(0) ? -1 : 1))
-        console.log(data);
+        console.log(data, 'a')
+        this.diseases = data.sort((a, b) => (a.name.charAt(0) < b.name.charAt(0) ? -1 : 1))
+        console.log(data, 'MEDICAL CASE');
       });
     }
+  }
+
+  ngAfterViewInit(){
+    // print array of CustomComponent objects
+    console.log(this.timerComponents);
   }
 
   updateMedicalCase(medicalCase: MedicalCaseFull): void {
@@ -86,7 +103,7 @@ export class MedicalCasesComponent implements OnInit {
       (res) => {
         console.log(res);
         this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost salvat cu succes!`})
-          .afterClosed().subscribe(() => this.dialog.closeAll());
+          .afterClosed().subscribe(() => window.location.reload());
       },
       (error) => {
         console.log(error);
@@ -103,6 +120,13 @@ export class MedicalCasesComponent implements OnInit {
     }
     this.updateMedicalCase(medicalCase);
     window.location.reload();
+  }
+
+  markAllAsCorrect(medicalCase: MedicalCaseFull): void {
+    medicalCase.clinicalSignGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
+    medicalCase.differentialDiagnosisGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
+    medicalCase.therapeuticPlanGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
+    medicalCase.score = medicalCase.clinicalSignGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.therapeuticPlanGrades.length;
   }
 
   openImage(medicalCase: MedicalCaseFull) {
@@ -143,6 +167,7 @@ export class MedicalCasesComponent implements OnInit {
             const {content, totalElements} = response;
             this.totalSize = totalElements;
             this.medicalCases = content;
+            console.log(content)
           }
         },
         error => {
@@ -155,6 +180,10 @@ export class MedicalCasesComponent implements OnInit {
   }
 
   searchMedicalCases() {
+    console.log(this.searchedFirstName);
+    console.log(this.searchedLastName);
+    console.log(this.searchedBirthDate);
+
     this.searchedEncodedInfo = bcrypt.hashSync(this.searchedFirstName + this.searchedLastName + this.searchedBirthDate, SALT);
     if (this.searchedLastName === '' || this.searchedFirstName === '' || this.searchedBirthDate === '') {
       this.searchedEncodedInfo = "$2a"
@@ -201,6 +230,39 @@ export class MedicalCasesComponent implements OnInit {
       this.evaluationFileComponent.correctDiagnosis = false;
       this.evaluationFileComponent.initFields();
       medicalCase.score = 0;
+    }
+  }
+
+  openMedicalCase(mep: any, position: number, medicalCase: MedicalCaseFull){
+    let timerComponent = this.timerComponents.get(position);
+
+    if (timerComponent?.isRunning == false){
+      medicalCase.beginDate = new Date().toISOString();
+      this.medicalCaseService.updateMedicalCase(medicalCase).subscribe(
+        (res) => {
+          console.log(res);
+          timerComponent?.startTimer();
+        },
+        (error) => {
+          console.log(error);
+        });
+    }
+    mep.expanded = !mep.expanded;
+    console.log(timerComponent?.isRunning, position)
+  }
+
+  getRemainingTime(beginDate: string) {
+    if (beginDate == null) {
+      return -1;
+    }
+    let begin = new Date().getTime();// - 60*60*3*
+    let end = moment.utc(beginDate).toDate().getTime(); //+ 60*60*3 * 1000;
+
+    let timePassed = begin - end;
+    if (timePassed > 420000) {
+      return 0;
+    } else {
+      return Math.floor((420000 - timePassed) / 1000);
     }
   }
 }

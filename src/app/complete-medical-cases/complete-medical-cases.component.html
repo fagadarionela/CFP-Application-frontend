@@ -30,7 +30,7 @@
         <mat-label class="black">Diagnostic expert</mat-label>
         <input matInput [(ngModel)]="medicalCase.correctDiagnosis" disabled class="black">
       </mat-form-field>
-     </div>
+    </div>
 
     <div class="cfp-image">
       <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="preview" width="100%" height="100%"
@@ -38,7 +38,8 @@
     </div>
     <p class="to-left">
       Dificultate: {{medicalCase.difficultyScore}}
-      &nbsp;&nbsp;&nbsp;&nbsp;Scor: {{medicalCase.completedByExpert ? medicalCase.score : "Neevaluat"}}
+      &nbsp;&nbsp;&nbsp;&nbsp;Scor: {{medicalCase.completedByExpert ? medicalCase.score + " din " : "Neevaluat"}} {{medicalCase.completedByExpert ? medicalCase.therapeuticPlanGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.clinicalSignGrades.length : ""}}
+      &nbsp;&nbsp;&nbsp;&nbsp;Nota: {{medicalCase.completedByExpert ? medicalCase.grade : "Neevaluat"}}
     </p>
     <button mat-flat-button color="primary" (click)="openEvaluationFile(medicalCase)"
             [disabled]="medicalCase.score === -1 || !medicalCase.completedByExpert"

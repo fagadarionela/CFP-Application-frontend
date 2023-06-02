@@ -90,6 +90,11 @@ button.close-button:disabled {
   width: 100%;
 }
 
+.input-half {
+  width: 49%;
+  margin:5px;
+}
+
 .example-button-container {
   /*display: flex;*/
   justify-content: center;

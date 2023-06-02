@@ -63,7 +63,7 @@ export class ImageModalComponent implements OnInit {
       (res) => {
         console.log(res);
         this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost actualizat cu succes!`})
-          .afterClosed().subscribe(() => this.dialog.closeAll());
+          .afterClosed().subscribe(() => window.location.reload());
       },
       (error) => {
         console.log(error);

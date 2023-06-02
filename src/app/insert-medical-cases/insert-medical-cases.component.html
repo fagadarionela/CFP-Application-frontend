@@ -1,5 +1,11 @@
 <div class="content">
-  <br><br><br><br><br>
+  <br><br><br><br><br><br>
+  <button mat-flat-button color="primary" (click)="automaticallyAddMedicalCases()" class="auto-add-case" *ngIf="!started">
+    Porneste modul automat de adaugare a cazurilor medicale
+  </button>
+  <button mat-flat-button color="primary" (click)="stopAutomaticallyAddMedicalCases()" class="auto-add-case" *ngIf="started">
+    Opreste modul automat de adaugare a cazurilor medicale
+  </button>
   <mat-card *ngIf="role==='OPERATOR'" class="insert-medical-case">
     <!--    <div class="input">-->
     <br>
@@ -15,8 +21,8 @@
       </mat-form-field>
       <mat-form-field class="small-input" appearance="fill">
         <mat-label>Data nasterii</mat-label>
-        <input matInput [matDatepicker]="dp" [formControl]="birthDate">
-        <mat-hint>DD.MM.YYY</mat-hint>
+        <input matInput [matDatepicker]="dp" [formControl]="birthDate" [max]="today">
+        <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="dp" style="padding-right: 10px;"></mat-datepicker-toggle>
         <mat-datepicker #dp></mat-datepicker>
       </mat-form-field>
@@ -42,7 +48,7 @@
         <mat-select-trigger>
           {{presumptiveDiagnosis.value}}
         </mat-select-trigger>
-        <mat-option *ngFor="let disease of diseases" [value]="disease">{{disease}}</mat-option>
+        <mat-option *ngFor="let disease of diseases" [value]="disease.name">{{disease.name}}</mat-option>
       </mat-select>
     </mat-form-field>
     <br>

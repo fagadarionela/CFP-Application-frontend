@@ -3,11 +3,26 @@
     <div mat-dialog-title class="title-content"> Adauga Diagnostic</div>
   </div>
   <br>
-  <div class="content" *ngIf="clinicalSigns && signs && methods">
-    <mat-form-field class="input-full" appearance="fill">
+  <div class="content" *ngIf="clinicalSigns && signs && methods && educationalTopics">
+    <mat-form-field class="input-half" appearance="fill">
       <mat-label>Nume</mat-label>
       <input class="input" matInput [(ngModel)]="disease.name">
     </mat-form-field>
+
+    <mat-form-field appearance="fill" class="input-half">
+      <mat-label>Topic educational</mat-label>
+      <mat-select [(ngModel)]="disease.educationalTopic">
+        <mat-select-trigger>
+          {{disease.educationalTopic.name}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let educationalTopic of educationalTopics" [value]="educationalTopic">{{educationalTopic.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+<!--    <mat-form-field class="input-half" appearance="fill">-->
+<!--      <mat-label>Topic educational</mat-label>-->
+<!--      <input class="input" matInput [(ngModel)]="disease.educationalTopic">-->
+<!--    </mat-form-field>-->
     <br>
     <div class="example-button-row">
       <div class="example-flex-container">

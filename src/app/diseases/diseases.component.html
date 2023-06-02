@@ -47,16 +47,18 @@
         <div class="example-element-detail"
              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
           <table>
-            <td></td>
+            <td class="td-padding"><b>Topic educational:</b>
+              {{element.educationalTopic.name}}
+            </td>
             <td class="td-padding">
-              <b>Semne clinice generale :</b>
+              <b>Semne clinice generale: </b>
               <ul class="two-columns">
                 <li *ngFor="let sign of element.clinicalSigns"> {{sign}}</li>
               </ul>
             </td>
             <td>
               <div *ngFor="let differentialDiagnosis of element.differentialDiagnosis" class="td-padding">
-                <b>{{differentialDiagnosis.name}} :</b>
+                <b>{{differentialDiagnosis.name}}: </b>
                 <ul class="two-columns">
                   <li *ngFor="let sign of differentialDiagnosis.signs"> {{sign}}</li>
                 </ul>
@@ -64,11 +66,14 @@
             </td>
             <td>
               <div *ngFor="let therapeuticPlan of element.therapeuticPlans" class="td-padding">
-                <b>{{therapeuticPlan.name}} :</b>
+                <b>{{therapeuticPlan.name}}: </b>
                 <ul class="two-columns">
                   <li *ngFor="let method of therapeuticPlan.methods"> {{method}}</li>
                 </ul>
               </div>
+            </td>
+            <td>
+              <mat-icon class="link2">delete</mat-icon>
             </td>
           </table>
 

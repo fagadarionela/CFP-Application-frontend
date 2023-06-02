@@ -85,7 +85,11 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .td-padding {
-  padding: 5px;
+  padding-left: 15px;
+}
+.link2 {
+  padding-left: 15px;
+  color: white;
 }
 
 .mat-column-star {

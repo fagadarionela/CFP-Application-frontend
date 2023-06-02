@@ -15,8 +15,8 @@ export class DiseaseService {
     return this.http.post<any>(SERVER_URL + '/disease', disease, REQUEST_HEADERS);
   }
 
-  public getAllDiseases(): Observable<string[]> {
-    return this.http.get<string[]>(SERVER_URL + '/disease', REQUEST_HEADERS);
+  public getAllDiseases(): Observable<Disease[]> {
+    return this.http.get<Disease[]>(SERVER_URL + '/disease', REQUEST_HEADERS);
   }
 
   public getDiseaseByName(name: string): Observable<Disease> {
