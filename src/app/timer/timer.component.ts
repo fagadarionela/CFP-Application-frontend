@@ -17,7 +17,6 @@ export class TimerComponent implements AfterViewInit {
   @Output() finishEvaluation = new EventEmitter<void>();
 
   ngAfterViewInit(): void {
-    console.log(this.time, 'timeeeeeeeeeeeeeee');
     // console.log(new Date().getTime());
     // // console.log(this.beginDate);
     // // console.log(this.beginDate.getTime(), 'begindate');
@@ -35,8 +34,15 @@ export class TimerComponent implements AfterViewInit {
     //   this.time = 420;
     // }
     // console.log(new Date().getMilliseconds()-this.beginDate.getMilliseconds(),'date');
+
+    if (this.time == 0) {
+      console.log('end');
+      //update medicalCase
+      this.isRunning = false;
+      this.finishEvaluation.next();
+    }
     this.isRunning = false;
-    this.display = this.transform(this.time)
+    this.display = this.transform(this.time);
     if (this.time > 0) {
       this.startTimer();
     }
@@ -46,16 +52,16 @@ export class TimerComponent implements AfterViewInit {
     // console.log(this.beginDate);
     this.isRunning = true;
     this.interval = setInterval(() => {
-      console.log(this.time);
       if (this.time === -1) {
         this.time = 420;
       }
 
-      if (this.time <= 0) {
+      if (this.time <= 0 && this.isRunning) {
         console.log('end');
         //update medicalCase
+        this.isRunning = false;
         this.finishEvaluation.next();
-      } else {
+      } else if (this.isRunning) {
         this.time--;
         this.display = this.transform(this.time)
       }
@@ -65,7 +71,7 @@ export class TimerComponent implements AfterViewInit {
   transform(value: number): string {
     const minutes: number = Math.floor(value / 60);
     const seconds = value - minutes * 60;
-    if (minutes < 0 || seconds < 0){
+    if (minutes < 0 || seconds < 0) {
       return '06:59';
     }
     if (minutes < 10) {

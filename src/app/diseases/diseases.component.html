@@ -1,28 +1,28 @@
 <br><br><br><br><br><br>
 <mat-form-field class="input">
-  <mat-label>Filtru</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Exemplu: Diabetic Rethinopathy" #input>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Example: Diabetic Rethinopathy" #input>
 </mat-form-field>
 
-<button mat-flat-button color="primary" class="add-button" (click)="openDialog()"> Adauga diagnostic</button>
+<button mat-flat-button color="primary" class="add-button" (click)="openDialog()"> Add diagnosis</button>
 <div class="mat-elevation-z8 div-table">
   <table mat-table
          [dataSource]="dataSource" multiTemplateDataRows
          class="mat-elevation-z8">
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef><b>Denumire</b></th>
+      <th mat-header-cell *matHeaderCellDef><b>Name</b></th>
       <td mat-cell *matCellDef="let element"><b>{{element['name']}} </b></td>
     </ng-container>
     <ng-container matColumnDef="clinicalSigns">
-      <th mat-header-cell *matHeaderCellDef><b>Semne clinice</b></th>
+      <th mat-header-cell *matHeaderCellDef><b>Clinical signs</b></th>
       <td mat-cell *matCellDef="let element"></td>
     </ng-container>
     <ng-container matColumnDef="differentialDiagnosis">
-      <th mat-header-cell *matHeaderCellDef><b>Diagnostice diferentiale</b></th>
+      <th mat-header-cell *matHeaderCellDef><b>Differential diagnosis</b></th>
       <td mat-cell *matCellDef="let element"></td>
     </ng-container>
     <ng-container matColumnDef="therapeuticPlan">
-      <th mat-header-cell *matHeaderCellDef><b>Planuri terapeutice</b></th>
+      <th mat-header-cell *matHeaderCellDef><b>Therapeutic plans</b></th>
       <td mat-cell *matCellDef="let element"></td>
     </ng-container>
     <ng-container matColumnDef="star" stickyEnd>
@@ -47,11 +47,11 @@
         <div class="example-element-detail"
              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
           <table>
-            <td class="td-padding"><b>Topic educational:</b>
+            <td class="td-padding"><b>Educational topic:</b>
               {{element.educationalTopic.name}}
             </td>
             <td class="td-padding">
-              <b>Semne clinice generale: </b>
+              <b>General clinical signs: </b>
               <ul class="two-columns">
                 <li *ngFor="let sign of element.clinicalSigns"> {{sign}}</li>
               </ul>

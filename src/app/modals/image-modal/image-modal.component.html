@@ -1,7 +1,8 @@
-<div class="modal">
-  <img [src]="image" *ngIf="role === 'RESIDENT' && medicalCase.completedByExpert">
-  <image-drawing *ngIf="role != 'RESIDENT' || !medicalCase.completedByExpert"
-                 [src]="image"
+<div class="modal" *ngIf="colors">
+<!--  <br>-->
+  <img [src]="resizedImage" *ngIf="role === 'RESIDENT' && medicalCase.completedByResident" width="900" height="900">
+  <image-drawing *ngIf="role != 'RESIDENT' || !medicalCase.completedByResident"
+                 [src]="resizedImage"
                  outputMimeType="'image/jpeg'"
                  [outputQuality]=outputQuality
                  (save)="save($event)"
@@ -9,4 +10,5 @@
                  [colors]="colors"
                  [drawingSizes]="drawingSizes">
   </image-drawing>
+  <p style="padding: 10px; text-align: center; font-size: 12px;" *ngIf="role != 'RESIDENT' || !medicalCase.completedByResident">{{message}}</p>
 </div>

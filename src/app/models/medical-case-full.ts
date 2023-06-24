@@ -13,13 +13,15 @@ export class MedicalCaseFull {
 
   additionalInformation: string;
 
+  feedback: string;
+
   insertDate: Date;
 
   difficultyScore: number;
 
   cfpimage: File;
 
-  cfpimageCustomized: File;
+  cfpimageCustomized: any;
 
   presumptiveDiagnosis: string;
 

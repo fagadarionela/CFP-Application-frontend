@@ -9,7 +9,7 @@
         </button>
       </mat-chip-row>
     </mat-chip-grid>
-    <input placeholder="Adauga un nou element..." #elementInput [formControl]="elementsControl"
+    <input placeholder="Add a new element..." #elementInput [formControl]="elementsControl"
            [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
            (matChipInputTokenEnd)="add($event)"/>

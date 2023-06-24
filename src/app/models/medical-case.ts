@@ -6,6 +6,8 @@ export class MedicalCase {
 
   additionalInformation: string;
 
+  feedback: string;
+
   insertDate: Date;
 
   beginDate: string;

@@ -45,7 +45,7 @@ export class CompleteMedicalCasesComponent implements OnInit {
   handlePage(page: number, size: number, searchedDiagnostic: string) {
     this.medicalCaseService.getAllAssignedComplete(page, size, searchedDiagnostic).subscribe(
       response => {
-        console.log(response);
+        console.log(response, 'medicalCases');
         if (response.error) {
           console.log(response.error);
         } else {

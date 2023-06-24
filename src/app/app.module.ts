@@ -118,7 +118,7 @@ let MY_DATE_FORMATS = {
     MatTableModule,
     MatSortModule,
     ImageDrawingModule,
-    NgChartsModule
+    NgChartsModule//.forRoot({generateColors:false})
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{
@@ -129,7 +129,8 @@ let MY_DATE_FORMATS = {
     {provide: DateAdapter, useClass: MyDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS},
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ImageModalComponent]
 })
 
 export class AppModule {

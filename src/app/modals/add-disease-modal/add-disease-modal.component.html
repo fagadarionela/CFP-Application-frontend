@@ -1,16 +1,16 @@
 <div class="modal">
   <div class="title">
-    <div mat-dialog-title class="title-content"> Adauga Diagnostic</div>
+    <div mat-dialog-title class="title-content"> Add diagnosis</div>
   </div>
   <br>
   <div class="content" *ngIf="clinicalSigns && signs && methods && educationalTopics">
     <mat-form-field class="input-half" appearance="fill">
-      <mat-label>Nume</mat-label>
+      <mat-label>Name</mat-label>
       <input class="input" matInput [(ngModel)]="disease.name">
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="input-half">
-      <mat-label>Topic educational</mat-label>
+      <mat-label>Educational topic</mat-label>
       <mat-select [(ngModel)]="disease.educationalTopic">
         <mat-select-trigger>
           {{disease.educationalTopic.name}}
@@ -27,7 +27,7 @@
     <div class="example-button-row">
       <div class="example-flex-container">
         <div class="example-button-container border">
-          Semne clinice
+          Clinical signs
           <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon"
                   class="add-button-clinical-sign"
                   (click)="addClinicalSign()" [disabled]="clinicalSignVisible">
@@ -38,14 +38,14 @@
     </div>
     <div *ngIf="clinicalSignVisible">
       <app-chips class="input" [(list)]="disease.clinicalSigns" [allElements]="clinicalSigns"
-                 [title]="'Adauga semne clinice'"></app-chips>
+                 [title]="'Add clinical sign'"></app-chips>
     </div>
     <div *ngIf="!clinicalSignVisible">
     </div>
     <div class="example-button-row">
       <div class="example-flex-container">
         <div class="example-button-container">
-          Diagnostic diferential
+          Differential diagnosis
           <button mat-mini-fab color="primary" class="add-button"
                   (click)="addDifferentialDiagnosisAndTherapeuticPlan()">
             +
@@ -55,12 +55,12 @@
     </div>
     <div *ngFor="let differetialDiagnostic of disease.differentialDiagnosis; let i = index">
       <mat-form-field class="input-full" appearance="fill">
-        <mat-label>Nume diagnostic diferential</mat-label>
+        <mat-label>Differential diagnostic name</mat-label>
         <input matInput [(ngModel)]="differetialDiagnostic.name"
                (input)="changeTherapeuticPlanName(i, differetialDiagnostic.name)">
       </mat-form-field>
       <app-chips class="input" [(list)]="differetialDiagnostic.signs" [allElements]="signs"
-                 [title]="'Adauga semn'"></app-chips>
+                 [title]="'Add sign'"></app-chips>
       <br>
     </div>
     <div *ngIf="disease.differentialDiagnosis.length === 0">
@@ -68,7 +68,7 @@
     <div class="example-button-row">
       <div class="example-flex-container">
         <div class="example-button-container border">
-          Plan terapeutic
+          Therapeutic plan
           <button mat-mini-fab color="primary" class="add-button"
                   (click)="addDifferentialDiagnosisAndTherapeuticPlan()">
             +
@@ -78,20 +78,20 @@
     </div>
     <div *ngFor="let therapeuticPlan of disease.therapeuticPlans;let i=index">
       <mat-form-field class="input-full" appearance="fill">
-        <mat-label>Nume plan terapeutic</mat-label>
+        <mat-label>Therapeutic plan name</mat-label>
         <input matInput [(ngModel)]="therapeuticPlan.name"
                (input)="changeDifferentialDiagnosisName(i, therapeuticPlan.name)">
       </mat-form-field>
       <app-chips class="input" [(list)]="therapeuticPlan.methods" [allElements]="methods"
-                 [title]="'Adauga metoda'"></app-chips>
+                 [title]="'Add method'"></app-chips>
       <br>
     </div>
     <br>
     <div mat-dialog-actions align="center">
       <button class="close-button" mat-flat-button color="primary" mat-dialog-close (click)="addDisease()"
-              [disabled]="disease.name === '' || disease.name === undefined">Adauga
+              [disabled]="disease.name === '' || disease.name === undefined">Add
       </button>
-      <button class="close-button" mat-flat-button color="primary" mat-dialog-close>Inchide</button>
+      <button class="close-button" mat-flat-button color="primary" mat-dialog-close>Close</button>
     </div>
   </div>
 </div>

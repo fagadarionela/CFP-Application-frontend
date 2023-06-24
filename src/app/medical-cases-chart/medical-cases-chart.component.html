@@ -3,7 +3,7 @@
   <br><br><br><br><br>
   <div class="div-charts div-charts-pie div-charts-inline"
        *ngIf="pieChartData.labels!.length > 0 && pieChartData.datasets[0].data.length > 0">
-    <h1>Numar cazuri medicale per diagnostic</h1>
+    <h1>Number of medical cases per diagnosis</h1>
     <canvas baseChart class="canvas-pie" height="400" width="500"
             [data]="pieChartData"
             [type]="'pie'"
@@ -12,7 +12,7 @@
   </div>
   <div class="div-charts div-charts-base div-charts-inline"
        *ngIf="barChartDataCompleteIncomplete.labels!.length > 0 && barChartDataCompleteIncomplete.datasets[0].data.length > 0">
-    <h1>Statusul cazurilor medicale</h1>
+    <h1>Status of medical cases</h1>
     <canvas baseChart class="canvas"
             [data]="barChartDataCompleteIncomplete"
             [options]="barChartOptions"
@@ -22,7 +22,7 @@
   <br>
   <br>
   <div class="div-charts div-charts-barchart" *ngIf="barChartDataDiagnostics.labels!.length > 0" >
-    <h1>Cazuri corecte/incorecte in functie de diagnostic</h1>
+    <h1>Correct/incorrect cases depending on the diagnosis</h1>
     <canvas baseChart class="canvas canvas-barchar" height="400"
             [data]="barChartDataDiagnostics"
             [options]="barChartOptions"
@@ -32,7 +32,7 @@
   <br><br><br><br>
   <div class="div-charts div-charts-line"
        *ngIf="chartData.length > 0">
-    <h1>Progresul rezidentului</h1>
+    <h1>Resident's progress in the current year according to diagnoses</h1>
     <canvas baseChart class="canvas-line" height="400"
             [type]="'line'"
             [legend]="true"
@@ -40,7 +40,23 @@
             [labels]="chartLabels"
             [options]="lineChartOptions"
     >
+    </canvas><br><br><br><br>
+<!--  <div class="div-charts div-charts-line"-->
+<!--       *ngIf="chartData.length > 0">-->
+<!--    <h1>Progresul rezidentului in anul curent in functie de diagnostice</h1>-->
+<!--    <canvas baseChart class="canvas-line" height="400"-->
+<!--            [type]="'line'"-->
+<!--            [legend]="true"-->
+<!--            [datasets]="chartData"-->
+<!--            [labels]="chartLabels"-->
+<!--            [options]="lineChartOptions"-->
+<!--    >-->
+<!--    </canvas>-->
+<!--  </div>-->
+    <br><br><br><br>
+  <div class="div-charts div-charts-line" *ngIf="chartDataStacked.length > 0">
+    <h1>Resident's progress in the last 30 days</h1>
+    <canvas baseChart class="canvas-line" height="400" [type]="'bar'" [datasets]="chartDataStacked" [labels]="chartLabelsStaked" [legend]="true">
     </canvas>
-
   </div>
 </div>

@@ -3,15 +3,15 @@
   <br><br><br><br><br>
   <div class="filters">
     <mat-form-field class="small-input" appearance="fill">
-      <mat-label>Nume</mat-label>
+      <mat-label>Last name</mat-label>
       <input matInput [(ngModel)]="searchedLastName">
     </mat-form-field>
     <mat-form-field class="small-input" appearance="fill">
-      <mat-label>Prenume</mat-label>
+      <mat-label>First name</mat-label>
       <input matInput [(ngModel)]="searchedFirstName">
     </mat-form-field>
     <mat-form-field class="small-input" appearance="fill">
-      <mat-label>Data nasterii</mat-label>
+      <mat-label>Birthdate</mat-label>
       <input matInput [matDatepicker]="dp" [(ngModel)]="searchedBirthDate">
       <mat-datepicker-toggle matIconSuffix [for]="dp" style="padding-right: 10px;"></mat-datepicker-toggle>
       <mat-datepicker #dp></mat-datepicker>
@@ -19,7 +19,7 @@
     <button mat-flat-button color="primary" (click)="searchMedicalCases()"
             [disabled]="searchedLastName === '' || searchedFirstName === '' || searchedBirthDate === ''"
             class="search-case">
-      Cauta caz medical
+      Search medical case
     </button>
   </div>
   <div style="padding:30px">
@@ -31,7 +31,7 @@
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
         <mat-panel-title>
-          <h1><b>Caz medical {{i + 1}} - {{formatDate(medicalCase.insertDate)}}</b></h1>
+          <h1><b>Medical case no {{i + 1}} - {{formatDate(medicalCase.insertDate)}}</b></h1>
         </mat-panel-title>
         <mat-panel-description style="color: black">
           <p><b>
@@ -40,7 +40,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Dificultate: {{medicalCase.difficultyScore}}
+            Difficulty: {{medicalCase.difficultyScore}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <app-timer [time]="getRemainingTime(medicalCase.beginDate)" (finishEvaluation)="moveToCompleted(medicalCase)" style="display: inline" #timerComponent *ngIf="role==='RESIDENT'"></app-timer>
 
@@ -69,14 +69,20 @@
           <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="cfp-image" height="420px" width="420px"
                alt="Imagine CFP" (click)="openImage(medicalCase)">
           <mat-form-field appearance="fill" class="additional-info">
-            <mat-label>Informatii aditionale</mat-label>
+            <mat-label>Additional information</mat-label>
             <textarea matInput [(ngModel)]="medicalCase.additionalInformation"
-                      rows="{{medicalCase.residentDiagnosis?14:10}}"></textarea>
+                      rows="{{medicalCase.completedByResident?4:8}}"
+                    [disabled]="medicalCase.completedByResident"></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="additional-info" *ngIf="role==='EXPERT'">
+            <mat-label>Feedback</mat-label>
+            <textarea matInput [(ngModel)]="medicalCase.feedback"
+                      rows="{{medicalCase.completedByResident?4:7}}"></textarea>
           </mat-form-field>
         </div>
 
         <mat-form-field appearance="fill" class="input" *ngIf="role==='RESIDENT'">
-          <mat-label>Diagnostic rezident</mat-label>
+          <mat-label>Resident diagnosis</mat-label>
           <mat-select [(ngModel)]="medicalCase.residentDiagnosis" (ngModelChange)="getDiseaseByName(medicalCase)"
                       [disabled]="medicalCase.residentDiagnosis != null && medicalCase.saved">
             <mat-select-trigger>
@@ -86,16 +92,16 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field class="half-input" appearance="fill" *ngIf="role==='EXPERT'">
-          <mat-label class="black">Diagnostic rezident</mat-label>
+          <mat-label class="black">Resident diagnosis</mat-label>
           <input matInput [(ngModel)]="medicalCase.residentDiagnosis" disabled class="black">
         </mat-form-field>
         <mat-form-field class="half-input" appearance="fill" *ngIf="role==='EXPERT'">
-          <mat-label class="black">Diagnostic prezis</mat-label>
+          <mat-label class="black">Predicted diagnosis</mat-label>
           <input matInput [(ngModel)]="medicalCase.presumptiveDiagnosis" disabled class="black">
         </mat-form-field>
         <mat-form-field appearance="fill" class="input" *ngIf="role==='EXPERT'">
-          <mat-label>Diagnostic corect</mat-label>
-          <mat-select [(ngModel)]="medicalCase.correctDiagnosis" (ngModelChange)="checkCorrectDiagnosis(medicalCase)"
+          <mat-label>Correct diagnosis</mat-label>
+          <mat-select [(ngModel)]="medicalCase.correctDiagnosis" (ngModelChange)="checkCorrectDiagnosis(medicalCase, i)"
                       [disabled]="role!='EXPERT'">
             <mat-select-trigger>
               {{medicalCase.correctDiagnosis}}
@@ -115,8 +121,7 @@
       <br>
       <div class="align">
         <button class="link to-left" (click)="showOtherCases(medicalCase.encodedInfo)" style="align-self: start; ">
-          Vizualizeaza
-          cazuri medicale anterioare ale acestui pacient
+          View previous medical cases of this pacient
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -132,25 +137,25 @@
           <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'RESIDENT'"
                   [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
                   class="add-case">
-            Salveaza caz medical
+            Save medical case
           </button>
           <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'RESIDENT'"
                   [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
                   class="add-case">
-            Finalizeaza caz
+            Finish medical case
           </button>
           <button mat-flat-button color="primary" (click)="markAllAsCorrect(medicalCase)"
                   *ngIf="role === 'EXPERT' && medicalCase.correctDiagnosis === medicalCase.residentDiagnosis"
                   class="add-case">
-            Marcheaza totul ca si corect
+            Mark all as correct
           </button>
           <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'EXPERT'"
                   class="add-case">
-            Salveaza evaluare
+            Save evaluation
           </button>
           <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'EXPERT'"
                   class="add-case">
-            Finalizeaza evaluare
+            Finish evaluation
           </button>
         </div>
 

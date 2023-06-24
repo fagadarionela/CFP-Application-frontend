@@ -49,7 +49,7 @@
   border-right: solid black;
   width: 98%;
   padding-left: 15px;
-  min-height: 250px;
+  /*min-height: 250px;*/
 }
 
 .two-columns-correct-wrong {
@@ -62,7 +62,7 @@
 }
 
 .two-columns-first {
-  min-height: 100px;
+  /*min-height: 100px;*/
 }
 
 .one-row {
@@ -75,12 +75,13 @@
   border-right: solid black;
   width: 98%;
   padding-left: 15px;
-  min-height: 150px;
+  /*min-height: 150px;*/
 }
 
 .mat-checkbox {
-  margin-top: -10px;
-  margin-bottom: -10px;
+  margin-top: -5px;
+  margin-bottom: -5px;
+  margin-left: -15px;
 }
 
 .mat-checkbox:disabled {

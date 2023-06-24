@@ -69,12 +69,12 @@ export class AddDiseaseModalComponent {
     console.log(this.disease, 'disease');
     this.disease.retinalCondition = true;
     this.diseaseService.addDisease(this.disease).subscribe(() => {
-        this.dialog.open(SuccessModalComponent, {data: `Diagnosticul a fost adaugat cu succes!`})
+        this.dialog.open(SuccessModalComponent, {data: `The diagnosis was successfully added!`})
           .afterClosed().subscribe(() => window.location.reload())
       },
       error => {
         console.log(error)
-        this.dialog.open(ErrorModalComponent, {data: `A existat o problema la adaugarea diagnosticului!`})
+        this.dialog.open(ErrorModalComponent, {data: `There was an error when adding the diagnosis!`})
           // .afterClosed().subscribe(() => window.location.reload())
       });
   }

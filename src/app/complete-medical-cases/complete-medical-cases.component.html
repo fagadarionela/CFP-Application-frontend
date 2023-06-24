@@ -2,33 +2,38 @@
   <br><br><br><br><br>
   <div class="filters">
     <mat-form-field class="small-input" appearance="fill">
-      <mat-label>Diagnostic</mat-label>
+      <mat-label>Diagnosis</mat-label>
       <input matInput [(ngModel)]="searchedDiagnostic">
     </mat-form-field>
 
     <button mat-flat-button color="primary" (click)="searchMedicalCases()"
             [disabled]="searchedDiagnostic === ''"
             class="search-case">
-      Cauta caz medical
+      Search medical case
     </button>
   </div>
   <mat-card *ngFor="let medicalCase of medicalCases; let i=index" class="insert-medical-case">
     <div class="align-left">
       <mat-form-field class="half-input" appearance="fill">
-        <mat-label class="black">Diagnostic rezident</mat-label>
+        <mat-label class="black">Resident diagnosis</mat-label>
         <input matInput [(ngModel)]="medicalCase.residentDiagnosis" disabled class="black">
       </mat-form-field>
       <mat-form-field class="half-input" appearance="fill">
-        <mat-label class="black">Diagnostic prezis</mat-label>
+        <mat-label class="black">Predicted diagnosis</mat-label>
         <input matInput [(ngModel)]="medicalCase.presumptiveDiagnosis" disabled class="black">
       </mat-form-field>
       <mat-form-field class="half-input" appearance="fill">
-        <mat-label class="black">Data adaugarii</mat-label>
+        <mat-label class="black">Insert date</mat-label>
         <input matInput [ngModel]="formatDate(medicalCase.insertDate)" disabled class="black">
       </mat-form-field>
       <mat-form-field class="half-input" appearance="fill">
-        <mat-label class="black">Diagnostic expert</mat-label>
+        <mat-label class="black">Expert diagnosis</mat-label>
         <input matInput [(ngModel)]="medicalCase.correctDiagnosis" disabled class="black">
+      </mat-form-field>
+      <mat-form-field class="input" appearance="fill">
+        <mat-label class="black">Feedback from expert</mat-label>
+        <textarea matInput [(ngModel)]="medicalCase.feedback" [rows]="1" disabled class="black"></textarea>
+<!--        <input matInput [(ngModel)]="medicalCase.feedback" disabled class="black">-->
       </mat-form-field>
     </div>
 
@@ -37,14 +42,15 @@
            alt="Imagine CFP" (click)="openImage(medicalCase)">
     </div>
     <p class="to-left">
-      Dificultate: {{medicalCase.difficultyScore}}
-      &nbsp;&nbsp;&nbsp;&nbsp;Scor: {{medicalCase.completedByExpert ? medicalCase.score + " din " : "Neevaluat"}} {{medicalCase.completedByExpert ? medicalCase.therapeuticPlanGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.clinicalSignGrades.length : ""}}
-      &nbsp;&nbsp;&nbsp;&nbsp;Nota: {{medicalCase.completedByExpert ? medicalCase.grade : "Neevaluat"}}
+      Difficulty: {{medicalCase.difficultyScore}}
+<!--      &nbsp;&nbsp;&nbsp;&nbsp;Score: {{medicalCase.completedByExpert ? medicalCase.score + " of " : "Not evaluated"}} {{medicalCase.completedByExpert ? medicalCase.therapeuticPlanGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.clinicalSignGrades.length : ""}} TODO-->
+      &nbsp;&nbsp;&nbsp;&nbsp;Score: {{medicalCase.completedByExpert ? medicalCase.score + " of " : "Not evaluated"}} {{medicalCase.completedByExpert ? medicalCase.clinicalSignGrades.length : ""}}
+      &nbsp;&nbsp;&nbsp;&nbsp;Grade: {{medicalCase.completedByExpert ? medicalCase.grade : "Not evaluated"}}
     </p>
     <button mat-flat-button color="primary" (click)="openEvaluationFile(medicalCase)"
             [disabled]="medicalCase.score === -1 || !medicalCase.completedByExpert"
             class="add-case">
-      Afiseaza fisa de evaluare
+      Show evaluation file
     </button>
   </mat-card>
   <br>

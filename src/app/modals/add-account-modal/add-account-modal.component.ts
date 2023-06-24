@@ -27,21 +27,21 @@ export class AddAccountModalComponent implements OnInit {
   addAccount() {
     if (this.account.role === 'RESIDENT') {
       this.residentService.addResident(new Resident(this.account)).subscribe(
-        () => this.dialog.open(SuccessModalComponent, {data: `Utilizatorul a fost adaugat cu succes!`})
+        () => this.dialog.open(SuccessModalComponent, {data: `The user was successfully added!`})
           .afterClosed().subscribe(() => window.location.reload()),
         (error) => {
           console.log(error);
-          this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la adaugarea utilizatorului!`})
+          this.dialog.open(ErrorModalComponent, {data: `There was an error when adding the user!`})
             .afterClosed().subscribe(() => window.location.reload())
         }
       );
     } else {
       this.userService.insertUser(this.account).subscribe(
-        () => this.dialog.open(SuccessModalComponent, {data: `Utilizatorul a fost adaugat cu succes!`})
+        () => this.dialog.open(SuccessModalComponent, {data: `The user was successfully added!`})
           .afterClosed().subscribe(() => window.location.reload()),
         (error) => {
           console.log(error);
-          this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la adaugarea utilizatorului!`})
+          this.dialog.open(ErrorModalComponent, {data: `There was an error when adding the user!`})
             .afterClosed().subscribe(() => window.location.reload())
         }
       )

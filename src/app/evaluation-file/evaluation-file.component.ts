@@ -18,13 +18,14 @@ export class EvaluationFileComponent {
 
   correctDiagnosis = false;
 
+  minHeight: string;
+
   constructor(@Inject(LOCALE_ID) public locale: string) {
   }
 
   ngOnInit() {
     this.role = sessionStorage.getItem('role')!;
     this.resident = sessionStorage.getItem('username')!;
-    console.log(this.medicalCase)
     this.medicalCase.clinicalSignGrades.sort((a, b) => (a.clinicalSign.name < b.clinicalSign.name ? -1 : 1));
     this.medicalCase.differentialDiagnosisGrades.sort((a, b) => (a.differentialDiagnosisSign.sign.name < b.differentialDiagnosisSign.sign.name ? -1 : 1)).sort((a, b) => (a.differentialDiagnosisSign.differentialDiagnosis.name < b.differentialDiagnosisSign.differentialDiagnosis.name ? -1 : 1));
 
@@ -32,7 +33,12 @@ export class EvaluationFileComponent {
       .sort((a, b) => (a.therapeuticPlanMethod.therapeuticPlan.name < b.therapeuticPlanMethod.therapeuticPlan.name ? -1 : 1));
     if (this.medicalCase.correctDiagnosis === this.medicalCase.residentDiagnosis) {
       this.correctDiagnosis = true;
-      console.log(this.medicalCase)
+    }
+    if (!this.medicalCase.completedByExpert){
+      this.minHeight = '600px';
+    }
+    else{
+      this.minHeight = '0px';
     }
   }
 

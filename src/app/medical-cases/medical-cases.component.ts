@@ -9,7 +9,6 @@ import {
   ViewChildren,
   ViewEncapsulation
 } from '@angular/core';
-import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MedicalCaseService} from "../services/medical-case.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ImageModalComponent} from "../modals/image-modal/image-modal.component";
@@ -34,7 +33,6 @@ import {ClinicalSign} from "../models/clinical-sign";
 import {ClinicalSignGrade} from "../models/clinical-sign-grade";
 import {EvaluationFileComponent} from "../evaluation-file/evaluation-file.component";
 import {Disease} from "../models/disease";
-import {MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {TimerComponent} from "../timer/timer.component";
 import moment from "moment";
 
@@ -44,7 +42,7 @@ import moment from "moment";
   styleUrls: ['./medical-cases.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class MedicalCasesComponent implements OnInit, AfterViewInit {
+export class MedicalCasesComponent implements OnInit {
 
   medicalCases: MedicalCaseFull[] = [];
 
@@ -64,9 +62,9 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
 
   public searchedEncodedInfo = "$2a";
 
-  @ViewChildren('timerComponent') timerComponents:QueryList<TimerComponent>;
+  @ViewChildren('timerComponent') timerComponents: QueryList<TimerComponent>;
 
-  @ViewChild(EvaluationFileComponent) evaluationFileComponent: EvaluationFileComponent;
+  @ViewChildren(EvaluationFileComponent) evaluationFileComponents: QueryList<EvaluationFileComponent>;
 
   constructor(private medicalCaseService: MedicalCaseService, private dialog: MatDialog, private router: Router,
               @Inject(LOCALE_ID) public locale: string, private diseasesService: DiseaseService) {
@@ -79,22 +77,13 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
     this.searchedLastName = "";
     this.searchedBirthDate = "";
     this.searchedEncodedInfo = "$2a";
-    console.log('aici')
 
     this.handlePage(this.currentPage, this.pageSize, this.searchedEncodedInfo);
     if (this.role === 'RESIDENT' || this.role === 'EXPERT') {
-      console.log('aici2')
       this.diseasesService.getAllDiseases().subscribe(data => {
-        console.log(data, 'a')
         this.diseases = data.sort((a, b) => (a.name.charAt(0) < b.name.charAt(0) ? -1 : 1))
-        console.log(data, 'MEDICAL CASE');
       });
     }
-  }
-
-  ngAfterViewInit(){
-    // print array of CustomComponent objects
-    console.log(this.timerComponents);
   }
 
   updateMedicalCase(medicalCase: MedicalCaseFull): void {
@@ -102,12 +91,12 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
     this.medicalCaseService.updateMedicalCase(medicalCase).subscribe(
       (res) => {
         console.log(res);
-        this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost salvat cu succes!`})
+        this.dialog.open(SuccessModalComponent, {data: `The medical case was saved!`})
           .afterClosed().subscribe(() => window.location.reload());
       },
       (error) => {
         console.log(error);
-        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la salvarea cazului medical!`})
+        this.dialog.open(ErrorModalComponent, {data: `There was a problem when saving the case!`})
           .afterClosed().subscribe(() => this.dialog.closeAll());
       });
   }
@@ -119,14 +108,15 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
       medicalCase.completedByExpert = true;
     }
     this.updateMedicalCase(medicalCase);
-    window.location.reload();
+    // window.location.reload();
   }
 
   markAllAsCorrect(medicalCase: MedicalCaseFull): void {
     medicalCase.clinicalSignGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
-    medicalCase.differentialDiagnosisGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
-    medicalCase.therapeuticPlanGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
-    medicalCase.score = medicalCase.clinicalSignGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.therapeuticPlanGrades.length;
+    // medicalCase.differentialDiagnosisGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true); TODO
+    // medicalCase.therapeuticPlanGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
+    // medicalCase.score = medicalCase.clinicalSignGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.therapeuticPlanGrades.length;
+    medicalCase.score = medicalCase.clinicalSignGrades.length;
   }
 
   openImage(medicalCase: MedicalCaseFull) {
@@ -144,7 +134,7 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
         response => {
           if (response.error) {
             console.log(response.error);
-            this.dialog.open(ErrorModalComponent, {data: `A existat o eroare!`});
+            this.dialog.open(ErrorModalComponent, {data: `There was an error!`});
           } else {
             const {content, totalElements} = response;
             this.totalSize = totalElements;
@@ -153,7 +143,7 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
         },
         error => {
           console.log(error);
-          this.dialog.open(ErrorModalComponent, {data: `A existat o eroare!`});
+          this.dialog.open(ErrorModalComponent, {data: `There was an error!`});
         }
       );
     }
@@ -162,7 +152,7 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
       this.medicalCaseService.getAllAssignedIncomplete(page, size, searchedEncodedInfo).subscribe(
         response => {
           if (response.error) {
-            this.dialog.open(ErrorModalComponent, {data: `A existat o eroare!`});
+            this.dialog.open(ErrorModalComponent, {data: `There was an error!`});
           } else {
             const {content, totalElements} = response;
             this.totalSize = totalElements;
@@ -172,7 +162,7 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
         },
         error => {
           console.log(error);
-          this.dialog.open(ErrorModalComponent, {data: `A existat o eroare!`});
+          this.dialog.open(ErrorModalComponent, {data: `There was an error!`});
         }
       );
     }
@@ -222,21 +212,22 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
       });
   }
 
-  checkCorrectDiagnosis(medicalCase: MedicalCaseFull) {
+  checkCorrectDiagnosis(medicalCase: MedicalCaseFull, position: number) {
+  let evaluationFile = this.evaluationFileComponents.get(position);
     if (medicalCase.residentDiagnosis === medicalCase.correctDiagnosis) {
-      this.evaluationFileComponent.correctDiagnosis = true;
+      evaluationFile ? evaluationFile.correctDiagnosis = true: undefined;
       medicalCase.score = 0;
     } else {
-      this.evaluationFileComponent.correctDiagnosis = false;
-      this.evaluationFileComponent.initFields();
+      evaluationFile ? evaluationFile.correctDiagnosis = false: undefined;
+      evaluationFile?.initFields();
       medicalCase.score = 0;
     }
   }
 
-  openMedicalCase(mep: any, position: number, medicalCase: MedicalCaseFull){
+  openMedicalCase(mep: any, position: number, medicalCase: MedicalCaseFull) {
     let timerComponent = this.timerComponents.get(position);
 
-    if (timerComponent?.isRunning == false){
+    if (timerComponent?.isRunning == false) {
       medicalCase.beginDate = new Date().toISOString();
       this.medicalCaseService.updateMedicalCase(medicalCase).subscribe(
         (res) => {
@@ -248,7 +239,6 @@ export class MedicalCasesComponent implements OnInit, AfterViewInit {
         });
     }
     mep.expanded = !mep.expanded;
-    console.log(timerComponent?.isRunning, position)
   }
 
   getRemainingTime(beginDate: string) {

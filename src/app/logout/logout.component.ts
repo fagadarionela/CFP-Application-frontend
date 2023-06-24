@@ -24,8 +24,8 @@ export class LogoutComponent implements OnInit {
     let succesMessage: string;
     let errorMessage: string;
 
-    succesMessage = `Te-ai delogat cu succes!`;
-    errorMessage = `Ceva a mers prost!`;
+    succesMessage = `You were successfully logged out!`;
+    errorMessage = `Something went wrong!`;
 
     this.userServive.logout().subscribe(() => {
         this.dialog.open(SuccessModalComponent, {data: succesMessage})

@@ -27,30 +27,30 @@
         account_circle
         </span></a>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item *ngIf="role === 'RESIDENT' && resident">Nota {{resident.grade}}</button>
-        <button mat-menu-item (click)="goTo('/logout')">Deconectare</button>
+        <button mat-menu-item *ngIf="role === 'RESIDENT' && resident">Grade {{resident.grade}}</button>
+        <button mat-menu-item (click)="goTo('/logout')">Logout</button>
       </mat-menu>
     </li>
     <li class="nav-bar-item" *ngIf="role=='OPERATOR'" id="elements">
-      <a href="medical-cases/insert">Inserare cazuri medicale</a>
+      <a href="medical-cases/insert">Insert medical cases</a>
     </li>
     <li class="nav-bar-item" *ngIf="role=='RESIDENT'" id="elements">
-      <a href="medical-cases/charts">Statistici cazuri medicale</a>
+      <a href="medical-cases/charts">Statistics</a>
     </li>
     <li class="nav-bar-item" *ngIf="role=='RESIDENT'" id="elements">
-      <a href="medical-cases/completed">Cazuri medicale completate</a>
+      <a href="medical-cases/completed">Complete medical cases</a>
     </li>
     <li class="nav-bar-item" *ngIf="role=='RESIDENT'" id="elements">
-      <a href="medical-cases/incomplete">Cazuri medicale necompletate</a>
+      <a href="medical-cases/incomplete">Incomplete medical cases</a>
     </li>
     <li class="nav-bar-item" *ngIf="role=='EXPERT'" id="elements">
-      <a href="medical-cases/incomplete">Cazuri medicale</a>
+      <a href="medical-cases/incomplete">Medical cases</a>
     </li>
     <li class="nav-bar-item" *ngIf="role=='ADMIN'" id="elements">
-      <a href="diseases">Diagnostice</a>
+      <a href="diseases">Diagnoses</a>
     </li>
     <li class="nav-bar-item" *ngIf="role=='ADMIN'" id="elements">
-      <a href="users">Utilizatori</a>
+      <a href="users">Users</a>
     </li>
   </ul>
 </div>

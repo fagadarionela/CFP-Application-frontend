@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('role', role);
       },
       (error: any) => {
-        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la logare!`});
+        this.dialog.open(ErrorModalComponent, {data: `There was an error when trying to login!`});
       });
 
   }

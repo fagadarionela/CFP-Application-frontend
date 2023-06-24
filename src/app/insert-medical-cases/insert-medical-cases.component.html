@@ -1,26 +1,26 @@
 <div class="content">
   <br><br><br><br><br><br>
   <button mat-flat-button color="primary" (click)="automaticallyAddMedicalCases()" class="auto-add-case" *ngIf="!started">
-    Porneste modul automat de adaugare a cazurilor medicale
+    Start automatic mode to add medical cases
   </button>
   <button mat-flat-button color="primary" (click)="stopAutomaticallyAddMedicalCases()" class="auto-add-case" *ngIf="started">
-    Opreste modul automat de adaugare a cazurilor medicale
+    Stop automatic mode to add medical cases
   </button>
   <mat-card *ngIf="role==='OPERATOR'" class="insert-medical-case">
     <!--    <div class="input">-->
     <br>
     <div class="align-left">
       <mat-form-field class="small-input" appearance="fill">
-        <mat-label>Nume</mat-label>
+        <mat-label>Last Name</mat-label>
         <input matInput [formControl]="lastName">
       </mat-form-field>
       <mat-form-field class="small-input" appearance="fill">
-        <mat-label>Prenume</mat-label>
+        <mat-label>First Name</mat-label>
         <input class="input" matInput [formControl]="firstName">
         <mat-error *ngIf="firstName.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       <mat-form-field class="small-input" appearance="fill">
-        <mat-label>Data nasterii</mat-label>
+        <mat-label>Birthdate</mat-label>
         <input matInput [matDatepicker]="dp" [formControl]="birthDate" [max]="today">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="dp" style="padding-right: 10px;"></mat-datepicker-toggle>
@@ -29,7 +29,7 @@
     </div>
     <br>
     <mat-form-field class="input">
-      <mat-label class="black">Selecteaza imagine</mat-label>
+      <mat-label class="black">Select image</mat-label>
       <input matInput (click)="fileInput.click()" disabled value="{{selectedFileName}}" class="black"/>
       <button mat-icon-button matSuffix (click)="fileInput.click()" style="margin-right: 10px">
         <mat-icon class="upload-image">add_photo_alternate</mat-icon>
@@ -38,12 +38,12 @@
     </mat-form-field>
     <br>
     <mat-radio-group aria-label="Modalitate de prezicere a diagnosticului" [(ngModel)]="presumptiveDiagnosisModality">
-      <mat-radio-button value="withModel">Implica diagnostic model Deeplearning</mat-radio-button>
-      <mat-radio-button value="withoutModel">Nu implica diagnostic model Deeplearning</mat-radio-button>
+      <mat-radio-button value="withModel">Use deeplearning model to predict diagnosis</mat-radio-button>
+      <mat-radio-button value="withoutModel">Do not use deeplearning model to predict diagnosis</mat-radio-button>
     </mat-radio-group>
     <br>
     <mat-form-field appearance="fill" class="input" *ngIf="presumptiveDiagnosisModality === 'withoutModel'">
-      <mat-label>Diagnostic</mat-label>
+      <mat-label>Diagnosis</mat-label>
       <mat-select [formControl]="presumptiveDiagnosis">
         <mat-select-trigger>
           {{presumptiveDiagnosis.value}}
@@ -53,13 +53,13 @@
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill" class="input">
-      <mat-label>Informatii aditionale</mat-label>
+      <mat-label>Additional information</mat-label>
       <textarea matInput [formControl]="additionalInformation" [rows]="getNumberOfRows(presumptiveDiagnosisModality)"></textarea>
     </mat-form-field>
     <br>
     <button mat-flat-button color="primary" (click)="addMedicalCase()" [disabled]="previewImage === ''"
             class="add-case">
-      Adauga caz medical
+      Add medical case
     </button>
     <div class="cfp-image">
       <img [src]="previewImage? previewImage: 'assets/icon.png' " class="preview" width="100%" height="100%"

@@ -56,11 +56,11 @@ export class AccountsComponent implements AfterViewInit {
   deleteUser(username: string) {
     console.log(username);
     this.userService.deleteUser(username).subscribe(
-      () => this.dialog.open(SuccessModalComponent, {data: `Utilizatorul a fost sters cu succes!`})
+      () => this.dialog.open(SuccessModalComponent, {data: `The user was successfully created!`})
         .afterClosed().subscribe(() => window.location.reload()),
       (error) => {
         console.log(error);
-        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la stergerea utilizatorului!`})
+        this.dialog.open(ErrorModalComponent, {data: `There was an error when creating the user!`})
           .afterClosed().subscribe(() => window.location.reload())
       }
     )

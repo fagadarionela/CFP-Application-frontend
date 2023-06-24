@@ -63,11 +63,11 @@ export class DiseasesComponent implements AfterViewInit{
   deleteDisease(username: string) {
     console.log(username);
     this.diseasesService.deleteDisease(username).subscribe(
-      () => this.dialog.open(SuccessModalComponent, {data: `Diagnosticul a fost sters cu succes!`})
+      () => this.dialog.open(SuccessModalComponent, {data: `The diagnosis was successfully deleted!`})
         .afterClosed().subscribe(() => window.location.reload()),
       (error) => {
         console.log(error);
-        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la stergerea diagnosticului!`})
+        this.dialog.open(ErrorModalComponent, {data: `There was an error when deleting the diagnosis!`})
           .afterClosed().subscribe(() => window.location.reload())
       }
     )

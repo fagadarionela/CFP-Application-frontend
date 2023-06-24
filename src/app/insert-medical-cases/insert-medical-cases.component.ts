@@ -98,13 +98,13 @@ export class InsertMedicalCasesComponent implements OnInit {
     this.medicalCaseService.addMedicalCase(uploadImageData).subscribe(
       (res) => {
         console.log(res);
-        this.dialog.open(SuccessModalComponent, {data: `Cazul medical a fost asignat rezidentului: ` + res.resident.account.username + `!`})
+        this.dialog.open(SuccessModalComponent, {data: `The medical case was assigned to: ` + res.resident.account.username + `!`})
           .afterClosed().subscribe(() => window.location.reload());
         this.resetFields();
       },
       (error) => {
         console.log(error);
-        this.dialog.open(ErrorModalComponent, {data: `A existat o eroare la inserarea cazului!`})
+        this.dialog.open(ErrorModalComponent, {data: `There was an error when adding the medical case!`})
           .afterClosed().subscribe(() => window.location.reload());
       });
   }
