@@ -12,7 +12,7 @@
   <p style="float: right" *ngIf="role==='EXPERT' || role==='RESIDENT'"> Date: {{currentDate}} </p>
   <p style="float: right" *ngIf="role==='EXPERT'"> Resident: {{medicalCase.resident.account.username}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 </div>
-<div [ngStyle]="(medicalCase.completedByExpert===false) ? {'min-height':'5'} : {'min-height':'100px'}">
+<div [ngStyle]="(medicalCase.completedByExpert===false) ? {'min-height':'500px'} : {'min-height':'100px'}">
 
   <div class="evaluation-file two-columns two-columns-correct-wrong"
        *ngIf="role=='EXPERT' || medicalCase.completedByResident">
