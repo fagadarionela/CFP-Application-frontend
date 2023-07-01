@@ -54,7 +54,7 @@ export class AccountsComponent implements AfterViewInit {
   }
 
   deleteUser(username: string) {
-    console.log(username);
+    //console.log(username);
     this.userService.deleteUser(username).subscribe(
       () => this.dialog.open(SuccessModalComponent, {data: `The user was successfully created!`})
         .afterClosed().subscribe(() => window.location.reload()),

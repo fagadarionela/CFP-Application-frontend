@@ -63,24 +63,24 @@ export class InsertMedicalCasesComponent implements OnInit {
 
     this.previewImage = '';
     if (this.selectedFiles && this.selectedFiles[0]) {
-      console.log(this.selectedFiles[0])
+      // console.log(this.selectedFiles[0])
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        console.log(e.target.result);
+        // console.log(e.target.result);
         this.previewImage = e.target.result;
       };
 
       reader.readAsDataURL(this.selectedFiles[0]);
 
       this.selectedFileName = this.selectedFiles[0].name;
-      console.log(this.previewImage)
+      // console.log(this.previewImage)
     }
   }
 
   addMedicalCase(): void {
     let medicalCase: MedicalCase = new MedicalCase();
-    console.log(this.birthDate.value, 'birthdate');
+    // console.log(this.birthDate.value, 'birthdate');
     medicalCase.encodedInfo = bcrypt.hashSync(this.firstName.value! + this.lastName.value! + this.birthDate.value!, SALT);
 
     medicalCase.additionalInformation = this.additionalInformation.value!;
@@ -88,16 +88,16 @@ export class InsertMedicalCasesComponent implements OnInit {
 
     const uploadImageData = new FormData();
     if (this.selectedFiles) {
-      console.log(this.selectedFiles[0]!, this.selectedFiles[0]!.name)
+      // console.log(this.selectedFiles[0]!, this.selectedFiles[0]!.name)
       uploadImageData.append('image', this.selectedFiles[0]!, this.selectedFiles[0]!.name);
     }
     uploadImageData.append('medicalCase', JSON.stringify(medicalCase));
-    console.log(uploadImageData, 'imageData');
+    // console.log(uploadImageData, 'imageData');
 
-    console.log(medicalCase);
+    // console.log(medicalCase);
     this.medicalCaseService.addMedicalCase(uploadImageData).subscribe(
       (res) => {
-        console.log(res);
+        // console.log(res);
         this.dialog.open(SuccessModalComponent, {data: `The medical case was assigned to: ` + res.resident.account.username + `!`})
           .afterClosed().subscribe(() => window.location.reload());
         this.resetFields();

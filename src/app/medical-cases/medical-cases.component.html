@@ -25,13 +25,14 @@
   <div style="padding:30px">
   <mat-accordion *ngFor="let medicalCase of medicalCases;let i = index;" class="insert-medical-case">
     <mat-expansion-panel [disabled]="true" #mep="matExpansionPanel">
-      <mat-expansion-panel-header style="color: black; padding-top: 15px">
-        <button mat-icon-button (click)="openMedicalCase(mep, i, medicalCase)" style="color: black; top: -5px; z-index: 10"
+      <mat-expansion-panel-header style="color: black; padding-top: 15px" [collapsedHeight]="'100px'">
+        <button mat-icon-button (click)="openMedicalCase(mep, i, medicalCase)" style="color: black; top: 10px; z-index: 10"
         [disabled]="role === 'RESIDENT' && getRemainingTime(medicalCase.beginDate) === 0">
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
         <mat-panel-title>
-          <h1><b>Medical case no {{i + 1}} - {{formatDate(medicalCase.insertDate)}}</b></h1>
+          <h2 style="color: rgb(0, 138, 140);"><b>Medical case no {{medicalCase.id}}
+            <br>Insert date: {{formatDate(medicalCase.insertDate)}}</b></h2>
         </mat-panel-title>
         <mat-panel-description style="color: black">
           <p><b>
@@ -39,9 +40,11 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
             Difficulty: {{medicalCase.difficultyScore}}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></p>
+            <p *ngIf="role === 'EXPERT'" style="display: inline"> <b>Resident: {{medicalCase.resident.account.username}}</b></p>
             <app-timer [time]="getRemainingTime(medicalCase.beginDate)" (finishEvaluation)="moveToCompleted(medicalCase)" style="display: inline" #timerComponent *ngIf="role==='RESIDENT'"></app-timer>
 
 <!--          <div [style]="getRemainingTime(medicalCase.beginDate)<410?'display:inline;color:red':'display:inline'" *ngIf="getRemainingTime(medicalCase.beginDate) >= 0">-->
@@ -55,7 +58,7 @@
 <!--          </div>-->
 <!--          {{this.getRemainingTime(medicalCase.beginDate)}}-->
 
-          </b></p>
+<!--          </p>-->
 
         </mat-panel-description>
       </mat-expansion-panel-header>
@@ -135,25 +138,28 @@
         <br>
         <div class="to-right">
           <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'RESIDENT'"
-                  [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
+                  [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null || medicalCase.completedByResident"
                   class="add-case">
             Save medical case
           </button>
           <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'RESIDENT'"
-                  [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null"
+                  [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null || medicalCase.completedByResident"
                   class="add-case">
             Finish medical case
           </button>
           <button mat-flat-button color="primary" (click)="markAllAsCorrect(medicalCase)"
                   *ngIf="role === 'EXPERT' && medicalCase.correctDiagnosis === medicalCase.residentDiagnosis"
+                  [disabled]="medicalCase.completedByExpert"
                   class="add-case">
             Mark all as correct
           </button>
           <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'EXPERT'"
+                  [disabled]="medicalCase.completedByExpert || medicalCase.correctDiagnosis === null || medicalCase.correctDiagnosis === ''"
                   class="add-case">
             Save evaluation
           </button>
           <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'EXPERT'"
+                  [disabled]="medicalCase.completedByExpert || medicalCase.correctDiagnosis === null || medicalCase.correctDiagnosis === ''"
                   class="add-case">
             Finish evaluation
           </button>
@@ -267,7 +273,7 @@
 
   <br><br><br><br>
   <mat-paginator class="paginator" [pageSize]="pageSize"
-                 [pageSizeOptions]="[5, 10, 20]"
+                 [pageSizeOptions]="[1, 5, 10, 20]"
                  [showFirstLastButtons]="true"
                  [length]="totalSize"
                  [pageIndex]="currentPage"

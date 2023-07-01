@@ -14,7 +14,7 @@ export class MedicalCase {
 
   difficultyScore: number;
 
-  cfpimage: File;
+  cfpimage: any;
 
   presumptiveDiagnosis: string;
 

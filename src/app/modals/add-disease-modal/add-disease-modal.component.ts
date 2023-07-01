@@ -45,7 +45,7 @@ export class AddDiseaseModalComponent {
       (data) => this.educationalTopics = data
     )
     this.disease.educationalTopic = new EducationalTopic('');
-    console.log(this.disease, "D");
+    // console.log(this.disease, "D");
   }
 
   addClinicalSign() {
@@ -66,7 +66,7 @@ export class AddDiseaseModalComponent {
   }
 
   addDisease() {
-    console.log(this.disease, 'disease');
+    // console.log(this.disease, 'disease');
     this.disease.retinalCondition = true;
     this.diseaseService.addDisease(this.disease).subscribe(() => {
         this.dialog.open(SuccessModalComponent, {data: `The diagnosis was successfully added!`})

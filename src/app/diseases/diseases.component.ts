@@ -61,7 +61,7 @@ export class DiseasesComponent implements AfterViewInit{
   }
 
   deleteDisease(username: string) {
-    console.log(username);
+    // console.log(username);
     this.diseasesService.deleteDisease(username).subscribe(
       () => this.dialog.open(SuccessModalComponent, {data: `The diagnosis was successfully deleted!`})
         .afterClosed().subscribe(() => window.location.reload()),

@@ -238,7 +238,6 @@ export class MedicalCasesChartComponent {
 
               }
               for (let i = 29; i >= 0; i--) {
-                console.log(numberOfCasesDaily[i],i)
                 if (numberOfCasesDaily[i].get(disease.name) === undefined) {
                   dataStacked.push(0);
                 } else {
@@ -251,7 +250,6 @@ export class MedicalCasesChartComponent {
           }
         );
       });
-    console.log(this.chartDataStacked)
   }
 
   ngOnInit() {

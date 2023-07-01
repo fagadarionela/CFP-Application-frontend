@@ -36,7 +36,7 @@ export class TimerComponent implements AfterViewInit {
     // console.log(new Date().getMilliseconds()-this.beginDate.getMilliseconds(),'date');
 
     if (this.time == 0) {
-      console.log('end');
+      // console.log('end');
       //update medicalCase
       this.isRunning = false;
       this.finishEvaluation.next();
@@ -57,7 +57,7 @@ export class TimerComponent implements AfterViewInit {
       }
 
       if (this.time <= 0 && this.isRunning) {
-        console.log('end');
+        // console.log('end');
         //update medicalCase
         this.isRunning = false;
         this.finishEvaluation.next();

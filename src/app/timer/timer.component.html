@@ -1,9 +1,12 @@
 <div [style]="time<60?'display:inline;color:red':'display:inline'" *ngIf="time >= 0">
 <!--<div>-->
+  <p><b>
   {{display}} s &nbsp;
+  </b></p>
   <mat-icon style="font-size: 20px; top:100px">timer</mat-icon>
 </div>
 <div style="display:inline" *ngIf="time < 0">
+  <p><b>
   07:00 s &nbsp;
-  <mat-icon style="font-size: 20px; top:100px">timer</mat-icon>
+  <mat-icon style="font-size: 20px; top:100px">timer</mat-icon></b></p>
 </div>

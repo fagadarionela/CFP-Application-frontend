@@ -23,6 +23,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     sessionStorage.setItem('tab', String(0));
+    let role = sessionStorage.getItem('role');
+    if (role === 'OPERATOR') {
+      this.router.navigate(['medical-cases/insert']);
+    } else if (role === 'ADMIN') {
+      this.router.navigate(['users']);
+    } else if (role === 'EXPERT' || role === 'RESIDENT') {
+      this.router.navigate(['medical-cases/incomplete']);
+    }
   }
 
   public loginUser(loginFormValue: any) {

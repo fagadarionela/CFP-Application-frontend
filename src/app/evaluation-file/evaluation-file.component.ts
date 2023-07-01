@@ -27,10 +27,11 @@ export class EvaluationFileComponent {
     this.role = sessionStorage.getItem('role')!;
     this.resident = sessionStorage.getItem('username')!;
     this.medicalCase.clinicalSignGrades.sort((a, b) => (a.clinicalSign.name < b.clinicalSign.name ? -1 : 1));
-    this.medicalCase.differentialDiagnosisGrades.sort((a, b) => (a.differentialDiagnosisSign.sign.name < b.differentialDiagnosisSign.sign.name ? -1 : 1)).sort((a, b) => (a.differentialDiagnosisSign.differentialDiagnosis.name < b.differentialDiagnosisSign.differentialDiagnosis.name ? -1 : 1));
+    // TODO
+    // this.medicalCase.differentialDiagnosisGrades.sort((a, b) => (a.differentialDiagnosisSign.sign.name < b.differentialDiagnosisSign.sign.name ? -1 : 1)).sort((a, b) => (a.differentialDiagnosisSign.differentialDiagnosis.name < b.differentialDiagnosisSign.differentialDiagnosis.name ? -1 : 1));
 
-    this.medicalCase.therapeuticPlanGrades.sort((a, b) => (a.therapeuticPlanMethod.method.name < b.therapeuticPlanMethod.method.name ? -1 : 1))
-      .sort((a, b) => (a.therapeuticPlanMethod.therapeuticPlan.name < b.therapeuticPlanMethod.therapeuticPlan.name ? -1 : 1));
+    // this.medicalCase.therapeuticPlanGrades.sort((a, b) => (a.therapeuticPlanMethod.method.name < b.therapeuticPlanMethod.method.name ? -1 : 1))
+    //   .sort((a, b) => (a.therapeuticPlanMethod.therapeuticPlan.name < b.therapeuticPlanMethod.therapeuticPlan.name ? -1 : 1));
     if (this.medicalCase.correctDiagnosis === this.medicalCase.residentDiagnosis) {
       this.correctDiagnosis = true;
     }
@@ -44,8 +45,10 @@ export class EvaluationFileComponent {
 
   initFields() {
     this.medicalCase.clinicalSignGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
-    this.medicalCase.differentialDiagnosisGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
-    this.medicalCase.therapeuticPlanGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
+
+    // TODO
+    // this.medicalCase.differentialDiagnosisGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
+    // this.medicalCase.therapeuticPlanGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = false);
   }
 
   changeWrong() {
@@ -57,7 +60,7 @@ export class EvaluationFileComponent {
     } else {
       this.medicalCase.correctDiagnosis = '';
       this.initFields();
-      this.medicalCase.score = -1;
+      this.medicalCase.score = 0;
     }
   }
 

@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
 
   public username = '';
 
-  public resident: Resident;
+  public grade: number;
 
   constructor(private router: Router, private residentService: ResidentService) {
     this.role = sessionStorage.getItem('role')!;
@@ -25,8 +25,9 @@ export class NavBarComponent implements OnInit {
       this.loggedIn = true;
     }
     if (this.role === 'RESIDENT'){
-      residentService.getCurrentResident().subscribe(data => {this.resident = data
-      console.log(data)});
+      residentService.getCurrentResident().subscribe(data => {this.grade = data
+      // console.log(data)
+      });
     }
   }
 

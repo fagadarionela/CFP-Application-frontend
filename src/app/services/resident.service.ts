@@ -15,7 +15,7 @@ export class ResidentService {
     return this.http.post<Resident>(SERVER_URL + '/residents', resident, REQUEST_HEADERS);
   }
 
-  public getCurrentResident(): Observable<Resident> {
-    return this.http.get<Resident>(SERVER_URL + '/residents/current', REQUEST_HEADERS);
+  public getCurrentResident(): Observable<number> {
+    return this.http.get<number>(SERVER_URL + '/residents/current', REQUEST_HEADERS);
   }
 }

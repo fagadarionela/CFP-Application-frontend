@@ -27,7 +27,7 @@
         account_circle
         </span></a>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item *ngIf="role === 'RESIDENT' && resident">Grade {{resident.grade}}</button>
+        <button mat-menu-item *ngIf="role === 'RESIDENT' && grade>=0">Grade {{grade}}</button>
         <button mat-menu-item (click)="goTo('/logout')">Logout</button>
       </mat-menu>
     </li>

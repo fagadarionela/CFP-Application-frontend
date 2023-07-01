@@ -28,6 +28,9 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         }),
         catchError(error => {
           if (error.status === 401) {
+            sessionStorage.removeItem('role');
+            sessionStorage.removeItem('tab');
+            sessionStorage.removeItem('username');
             this.router.navigateByUrl('/login');
           }
           return throwError(error);

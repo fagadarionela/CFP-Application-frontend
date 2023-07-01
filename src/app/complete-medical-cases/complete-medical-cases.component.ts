@@ -18,7 +18,7 @@ export class CompleteMedicalCasesComponent implements OnInit {
 
   role: string = '';
 
-  public pageSize = 10;
+  public pageSize = 5;
   public currentPage = 0;
   public totalSize = 0;
   public searchedDiagnostic = "";
@@ -45,7 +45,7 @@ export class CompleteMedicalCasesComponent implements OnInit {
   handlePage(page: number, size: number, searchedDiagnostic: string) {
     this.medicalCaseService.getAllAssignedComplete(page, size, searchedDiagnostic).subscribe(
       response => {
-        console.log(response, 'medicalCases');
+        // console.log(response, 'medicalCases');
         if (response.error) {
           console.log(response.error);
         } else {
@@ -61,7 +61,7 @@ export class CompleteMedicalCasesComponent implements OnInit {
   }
 
   searchMedicalCases() {
-    console.log(this.searchedDiagnostic);
+    // console.log(this.searchedDiagnostic);
     this.handlePage(this.currentPage, this.pageSize, this.searchedDiagnostic);
   }
 

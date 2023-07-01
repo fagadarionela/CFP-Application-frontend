@@ -15,7 +15,7 @@
 <div [ngStyle]="(medicalCase.completedByExpert===false) ? {'min-height':'500px'} : {'min-height':'100px'}">
 
   <div class="evaluation-file two-columns two-columns-correct-wrong"
-       *ngIf="role=='EXPERT' || medicalCase.completedByResident">
+       *ngIf="role=='EXPERT' || medicalCase.completedByExpert">
     <div>
       <mat-checkbox color="warn" class="mat-checkbox" [checked]="correctDiagnosis"
                     (change)="changeCorrect()" [disabled]="medicalCase.completedByExpert">
@@ -33,14 +33,14 @@
     <p class="one-row evaluation-file">Clinical fundus signs:</p>
     <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have clinical fundus signs</p>
   </div>
-  <div class="two-columns" *ngIf="medicalCase.differentialDiagnosisGrades.length === 0">
-    <p class="one-row evaluation-file">Differential diagnosis:</p>
-    <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have any differential diagnosis</p>
-  </div>
-  <div class="two-columns" *ngIf="medicalCase.therapeuticPlanGrades.length === 0">
-    <p class="one-row evaluation-file">Management:</p>
-    <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have any therapeutic plans</p>
-  </div>
+<!--  <div class="two-columns" *ngIf="medicalCase.differentialDiagnosisGrades.length === 0">-->
+<!--    <p class="one-row evaluation-file">Differential diagnosis:</p>-->
+<!--    <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have any differential diagnosis</p>-->
+<!--  </div>-->
+<!--  <div class="two-columns" *ngIf="medicalCase.therapeuticPlanGrades.length === 0">-->
+<!--    <p class="one-row evaluation-file">Management:</p>-->
+<!--    <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have any therapeutic plans</p>-->
+<!--  </div>-->
   <div class="evaluation-file two-columns two-columns-first">
     <div *ngFor="let clinicalSignGrade of medicalCase.clinicalSignGrades; let i = index;">
       <p *ngIf="i === 0" class="one-row evaluation-file">Clinical fundus signs:</p>

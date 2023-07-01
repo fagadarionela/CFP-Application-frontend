@@ -65,13 +65,13 @@ export class ImageModalComponent implements OnInit {
     uploadImageData.append('id', this.medicalCase.id);
     this.medicalCaseService.addDrawing(uploadImageData).subscribe(
       async (res) => {
-        console.log(res);
-        this.message = 'Cazul medical a fost actualizat cu succes!';
+        // console.log(res);
+        this.message = 'Medical case has been successfully updated!';
         this.medicalCase.cfpimageCustomized = await this.getBase64Image(file);
       },
       (error) => {
         console.log(error);
-        this.message = 'Cazul medical a fost actualizat cu succes!';
+        this.message = 'There was a problem when updating the medical case!';
       });
   }
 

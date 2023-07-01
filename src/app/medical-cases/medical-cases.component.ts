@@ -50,7 +50,7 @@ export class MedicalCasesComponent implements OnInit {
 
   diseases: Disease[] = [];
 
-  public pageSize = 10;
+  public pageSize = 5;
   public currentPage = 0;
   public totalSize = 0;
 
@@ -88,9 +88,14 @@ export class MedicalCasesComponent implements OnInit {
 
   updateMedicalCase(medicalCase: MedicalCaseFull): void {
     medicalCase.saved = true;
+    let cfpImage = medicalCase.cfpimage;
+    let cfpImageCustomized = medicalCase.cfpimageCustomized;
+
+    medicalCase.cfpimage = null;
+    medicalCase.cfpimageCustomized = null;
     this.medicalCaseService.updateMedicalCase(medicalCase).subscribe(
       (res) => {
-        console.log(res);
+        // console.log(res);
         this.dialog.open(SuccessModalComponent, {data: `The medical case was saved!`})
           .afterClosed().subscribe(() => window.location.reload());
       },
@@ -99,6 +104,8 @@ export class MedicalCasesComponent implements OnInit {
         this.dialog.open(ErrorModalComponent, {data: `There was a problem when saving the case!`})
           .afterClosed().subscribe(() => this.dialog.closeAll());
       });
+    medicalCase.cfpimage = cfpImage;
+    medicalCase.cfpimageCustomized = cfpImageCustomized;
   }
 
   moveToCompleted(medicalCase: MedicalCaseFull): void {
@@ -148,7 +155,7 @@ export class MedicalCasesComponent implements OnInit {
       );
     }
     if (this.role === "RESIDENT") {
-      console.log('aici')
+      // console.log('aici')
       this.medicalCaseService.getAllAssignedIncomplete(page, size, searchedEncodedInfo).subscribe(
         response => {
           if (response.error) {
@@ -157,7 +164,7 @@ export class MedicalCasesComponent implements OnInit {
             const {content, totalElements} = response;
             this.totalSize = totalElements;
             this.medicalCases = content;
-            console.log(content)
+            // console.log(content)
           }
         },
         error => {
@@ -170,9 +177,9 @@ export class MedicalCasesComponent implements OnInit {
   }
 
   searchMedicalCases() {
-    console.log(this.searchedFirstName);
-    console.log(this.searchedLastName);
-    console.log(this.searchedBirthDate);
+    // console.log(this.searchedFirstName);
+    // console.log(this.searchedLastName);
+    // console.log(this.searchedBirthDate);
 
     this.searchedEncodedInfo = bcrypt.hashSync(this.searchedFirstName + this.searchedLastName + this.searchedBirthDate, SALT);
     if (this.searchedLastName === '' || this.searchedFirstName === '' || this.searchedBirthDate === '') {
@@ -189,26 +196,27 @@ export class MedicalCasesComponent implements OnInit {
     this.diseasesService.getDiseaseByName(medicalCase.residentDiagnosis).subscribe(
       data => {
         medicalCase.clinicalSignGrades.length = 0;
-        medicalCase.differentialDiagnosisGrades.length = 0;
-        medicalCase.therapeuticPlanGrades.length = 0;
-        for (var differentialDiagnosis of data.differentialDiagnosis) {
-          for (var signName of differentialDiagnosis.signs) {
-            medicalCase.differentialDiagnosisGrades.push(new DifferentialDiagnosisGrade(new DifferentialDiagnosisSign(new DifferentialDiagnosisPartial(differentialDiagnosis.name), new Sign(signName))));
-          }
-        }
-        for (var therapeuticPlan of data.therapeuticPlans) {
-          for (var methodName of therapeuticPlan.methods) {
-            medicalCase.therapeuticPlanGrades.push(new TherapeuticPlanGrade(new TherapeuticPlanMethod(new TherapeuticPlanPartial(therapeuticPlan.name), new Method(methodName))));
-          }
-        }
+        // medicalCase.differentialDiagnosisGrades.length = 0; TODO
+        // medicalCase.therapeuticPlanGrades.length = 0;
+        // for (var differentialDiagnosis of data.differentialDiagnosis) {
+        //   for (var signName of differentialDiagnosis.signs) {
+        //     medicalCase.differentialDiagnosisGrades.push(new DifferentialDiagnosisGrade(new DifferentialDiagnosisSign(new DifferentialDiagnosisPartial(differentialDiagnosis.name), new Sign(signName))));
+        //   }
+        // }
+        // for (var therapeuticPlan of data.therapeuticPlans) {
+        //   for (var methodName of therapeuticPlan.methods) {
+        //     medicalCase.therapeuticPlanGrades.push(new TherapeuticPlanGrade(new TherapeuticPlanMethod(new TherapeuticPlanPartial(therapeuticPlan.name), new Method(methodName))));
+        //   }
+        // }
         for (var clinicalSign of data.clinicalSigns) {
           medicalCase.clinicalSignGrades.push(new ClinicalSignGrade(new ClinicalSign(clinicalSign)));
         }
         medicalCase.clinicalSignGrades.sort((a, b) => (a.clinicalSign.name < b.clinicalSign.name ? -1 : 1));
-        medicalCase.differentialDiagnosisGrades.sort((a, b) => (a.differentialDiagnosisSign.sign.name < b.differentialDiagnosisSign.sign.name ? -1 : 1)).sort((a, b) => (a.differentialDiagnosisSign.differentialDiagnosis.name < b.differentialDiagnosisSign.differentialDiagnosis.name ? -1 : 1));
-
-        medicalCase.therapeuticPlanGrades.sort((a, b) => (a.therapeuticPlanMethod.method.name < b.therapeuticPlanMethod.method.name ? -1 : 1))
-          .sort((a, b) => (a.therapeuticPlanMethod.therapeuticPlan.name < b.therapeuticPlanMethod.therapeuticPlan.name ? -1 : 1));
+        // TODO
+        // medicalCase.differentialDiagnosisGrades.sort((a, b) => (a.differentialDiagnosisSign.sign.name < b.differentialDiagnosisSign.sign.name ? -1 : 1)).sort((a, b) => (a.differentialDiagnosisSign.differentialDiagnosis.name < b.differentialDiagnosisSign.differentialDiagnosis.name ? -1 : 1));
+        //
+        // medicalCase.therapeuticPlanGrades.sort((a, b) => (a.therapeuticPlanMethod.method.name < b.therapeuticPlanMethod.method.name ? -1 : 1))
+        //   .sort((a, b) => (a.therapeuticPlanMethod.therapeuticPlan.name < b.therapeuticPlanMethod.therapeuticPlan.name ? -1 : 1));
       });
   }
 
@@ -226,18 +234,25 @@ export class MedicalCasesComponent implements OnInit {
 
   openMedicalCase(mep: any, position: number, medicalCase: MedicalCaseFull) {
     let timerComponent = this.timerComponents.get(position);
+    let cfpImage = medicalCase.cfpimage;
+    let cfpImageCustomized = medicalCase.cfpimageCustomized;
+
+    medicalCase.cfpimage = null;
+    medicalCase.cfpimageCustomized = null;
 
     if (timerComponent?.isRunning == false) {
       medicalCase.beginDate = new Date().toISOString();
       this.medicalCaseService.updateMedicalCase(medicalCase).subscribe(
         (res) => {
-          console.log(res);
+          // console.log(res);
           timerComponent?.startTimer();
         },
         (error) => {
           console.log(error);
         });
     }
+    medicalCase.cfpimage = cfpImage;
+    medicalCase.cfpimageCustomized = cfpImageCustomized;
     mep.expanded = !mep.expanded;
   }
 

@@ -19,7 +19,7 @@ export class MedicalCaseFull {
 
   difficultyScore: number;
 
-  cfpimage: File;
+  cfpimage: any;
 
   cfpimageCustomized: any;
 

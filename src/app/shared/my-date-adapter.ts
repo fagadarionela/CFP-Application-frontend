@@ -5,8 +5,8 @@ export class MyDateAdapter extends NativeDateAdapter {
   override format(date: Date, displayFormat: Object): string {
 
     if (displayFormat == "input") {
-      console.log(date);
-      console.log(displayFormat)
+      // console.log(date);
+      // console.log(displayFormat)
       let day = date.getDate();
       let month = date.getMonth() + 1;
       let year = date.getFullYear();
