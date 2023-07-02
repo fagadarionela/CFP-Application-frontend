@@ -1,10 +1,9 @@
 import {Component} from '@angular/core';
-import {ChartConfiguration, ChartData} from "chart.js";
+import {ChartConfiguration, ChartData, Color} from "chart.js";
 import {MedicalCaseFull} from "../models/medical-case-full";
 import {MedicalCaseService} from "../services/medical-case.service";
 import {DiseaseService} from "../services/disease.service";
 import {Disease} from "../models/disease";
-import {NgChartsModule} from "ng2-charts";
 
 @Component({
   selector: 'app-medical-cases-chart',
@@ -77,6 +76,15 @@ export class MedicalCasesChartComponent {
       {data: [], label: 'Incomplete'},
       {data: [], label: 'In progress'},
       {data: [], label: 'Complete'}
+    ]
+  };
+
+  public barChartDataAssigned: ChartConfiguration<'bar'>['data'] = {
+    labels: ['Medical cases assigned to resident'],
+    datasets: [
+      {data: [962], label: 'Resident 1'},
+      {data: [162], label: 'Resident 2'},
+      {data: [106], label: 'Resident 3'}
     ]
   };
 
@@ -154,24 +162,25 @@ export class MedicalCasesChartComponent {
                 if (medicalCase.completedByResident) {
                   if (medicalCase.completedByExpert) {
                     numberOfCompleteCases++;
-                    let month = new Date(medicalCase.beginDate).getMonth();
+                    let month = new Date(medicalCase.insertDate).getMonth();
 
-                    const MS_PER_DAY: number = 1000 * 60 * 60 * 24;
-                    const start: number = new Date(medicalCase.beginDate).getTime();
-                    const end: number = today.getTime();
-                    const daysBetweenDates: number = Math.round((end - start) / MS_PER_DAY);
-                    if (daysBetweenDates <= 29) {
-                      // console.log(daysBetweenDates)
-                      // console.log(gradesDaily[daysBetweenDates])
-                      let numberOfCasesDailyElement = numberOfCasesDaily[daysBetweenDates];
-                      if (numberOfCasesDailyElement.get(medicalCase.correctDiagnosis) === undefined) {
-                        numberOfCasesDailyElement.set(medicalCase.correctDiagnosis, 1);
-                      } else {
-                        numberOfCasesDailyElement.set(medicalCase.correctDiagnosis, numberOfCasesDailyElement.get(medicalCase.correctDiagnosis)! + 1);
-                      }
-                    }
+                    // const MS_PER_DAY: number = 1000 * 60 * 60 * 24;
+                    // const start: number = new Date(medicalCase.insertDate).getTime();
+                    // const end: number = today.getTime();
+                    // const daysBetweenDates: number = Math.round((end - start) / MS_PER_DAY);
+                    // if (daysBetweenDates <= 29) {
+                    //   // console.log(daysBetweenDates)
+                    //   // console.log(gradesDaily[daysBetweenDates])
+                    //   let numberOfCasesDailyElement = numberOfCasesDaily[daysBetweenDates];
+                    //   if (numberOfCasesDailyElement.get(medicalCase.correctDiagnosis) === undefined) {
+                    //     numberOfCasesDailyElement.set(medicalCase.correctDiagnosis, 1);
+                    //   } else {
+                    //     numberOfCasesDailyElement.set(medicalCase.correctDiagnosis, numberOfCasesDailyElement.get(medicalCase.correctDiagnosis)! + 1);
+                    //   }
+                    // }
                     let gradesMonthlyElement = gradesMonthly[month];
                     let numberOfCasesMonthlyElement = numberOfCasesMonthly[month];
+
                     if (gradesMonthlyElement.get(medicalCase.correctDiagnosis) === undefined) {
                       gradesMonthlyElement.set(medicalCase.correctDiagnosis, medicalCase.grade);
                       numberOfCasesMonthlyElement.set(medicalCase.correctDiagnosis, 1);
@@ -188,6 +197,7 @@ export class MedicalCasesChartComponent {
                 if (correctDiagnosis.get(medicalCase.correctDiagnosis) === undefined) {
                   correctDiagnosis.set(medicalCase.correctDiagnosis, 0);
                 }
+                // console.log(medicalCase.correctDiagnosis, medicalCase.residentDiagnosis)
                 if (incorrectDiagnosis.get(medicalCase.correctDiagnosis) === undefined) {
                   incorrectDiagnosis.set(medicalCase.correctDiagnosis, 0);
                 }
@@ -213,21 +223,47 @@ export class MedicalCasesChartComponent {
             this.barChartDataCompleteIncomplete.datasets[2].data.push(numberOfCompleteCases);
             this.barChartDataCompleteIncomplete.datasets[1].data.push(numberOfInProgressCases);
             this.barChartDataCompleteIncomplete.datasets[0].data.push(numberOfIncompleteCases);
-            for (let i = 0; i < 12; i++) {
-              let gradesMonthlyElement = gradesMonthly[i];
-              let numberOfCasesMonthlyElement = numberOfCasesMonthly[i];
-              for (let disease of this.diseases) {
+            // for (let i = 0; i < 12; i++) {
+            //   let gradesMonthlyElement = gradesMonthly[i];
+            //   let numberOfCasesMonthlyElement = numberOfCasesMonthly[i];
+            //   for (let disease of this.diseases) {
+            //     if (gradesMonthlyElement.get(disease.name) === undefined) {
+            //       gradesMonthlyElement.set(disease.name, 0);
+            //     } else {
+            //       let grade = gradesMonthlyElement.get(disease.name)! / numberOfCasesMonthlyElement.get(disease.name)!;
+            //       gradesMonthlyElement.set(disease.name, Number(grade.toFixed(2)));
+            //     }
+            //   }
+            // }
+            for (let disease of this.diseases) {
+              let auxSum = 0;
+              let auxNr = 0;
+              console.log(disease.name)
+              for (let i = 0; i < 12; i++) {
+                let gradesMonthlyElement = gradesMonthly[i];
+                let numberOfCasesMonthlyElement = numberOfCasesMonthly[i];
                 if (gradesMonthlyElement.get(disease.name) === undefined) {
-                  gradesMonthlyElement.set(disease.name, 0);
+                  let grade;
+                  auxNr != 0? grade= auxSum/auxNr: grade = 0;
+                  gradesMonthlyElement.set(disease.name, Number(grade.toFixed(2)))
+                  console.log(disease.name,i)
+                  console.log(disease.name, grade)
                 } else {
-                  let grade = gradesMonthlyElement.get(disease.name)! / numberOfCasesMonthlyElement.get(disease.name)!;
+                  auxNr += numberOfCasesMonthlyElement.get(disease.name)!;
+                  // let grade = gradesMonthlyElement.get(disease.name)! / numberOfCasesMonthlyElement.get(disease.name)!;
+                  auxSum += gradesMonthlyElement.get(disease.name)!;
+                  let grade = auxSum/auxNr;
                   gradesMonthlyElement.set(disease.name, Number(grade.toFixed(2)));
+                  console.log(disease.name,i)
+                  console.log(disease.name, grade)
                 }
               }
             }
+            console.log(gradesMonthly)
             this.diseases.forEach(disease => {
               let data: number[] = [];
               let dataStacked: number[] = [];
+
               for (let i = 0; i < 12; i++) {
                 if (gradesMonthly[i].get(disease.name) === undefined) {
                   // this.chartData[i].data.push(0);

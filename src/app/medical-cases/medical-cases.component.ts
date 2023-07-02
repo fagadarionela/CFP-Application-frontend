@@ -196,27 +196,27 @@ export class MedicalCasesComponent implements OnInit {
     this.diseasesService.getDiseaseByName(medicalCase.residentDiagnosis).subscribe(
       data => {
         medicalCase.clinicalSignGrades.length = 0;
-        // medicalCase.differentialDiagnosisGrades.length = 0; TODO
-        // medicalCase.therapeuticPlanGrades.length = 0;
-        // for (var differentialDiagnosis of data.differentialDiagnosis) {
-        //   for (var signName of differentialDiagnosis.signs) {
-        //     medicalCase.differentialDiagnosisGrades.push(new DifferentialDiagnosisGrade(new DifferentialDiagnosisSign(new DifferentialDiagnosisPartial(differentialDiagnosis.name), new Sign(signName))));
-        //   }
-        // }
-        // for (var therapeuticPlan of data.therapeuticPlans) {
-        //   for (var methodName of therapeuticPlan.methods) {
-        //     medicalCase.therapeuticPlanGrades.push(new TherapeuticPlanGrade(new TherapeuticPlanMethod(new TherapeuticPlanPartial(therapeuticPlan.name), new Method(methodName))));
-        //   }
-        // }
+        medicalCase.differentialDiagnosisGrades.length = 0;
+        medicalCase.therapeuticPlanGrades.length = 0;
+        for (var differentialDiagnosis of data.differentialDiagnosis) {
+          for (var signName of differentialDiagnosis.signs) {
+            medicalCase.differentialDiagnosisGrades.push(new DifferentialDiagnosisGrade(new DifferentialDiagnosisSign(new DifferentialDiagnosisPartial(differentialDiagnosis.name), new Sign(signName))));
+          }
+        }
+        for (var therapeuticPlan of data.therapeuticPlans) {
+          for (var methodName of therapeuticPlan.methods) {
+            medicalCase.therapeuticPlanGrades.push(new TherapeuticPlanGrade(new TherapeuticPlanMethod(new TherapeuticPlanPartial(therapeuticPlan.name), new Method(methodName))));
+          }
+        }
         for (var clinicalSign of data.clinicalSigns) {
           medicalCase.clinicalSignGrades.push(new ClinicalSignGrade(new ClinicalSign(clinicalSign)));
         }
         medicalCase.clinicalSignGrades.sort((a, b) => (a.clinicalSign.name < b.clinicalSign.name ? -1 : 1));
         // TODO
-        // medicalCase.differentialDiagnosisGrades.sort((a, b) => (a.differentialDiagnosisSign.sign.name < b.differentialDiagnosisSign.sign.name ? -1 : 1)).sort((a, b) => (a.differentialDiagnosisSign.differentialDiagnosis.name < b.differentialDiagnosisSign.differentialDiagnosis.name ? -1 : 1));
-        //
-        // medicalCase.therapeuticPlanGrades.sort((a, b) => (a.therapeuticPlanMethod.method.name < b.therapeuticPlanMethod.method.name ? -1 : 1))
-        //   .sort((a, b) => (a.therapeuticPlanMethod.therapeuticPlan.name < b.therapeuticPlanMethod.therapeuticPlan.name ? -1 : 1));
+        medicalCase.differentialDiagnosisGrades.sort((a, b) => (a.differentialDiagnosisSign.sign.name < b.differentialDiagnosisSign.sign.name ? -1 : 1)).sort((a, b) => (a.differentialDiagnosisSign.differentialDiagnosis.name < b.differentialDiagnosisSign.differentialDiagnosis.name ? -1 : 1));
+
+        medicalCase.therapeuticPlanGrades.sort((a, b) => (a.therapeuticPlanMethod.method.name < b.therapeuticPlanMethod.method.name ? -1 : 1))
+          .sort((a, b) => (a.therapeuticPlanMethod.therapeuticPlan.name < b.therapeuticPlanMethod.therapeuticPlan.name ? -1 : 1));
       });
   }
 

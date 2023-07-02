@@ -59,4 +59,15 @@
     <canvas baseChart class="canvas-line" height="400" [type]="'bar'" [datasets]="chartDataStacked" [labels]="chartLabelsStaked" [legend]="true">
     </canvas>
   </div>
+
+
+    <div class="div-charts div-charts-base div-charts-inline"
+         *ngIf="barChartDataAssigned.labels!.length > 0 && barChartDataAssigned.datasets[0].data.length > 0">
+      <h1>Distribution of medical cases</h1>
+      <canvas baseChart class="canvas"
+              [data]="barChartDataAssigned"
+              [options]="barChartOptions"
+              [type]="'bar'">
+      </canvas>
+    </div>
 </div>

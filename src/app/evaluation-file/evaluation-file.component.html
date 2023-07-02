@@ -33,14 +33,14 @@
     <p class="one-row evaluation-file">Clinical fundus signs:</p>
     <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have clinical fundus signs</p>
   </div>
-<!--  <div class="two-columns" *ngIf="medicalCase.differentialDiagnosisGrades.length === 0">-->
-<!--    <p class="one-row evaluation-file">Differential diagnosis:</p>-->
-<!--    <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have any differential diagnosis</p>-->
-<!--  </div>-->
-<!--  <div class="two-columns" *ngIf="medicalCase.therapeuticPlanGrades.length === 0">-->
-<!--    <p class="one-row evaluation-file">Management:</p>-->
-<!--    <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have any therapeutic plans</p>-->
-<!--  </div>-->
+  <div class="two-columns" *ngIf="medicalCase.differentialDiagnosisGrades.length === 0">
+    <p class="one-row evaluation-file">Differential diagnosis:</p>
+    <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have any differential diagnosis</p>
+  </div>
+  <div class="two-columns" *ngIf="medicalCase.therapeuticPlanGrades.length === 0">
+    <p class="one-row evaluation-file">Management:</p>
+    <p class="one-row evaluation-file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This diagnosis does not have any therapeutic plans</p>
+  </div>
   <div class="evaluation-file two-columns two-columns-first">
     <div *ngFor="let clinicalSignGrade of medicalCase.clinicalSignGrades; let i = index;">
       <p *ngIf="i === 0" class="one-row evaluation-file">Clinical fundus signs:</p>
@@ -78,11 +78,9 @@
       <a title="First checkbox: Expert, second checkbox: Resident" style="cursor: pointer">
         <mat-checkbox color="warn" class="mat-checkbox" [checked]="differentialDiagnosisGrade.correct"
                       (change)="differentialDiagnosisGrade.correct = changeAndIncrementScore(differentialDiagnosisGrade.correct)"
-                      *ngIf="role==='EXPERT' || medicalCase.completedByExpert"
-                      disabled>
+                      *ngIf="role==='EXPERT' || medicalCase.completedByExpert">
           <mat-checkbox color="black" class="mat-checkbox" [checked]="differentialDiagnosisGrade.checked"
-                        (change)="differentialDiagnosisGrade.checked = !differentialDiagnosisGrade.checked"
-                        disabled>
+                        (change)="differentialDiagnosisGrade.checked = !differentialDiagnosisGrade.checked">
             {{differentialDiagnosisGrade.differentialDiagnosisSign.sign.name}}
           </mat-checkbox>
 
@@ -92,7 +90,7 @@
           <mat-checkbox color="black" class="mat-checkbox" [checked]="differentialDiagnosisGrade.checked"
                         *ngIf="role!='EXPERT' && !medicalCase.completedByExpert"
                         (change)="differentialDiagnosisGrade.checked = !differentialDiagnosisGrade.checked"
-                        disabled>
+                        [disabled]="role==='EXPERT'">
             {{differentialDiagnosisGrade.differentialDiagnosisSign.sign.name}}
           </mat-checkbox>
       </a>
@@ -107,11 +105,9 @@
       <a title="First checkbox: Expert, second checkbox: Resident" style="cursor: pointer">
         <mat-checkbox color="warn" class="mat-checkbox" [checked]="therapeuticPlanGrade.correct"
                       (change)="therapeuticPlanGrade.correct = changeAndIncrementScore(therapeuticPlanGrade.correct)"
-                      *ngIf="role==='EXPERT' || medicalCase.completedByExpert"
-                      disabled>
+                      *ngIf="role==='EXPERT' || medicalCase.completedByExpert">
           <mat-checkbox color="black" class="mat-checkbox" [checked]="therapeuticPlanGrade.checked"
-                        (change)="therapeuticPlanGrade.checked = !therapeuticPlanGrade.checked"
-                        disabled>
+                        (change)="therapeuticPlanGrade.checked = !therapeuticPlanGrade.checked">
             {{therapeuticPlanGrade.therapeuticPlanMethod.method.name}}
           </mat-checkbox>
         </mat-checkbox>
@@ -119,8 +115,7 @@
       <a title="Resident" style="cursor: pointer">
         <mat-checkbox color="black" class="mat-checkbox" [checked]="therapeuticPlanGrade.checked"
                       (change)="therapeuticPlanGrade.checked = !therapeuticPlanGrade.checked"
-                      *ngIf="role!='EXPERT' && !medicalCase.completedByExpert"
-                      disabled>
+                      *ngIf="role!='EXPERT' && !medicalCase.completedByExpert">
           {{therapeuticPlanGrade.therapeuticPlanMethod.method.name}}
         </mat-checkbox>
       </a>
@@ -138,7 +133,7 @@
     </div>
   </div>
 </div>
-<!--  <div class="two-columns">TODO-->
+<!--  <div class="two-columns">-->
 <!--    <div *ngFor="let differentialDiagnosisGrade of medicalCase.differentialDiagnosisGrades; let i = index">-->
 <!--      <p class="one-row evaluation-file"-->
 <!--         *ngIf="i==0 || (i+1 < medicalCase.differentialDiagnosisGrades.length && medicalCase.differentialDiagnosisGrades[i-1].differentialDiagnosisSign.differentialDiagnosis.name != medicalCase.differentialDiagnosisGrades[i].differentialDiagnosisSign.differentialDiagnosis.name)">-->
