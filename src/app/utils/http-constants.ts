@@ -18,3 +18,7 @@ export const REQUEST_HEADERS_IMAGE = {
     'Access-Control-Allow-Origin': '*'
   }
 };
+
+export const PATH = 'https://cfp-images.s3.eu-central-1.amazonaws.com/cfp-images/';
+
+export const AUTOMATIC_PATH = 'https://cfp-images.s3.eu-central-1.amazonaws.com/images/';

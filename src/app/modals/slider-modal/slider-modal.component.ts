@@ -3,6 +3,8 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {CustomizedImage} from "../../models/customized-image";
 import {MedicalCaseService} from "../../services/medical-case.service";
 import {formatDate} from "@angular/common";
+import {AUTOMATIC_PATH, PATH} from "../../utils/http-constants";
+import {MedicalCaseCustomized} from "../../models/medical-case-customized";
 
 @Component({
   selector: 'app-slider-modal',
@@ -46,11 +48,22 @@ export class SliderModalComponent implements OnInit {
       }
       medicalCases.forEach(medicalCase => {
         // console.log(medicalCase);
-        this.images.push(new CustomizedImage('data:image/jpeg;base64,' + medicalCase.cfpimage, "2", formatDate(medicalCase.insertDate, 'yyyy-MM-dd HH:mm:ss', this.locale)))
+        this.images.push(new CustomizedImage(this.getPath(medicalCase), "2", formatDate(medicalCase.insertDate, 'yyyy-MM-dd HH:mm:ss', this.locale)))
       });
       this.images.sort((a, b) => (a.insertDate < b.insertDate ? -1 : 1))
       // console.log(this.images.length)
     })
+  }
+
+  public getPath(medicalCase: MedicalCaseCustomized): string {
+    let path = medicalCase.automaticCase ? AUTOMATIC_PATH + medicalCase.presumptiveDiagnosis + '/' + medicalCase.cfpimageName : PATH + medicalCase.cfpimageName;
+
+    return this.sanitize(path);
+  }
+
+  sanitize(path: string) {
+    path = path.replaceAll('+', '%2B');
+    return path.replaceAll(' ', '+');
   }
 
 }

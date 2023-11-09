@@ -5,4 +5,10 @@ export class MedicalCaseCustomized {
   cfpimage: File;
 
   insertDate: Date;
+
+  cfpimageName: string;
+
+  presumptiveDiagnosis: string;
+
+  automaticCase: boolean;
 }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MedicalCaseFull} from "../../models/medical-case-full";
 import {MedicalCaseService} from "../../services/medical-case.service";
 import {MatDialog} from "@angular/material/dialog";
+import {AUTOMATIC_PATH, PATH} from "../../utils/http-constants";
 
 @Component({
   selector: 'app-image-modal',
@@ -29,16 +30,13 @@ export class ImageModalComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.image = this.medicalCase.cfpimageCustomized ? 'data:image/jpeg;base64,' + this.medicalCase.cfpimageCustomized : 'data:image/jpeg;base64,' + this.medicalCase.cfpimage;
-    this.resizedImage = await this.resizeBase64Image(this.image, 900, 900);
-    if (this.role === 'EXPERT'){
+    this.resizedImage = await this.resizeBase64Image(this.getPath(), 900, 900);
+    if (this.role === 'EXPERT') {
       this.colors = {
         'black': 'black',
         'red': 'red'
       }
-    }
-    else
-    {
+    } else {
       this.colors = {
         'black': 'black',
         'white': 'white',
@@ -48,6 +46,19 @@ export class ImageModalComponent implements OnInit {
         'purple': 'purple'
       }
     }
+  }
+
+  public getPath(): string {
+
+    let partialPath = this.medicalCase.cfpimageCustomizedName ? this.medicalCase.cfpimageCustomizedName : this.medicalCase.cfpimageName;
+    let path = this.medicalCase.automaticCase && !this.medicalCase.cfpimageCustomizedName ? AUTOMATIC_PATH + this.medicalCase.presumptiveDiagnosis + '/' + partialPath : PATH + partialPath;
+
+    return this.sanitize(path);
+  }
+
+  sanitize(path: string) {
+    path = path.replaceAll('+', '%2B');
+    return path.replaceAll(' ', '+');
   }
 
   public save($event: any) {
@@ -65,9 +76,10 @@ export class ImageModalComponent implements OnInit {
     uploadImageData.append('id', this.medicalCase.id);
     this.medicalCaseService.addDrawing(uploadImageData).subscribe(
       async (res) => {
-        // console.log(res);
         this.message = 'Medical case has been successfully updated!';
-        this.medicalCase.cfpimageCustomized = await this.getBase64Image(file);
+        this.medicalCase.cfpimageCustomizedName = res.message;
+        // this.medicalCase.cfpimageCustomized = await this.getBase64Image(file);
+        this.resizedImage = await this.resizeBase64Image(this.getPath(), 900, 900);
       },
       (error) => {
         console.log(error);
@@ -89,13 +101,13 @@ export class ImageModalComponent implements OnInit {
       reader.onerror = error => reject(error);
     });
   }
+
   resizeBase64Image = (base64: string, width: number, height: number): Promise<string> => {
     // Create a canvas element
     const canvas = document.createElement('canvas') as HTMLCanvasElement;
 
     // Create an image element from the base64 string
     const image = new Image();
-    image.src = base64;
 
     // Return a Promise that resolves when the image has loaded
     return new Promise((resolve, reject) => {
@@ -118,11 +130,11 @@ export class ImageModalComponent implements OnInit {
         // Resolve the Promise with the resized image as a base64 string
         resolve(canvas.toDataURL());
       };
-
+      image.crossOrigin = 'anonymous';
+      image.src = base64;
       image.onerror = reject;
     });
   };
-
   // async function resizeBase64Image(base64: string, targetWidth: number, targetHeight: number): Promise<string> {
   //   // Decode the base64 image data and save it to a buffer
   //   const imageBuffer = Buffer.from(base64, "base64");

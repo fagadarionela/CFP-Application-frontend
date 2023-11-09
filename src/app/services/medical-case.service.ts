@@ -28,6 +28,17 @@ export class MedicalCaseService {
     });
   }
 
+  public getPresumptiveDiagnosisById(id: string): Observable<any> {
+    return this.http.get<any>(SERVER_URL + '/cases/assigned/incomplete/'+id, {
+      'headers': {
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    });
+  }
+
   public getAllAssignedComplete(page: number, size: number, searchedDiagnostic: string): Observable<any> {
     return this.http.get<any>(SERVER_URL + '/cases/assigned/completed', {
       'headers': {

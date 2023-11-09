@@ -23,155 +23,162 @@
     </button>
   </div>
   <div style="padding:30px">
-  <mat-accordion *ngFor="let medicalCase of medicalCases;let i = index;" class="insert-medical-case">
-    <mat-expansion-panel [disabled]="true" #mep="matExpansionPanel">
-      <mat-expansion-panel-header style="color: black; padding-top: 15px" [collapsedHeight]="'100px'">
-        <button mat-icon-button (click)="openMedicalCase(mep, i, medicalCase)" style="color: black; top: 10px; z-index: 10"
-        [disabled]="role === 'RESIDENT' && getRemainingTime(medicalCase.beginDate) === 0">
-          <mat-icon>keyboard_arrow_down</mat-icon>
-        </button>
-        <mat-panel-title>
-          <h2 style="color: rgb(0, 138, 140);"><b>Medical case no {{medicalCase.id}}
-            <br>Insert date: {{formatDate(medicalCase.insertDate)}}</b></h2>
-        </mat-panel-title>
-        <mat-panel-description style="color: black">
-          <p><b>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-            Difficulty: {{medicalCase.difficultyScore}}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></p>
-            <p *ngIf="role === 'EXPERT'" style="display: inline"> <b>Resident: {{medicalCase.resident.account.username}}</b></p>
-            <app-timer [time]="getRemainingTime(medicalCase.beginDate)" (finishEvaluation)="moveToCompleted(medicalCase)" style="display: inline" #timerComponent *ngIf="role==='RESIDENT'"></app-timer>
+    <mat-accordion *ngFor="let medicalCase of medicalCases;let i = index;" class="insert-medical-case">
+      <mat-expansion-panel [disabled]="true" #mep="matExpansionPanel">
+        <mat-expansion-panel-header style="color: black; padding-top: 15px" [collapsedHeight]="'100px'">
+          <button mat-icon-button (click)="openMedicalCase(mep, i, medicalCase)"
+                  style="color: black; top: 10px; z-index: 10"
+                  [disabled]="role === 'RESIDENT' && getRemainingTime(medicalCase.beginDate) === 0">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+          <mat-panel-title>
+            <h2 style="color: rgb(0, 138, 140);"><b>Medical case no {{medicalCase.id}}
+              <br>Insert date: {{formatDate(medicalCase.insertDate)}}</b></h2>
+          </mat-panel-title>
+          <mat-panel-description style="color: black">
+            <p><b>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+              Difficulty: {{medicalCase.difficultyScore}}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></p>
+            <p *ngIf="role === 'EXPERT'" style="display: inline">
+              <b>Resident: {{medicalCase.resident.account.username}}</b></p>
+            <app-timer [time]="getRemainingTime(medicalCase.beginDate)"
+                       (finishEvaluation)="moveToCompleted(medicalCase)" style="display: inline" #timerComponent
+                       *ngIf="role==='RESIDENT'"></app-timer>
 
-<!--          <div [style]="getRemainingTime(medicalCase.beginDate)<410?'display:inline;color:red':'display:inline'" *ngIf="getRemainingTime(medicalCase.beginDate) >= 0">-->
-<!--            &lt;!&ndash;<div>&ndash;&gt;-->
-<!--            {{this.transform(this.getRemainingTime(medicalCase.beginDate))}} s &nbsp;-->
-<!--            <mat-icon style="font-size: 20px; top:100px">timer</mat-icon>-->
-<!--          </div>-->
-<!--          <div style="display:inline" *ngIf="getRemainingTime(medicalCase.beginDate) < 0">-->
-<!--            07:00 s &nbsp;-->
-<!--            <mat-icon style="font-size: 20px; top:100px">timer</mat-icon>-->
-<!--          </div>-->
-<!--          {{this.getRemainingTime(medicalCase.beginDate)}}-->
+            <!--          <div [style]="getRemainingTime(medicalCase.beginDate)<410?'display:inline;color:red':'display:inline'" *ngIf="getRemainingTime(medicalCase.beginDate) >= 0">-->
+            <!--            &lt;!&ndash;<div>&ndash;&gt;-->
+            <!--            {{this.transform(this.getRemainingTime(medicalCase.beginDate))}} s &nbsp;-->
+            <!--            <mat-icon style="font-size: 20px; top:100px">timer</mat-icon>-->
+            <!--          </div>-->
+            <!--          <div style="display:inline" *ngIf="getRemainingTime(medicalCase.beginDate) < 0">-->
+            <!--            07:00 s &nbsp;-->
+            <!--            <mat-icon style="font-size: 20px; top:100px">timer</mat-icon>-->
+            <!--          </div>-->
+            <!--          {{this.getRemainingTime(medicalCase.beginDate)}}-->
 
-<!--          </p>-->
+            <!--          </p>-->
 
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div>
-        <!--        <h1><b>Caz medical {{i + 1}} - {{formatDate(medicalCase.insertDate)}}</b>-->
-        <!--          <p style="float:right; display: inline"><b>Dificultate: {{medicalCase.difficultyScore}}-->
-        <!--          <app-timer [beginDate]="medicalCase.beginDate"></app-timer>-->
-        <!--          </b></p></h1>-->
-        <br>
-        <div class="cfp-image-div">
-          <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="cfp-image" height="420px" width="420px"
-               alt="Imagine CFP" (click)="openImage(medicalCase)">
-          <mat-form-field appearance="fill" class="additional-info">
-            <mat-label>Additional information</mat-label>
-            <textarea matInput [(ngModel)]="medicalCase.additionalInformation"
-                      rows="{{medicalCase.completedByResident?4:8}}"
-                    [disabled]="medicalCase.completedByResident"></textarea>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div>
+          <!--        <h1><b>Caz medical {{i + 1}} - {{formatDate(medicalCase.insertDate)}}</b>-->
+          <!--          <p style="float:right; display: inline"><b>Dificultate: {{medicalCase.difficultyScore}}-->
+          <!--          <app-timer [beginDate]="medicalCase.beginDate"></app-timer>-->
+          <!--          </b></p></h1>-->
+          <br>
+          <div class="cfp-image-div">
+            <!--          <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="cfp-image" height="420px" width="420px"-->
+            <!--               alt="Imagine CFP" (click)="openImage(medicalCase)">-->
+            <img [src]="getPath(medicalCase)" class="cfp-image" height="420px" width="420px"
+                 alt="Imagine CFP" (click)="openImage(medicalCase)">
+            <mat-form-field appearance="fill" class="additional-info">
+              <mat-label>Additional information</mat-label>
+              <textarea matInput [(ngModel)]="medicalCase.additionalInformation"
+                        rows="{{medicalCase.completedByResident?4:8}}"
+                        [disabled]="medicalCase.completedByResident"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="additional-info" *ngIf="role==='EXPERT'">
+              <mat-label>Feedback</mat-label>
+              <textarea matInput [(ngModel)]="medicalCase.feedback"
+                        rows="{{medicalCase.completedByResident?4:7}}"></textarea>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="fill" class="input" *ngIf="role==='RESIDENT'">
+            <mat-label>Resident diagnosis</mat-label>
+            <mat-select [(ngModel)]="medicalCase.residentDiagnosis" (ngModelChange)="getDiseaseByName(medicalCase)"
+                        [disabled]="medicalCase.residentDiagnosis != null && medicalCase.saved">
+              <mat-select-trigger>
+                {{medicalCase.residentDiagnosis}}
+              </mat-select-trigger>
+              <mat-option *ngFor="let disease of diseases" [value]="disease.name">{{disease.name}}</mat-option>
+            </mat-select>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="additional-info" *ngIf="role==='EXPERT'">
-            <mat-label>Feedback</mat-label>
-            <textarea matInput [(ngModel)]="medicalCase.feedback"
-                      rows="{{medicalCase.completedByResident?4:7}}"></textarea>
+          <mat-form-field class="half-input" appearance="fill" *ngIf="role==='EXPERT'">
+            <mat-label class="black">Resident diagnosis</mat-label>
+            <input matInput [(ngModel)]="medicalCase.residentDiagnosis" disabled class="black">
           </mat-form-field>
+          <mat-form-field class="half-input" appearance="fill" *ngIf="role==='EXPERT'">
+            <mat-label class="black">Predicted diagnosis</mat-label>
+            <input matInput [(ngModel)]="medicalCase.presumptiveDiagnosis" disabled class="black">
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="input" *ngIf="role==='EXPERT'">
+            <mat-label>Correct diagnosis</mat-label>
+            <mat-select [(ngModel)]="medicalCase.correctDiagnosis"
+                        (ngModelChange)="checkCorrectDiagnosis(medicalCase, i)"
+                        [disabled]="role!='EXPERT'">
+              <mat-select-trigger>
+                {{medicalCase.correctDiagnosis}}
+              </mat-select-trigger>
+              <mat-option *ngFor="let disease of diseases" [value]="disease.name">{{disease.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br>
+          <div class="evaluation-file">
+            <app-evaluation-file [medicalCase]="medicalCase"></app-evaluation-file>
+          </div>
+
+
+          <br>
+
         </div>
-
-        <mat-form-field appearance="fill" class="input" *ngIf="role==='RESIDENT'">
-          <mat-label>Resident diagnosis</mat-label>
-          <mat-select [(ngModel)]="medicalCase.residentDiagnosis" (ngModelChange)="getDiseaseByName(medicalCase)"
-                      [disabled]="medicalCase.residentDiagnosis != null && medicalCase.saved">
-            <mat-select-trigger>
-              {{medicalCase.residentDiagnosis}}
-            </mat-select-trigger>
-            <mat-option *ngFor="let disease of diseases" [value]="disease.name">{{disease.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="half-input" appearance="fill" *ngIf="role==='EXPERT'">
-          <mat-label class="black">Resident diagnosis</mat-label>
-          <input matInput [(ngModel)]="medicalCase.residentDiagnosis" disabled class="black">
-        </mat-form-field>
-        <mat-form-field class="half-input" appearance="fill" *ngIf="role==='EXPERT'">
-          <mat-label class="black">Predicted diagnosis</mat-label>
-          <input matInput [(ngModel)]="medicalCase.presumptiveDiagnosis" disabled class="black">
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="input" *ngIf="role==='EXPERT'">
-          <mat-label>Correct diagnosis</mat-label>
-          <mat-select [(ngModel)]="medicalCase.correctDiagnosis" (ngModelChange)="checkCorrectDiagnosis(medicalCase, i)"
-                      [disabled]="role!='EXPERT'">
-            <mat-select-trigger>
-              {{medicalCase.correctDiagnosis}}
-            </mat-select-trigger>
-            <mat-option *ngFor="let disease of diseases" [value]="disease.name">{{disease.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
         <br>
-        <div class="evaluation-file">
-          <app-evaluation-file [medicalCase]="medicalCase"></app-evaluation-file>
+        <div class="align">
+          <button class="link to-left" (click)="showOtherCases(medicalCase.encodedInfo)" style="align-self: start; ">
+            View previous medical cases of this pacient
+          </button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <br>
+          <div class="to-right">
+            <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'RESIDENT'"
+                    [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null || medicalCase.completedByResident"
+                    class="add-case">
+              Save medical case
+            </button>
+            <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'RESIDENT'"
+                    [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null || medicalCase.completedByResident"
+                    class="add-case">
+              Finish medical case
+            </button>
+            <button mat-flat-button color="primary" (click)="markAllAsCorrect(medicalCase)"
+                    *ngIf="role === 'EXPERT' && medicalCase.correctDiagnosis === medicalCase.residentDiagnosis"
+                    [disabled]="medicalCase.completedByExpert"
+                    class="add-case">
+              Mark all as correct
+            </button>
+            <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'EXPERT'"
+                    [disabled]="medicalCase.completedByExpert || medicalCase.correctDiagnosis === null || medicalCase.correctDiagnosis === ''"
+                    class="add-case">
+              Save evaluation
+            </button>
+            <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'EXPERT'"
+                    [disabled]="medicalCase.completedByExpert || medicalCase.correctDiagnosis === null || medicalCase.correctDiagnosis === ''"
+                    class="add-case">
+              Finish evaluation
+            </button>
+          </div>
+
         </div>
-
-
         <br>
 
-      </div>
-      <br>
-      <div class="align">
-        <button class="link to-left" (click)="showOtherCases(medicalCase.encodedInfo)" style="align-self: start; ">
-          View previous medical cases of this pacient
-        </button>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <br>
-        <div class="to-right">
-          <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'RESIDENT'"
-                  [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null || medicalCase.completedByResident"
-                  class="add-case">
-            Save medical case
-          </button>
-          <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'RESIDENT'"
-                  [disabled]="medicalCase.residentDiagnosis === '' || medicalCase.residentDiagnosis === undefined || medicalCase.residentDiagnosis === null || medicalCase.completedByResident"
-                  class="add-case">
-            Finish medical case
-          </button>
-          <button mat-flat-button color="primary" (click)="markAllAsCorrect(medicalCase)"
-                  *ngIf="role === 'EXPERT' && medicalCase.correctDiagnosis === medicalCase.residentDiagnosis"
-                  [disabled]="medicalCase.completedByExpert"
-                  class="add-case">
-            Mark all as correct
-          </button>
-          <button mat-flat-button color="primary" (click)="updateMedicalCase(medicalCase)" *ngIf="role === 'EXPERT'"
-                  [disabled]="medicalCase.completedByExpert || medicalCase.correctDiagnosis === null || medicalCase.correctDiagnosis === ''"
-                  class="add-case">
-            Save evaluation
-          </button>
-          <button mat-flat-button color="primary" (click)="moveToCompleted(medicalCase)" *ngIf="role === 'EXPERT'"
-                  [disabled]="medicalCase.completedByExpert || medicalCase.correctDiagnosis === null || medicalCase.correctDiagnosis === ''"
-                  class="add-case">
-            Finish evaluation
-          </button>
-        </div>
-
-      </div>
+      </mat-expansion-panel>
       <br>
-
-      <br>
-    </mat-expansion-panel>
-    <br>
-  </mat-accordion>
+    </mat-accordion>
   </div>
   <!--  <mat-card *ngFor="let medicalCase of medicalCases;let i = index;" class="insert-medical-case">-->
 

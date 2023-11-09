@@ -21,7 +21,13 @@ export class MedicalCaseFull {
 
   cfpimage: any;
 
+  cfpimageName: any;
+
   cfpimageCustomized: any;
+
+  automaticCase: boolean;
+
+  cfpimageCustomizedName: string;
 
   presumptiveDiagnosis: string;
 

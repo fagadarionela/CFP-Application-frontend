@@ -1,21 +1,11 @@
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  LOCALE_ID,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-  ViewEncapsulation
-} from '@angular/core';
+import {Component, Inject, LOCALE_ID, OnInit, QueryList, ViewChildren, ViewEncapsulation} from '@angular/core';
 import {MedicalCaseService} from "../services/medical-case.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ImageModalComponent} from "../modals/image-modal/image-modal.component";
 import {Router} from "@angular/router";
 import {SliderModalComponent} from "../modals/slider-modal/slider-modal.component";
 import * as bcrypt from "bcryptjs";
-import {SALT} from "../utils/http-constants";
+import {AUTOMATIC_PATH, PATH, SALT} from "../utils/http-constants";
 import {formatDate} from "@angular/common";
 import {ErrorModalComponent} from "../modals/error-modal/error-modal.component";
 import {SuccessModalComponent} from "../modals/success-modal/success-modal.component";
@@ -86,6 +76,18 @@ export class MedicalCasesComponent implements OnInit {
     }
   }
 
+  getPath(medicalCase: MedicalCaseFull) {
+    if (medicalCase.cfpimageName === undefined || medicalCase.cfpimageName === null || medicalCase.cfpimageName === "") {
+      return PATH + "noimage.png";
+    }
+
+    return medicalCase.automaticCase? AUTOMATIC_PATH + this.sanitize(medicalCase.presumptiveDiagnosis) + '/' + medicalCase.cfpimageName: PATH + medicalCase.cfpimageName;
+  }
+
+  sanitize(path: string) {
+    return path.replaceAll('+', '%2B');
+  }
+
   updateMedicalCase(medicalCase: MedicalCaseFull): void {
     medicalCase.saved = true;
     let cfpImage = medicalCase.cfpimage;
@@ -120,10 +122,13 @@ export class MedicalCasesComponent implements OnInit {
 
   markAllAsCorrect(medicalCase: MedicalCaseFull): void {
     medicalCase.clinicalSignGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
-    // medicalCase.differentialDiagnosisGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true); TODO
-    // medicalCase.therapeuticPlanGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
-    // medicalCase.score = medicalCase.clinicalSignGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.therapeuticPlanGrades.length;
-    medicalCase.score = medicalCase.clinicalSignGrades.length;
+    if (!medicalCase.automaticCase) {
+      medicalCase.differentialDiagnosisGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
+      medicalCase.therapeuticPlanGrades.forEach(clinicalSignGrade => clinicalSignGrade.correct = true);
+      medicalCase.score = medicalCase.clinicalSignGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.therapeuticPlanGrades.length;
+    } else {
+      medicalCase.score = medicalCase.clinicalSignGrades.length;
+    }
   }
 
   openImage(medicalCase: MedicalCaseFull) {
@@ -182,6 +187,7 @@ export class MedicalCasesComponent implements OnInit {
     // console.log(this.searchedBirthDate);
 
     this.searchedEncodedInfo = bcrypt.hashSync(this.searchedFirstName + this.searchedLastName + this.searchedBirthDate, SALT);
+    console.log(this.searchedEncodedInfo);
     if (this.searchedLastName === '' || this.searchedFirstName === '' || this.searchedBirthDate === '') {
       this.searchedEncodedInfo = "$2a"
     }
@@ -221,12 +227,12 @@ export class MedicalCasesComponent implements OnInit {
   }
 
   checkCorrectDiagnosis(medicalCase: MedicalCaseFull, position: number) {
-  let evaluationFile = this.evaluationFileComponents.get(position);
+    let evaluationFile = this.evaluationFileComponents.get(position);
     if (medicalCase.residentDiagnosis === medicalCase.correctDiagnosis) {
-      evaluationFile ? evaluationFile.correctDiagnosis = true: undefined;
+      evaluationFile ? evaluationFile.correctDiagnosis = true : undefined;
       medicalCase.score = 0;
     } else {
-      evaluationFile ? evaluationFile.correctDiagnosis = false: undefined;
+      evaluationFile ? evaluationFile.correctDiagnosis = false : undefined;
       evaluationFile?.initFields();
       medicalCase.score = 0;
     }

@@ -1,7 +1,10 @@
 <div class="modal" *ngIf="colors">
 <!--  <br>-->
-  <img [src]="resizedImage" *ngIf="role === 'RESIDENT' && medicalCase.completedByResident" width="900" height="900">
-  <image-drawing *ngIf="role != 'RESIDENT' || !medicalCase.completedByResident"
+<!--  <img [src]="resizedImage" *ngIf="role === 'RESIDENT' && medicalCase.completedByResident" width="900" height="900">-->
+
+  <img crossorigin="anonymous" [src]="resizedImage" *ngIf="role === 'RESIDENT' && medicalCase.completedByResident" width="900" height="900">
+  <image-drawing crossorigin="anonymous"
+                 *ngIf="role != 'RESIDENT' || !medicalCase.completedByResident"
                  [src]="resizedImage"
                  outputMimeType="'image/jpeg'"
                  [outputQuality]=outputQuality

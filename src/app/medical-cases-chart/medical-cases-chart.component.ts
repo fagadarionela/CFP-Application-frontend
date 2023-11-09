@@ -79,15 +79,6 @@ export class MedicalCasesChartComponent {
     ]
   };
 
-  public barChartDataAssigned: ChartConfiguration<'bar'>['data'] = {
-    labels: ['Medical cases assigned to resident'],
-    datasets: [
-      {data: [962], label: 'Resident 1'},
-      {data: [162], label: 'Resident 2'},
-      {data: [106], label: 'Resident 3'}
-    ]
-  };
-
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
     labels: [],
     datasets: [{data: []}]

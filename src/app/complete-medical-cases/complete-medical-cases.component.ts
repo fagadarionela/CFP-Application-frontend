@@ -6,6 +6,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {MedicalCaseFull} from "../models/medical-case-full";
 import {EvaluationFileModalComponent} from "../modals/evaluation-file-modal/evaluation-file-modal.component";
 import {formatDate} from "@angular/common";
+import {AUTOMATIC_PATH, PATH} from "../utils/http-constants";
+import {A} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-complete-medical-cases',
@@ -40,6 +42,14 @@ export class CompleteMedicalCasesComponent implements OnInit {
   openImage(medicalCase: MedicalCaseFull) {
     const activeModal = this.dialog.open(ImageModalComponent);
     activeModal.componentInstance.medicalCase = medicalCase;
+  }
+
+  getPath(medicalCase:MedicalCaseFull){
+    return medicalCase.automaticCase? AUTOMATIC_PATH+ this.sanitize(medicalCase.presumptiveDiagnosis)+ '/'+ medicalCase.cfpimageName:PATH + medicalCase.cfpimageName;
+  }
+
+  sanitize(path: string){
+    return path.replaceAll('+', '%2B');
   }
 
   handlePage(page: number, size: number, searchedDiagnostic: string) {

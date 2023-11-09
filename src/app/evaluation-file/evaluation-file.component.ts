@@ -35,10 +35,9 @@ export class EvaluationFileComponent {
     if (this.medicalCase.correctDiagnosis === this.medicalCase.residentDiagnosis) {
       this.correctDiagnosis = true;
     }
-    if (!this.medicalCase.completedByExpert){
+    if (!this.medicalCase.completedByExpert) {
       this.minHeight = '600px';
-    }
-    else{
+    } else {
       this.minHeight = '0px';
     }
   }

@@ -38,13 +38,13 @@
     </div>
 
     <div class="cfp-image">
-      <img [src]="'data:image/jpeg;base64,' + medicalCase.cfpimage" class="preview" width="100%" height="100%"
-           alt="Imagine CFP" (click)="openImage(medicalCase)">
+      <img [src]="getPath(medicalCase)" class="preview" width="100%" height="100%"
+           alt="Imagine CFP" (click)="openImage(medicalCase)" >
     </div>
     <p class="to-left">
       Difficulty: {{medicalCase.difficultyScore}}
 <!--      &nbsp;&nbsp;&nbsp;&nbsp;Score: {{medicalCase.completedByExpert ? medicalCase.score + " of " : "Not evaluated"}} {{medicalCase.completedByExpert ? medicalCase.therapeuticPlanGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.clinicalSignGrades.length : ""}} TODO-->
-      &nbsp;&nbsp;&nbsp;&nbsp;Score: {{medicalCase.completedByExpert ? medicalCase.score + " of " : "Not evaluated"}} {{medicalCase.completedByExpert ? medicalCase.clinicalSignGrades.length : ""}}
+      &nbsp;&nbsp;&nbsp;&nbsp;Score: {{medicalCase.completedByExpert ? medicalCase.score + " of " : "Not evaluated"}} {{medicalCase.completedByExpert ? medicalCase.automaticCase? medicalCase.clinicalSignGrades.length: medicalCase.therapeuticPlanGrades.length + medicalCase.differentialDiagnosisGrades.length + medicalCase.clinicalSignGrades.length: ""}}
       &nbsp;&nbsp;&nbsp;&nbsp;Grade: {{medicalCase.completedByExpert ? medicalCase.grade : "Not evaluated"}}
     </p>
     <button mat-flat-button color="primary" (click)="openEvaluationFile(medicalCase)"

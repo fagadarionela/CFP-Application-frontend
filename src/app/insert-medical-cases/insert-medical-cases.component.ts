@@ -87,9 +87,13 @@ export class InsertMedicalCasesComponent implements OnInit {
     medicalCase.presumptiveDiagnosis = this.presumptiveDiagnosis.value!;
 
     const uploadImageData = new FormData();
-    if (this.selectedFiles) {
-      // console.log(this.selectedFiles[0]!, this.selectedFiles[0]!.name)
+    console.log(this.selectedFiles)
+    if (this.selectedFiles && this.selectedFiles.length != 0) {
+      console.log(this.selectedFiles[0]!, this.selectedFiles[0]!.name)
       uploadImageData.append('image', this.selectedFiles[0]!, this.selectedFiles[0]!.name);
+    }
+    else{
+      uploadImageData.append('image', new Blob(), "null");
     }
     uploadImageData.append('medicalCase', JSON.stringify(medicalCase));
     // console.log(uploadImageData, 'imageData');
