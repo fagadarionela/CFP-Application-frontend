@@ -36,8 +36,6 @@ export class InsertMedicalCasesComponent implements OnInit {
 
   today = new Date();
 
-  started: boolean;
-
   constructor(private dialog: MatDialog, private medicalCaseService: MedicalCaseService, private systemService: SystemService, private diseasesService: DiseaseService) {
     this.role = sessionStorage.getItem('role')!;
   }
@@ -47,7 +45,6 @@ export class InsertMedicalCasesComponent implements OnInit {
     this.diseasesService.getAllDiseases().subscribe(data => {
       this.diseases = data.sort((a, b) => (a.name.charAt(0) < b.name.charAt(0) ? -1 : 1))
     });
-    this.systemService.getAllTempMedicalCases().subscribe((data) => this.started = data > 0);
   }
 
   getErrorMessage(): string {
@@ -131,11 +128,4 @@ export class InsertMedicalCasesComponent implements OnInit {
     this.additionalInformation.setValue("");
   }
 
-  automaticallyAddMedicalCases() {
-    this.systemService.getImages().subscribe(()=> this.started = true);
-  }
-
-  stopAutomaticallyAddMedicalCases(){
-    this.systemService.deleteTempMedicalCases().subscribe(()=> this.started = false);
-  }
 }

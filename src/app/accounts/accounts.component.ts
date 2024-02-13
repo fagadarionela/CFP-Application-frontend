@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddAccountModalComponent} from "../modals/add-account-modal/add-account-modal.component";
 import {SuccessModalComponent} from "../modals/success-modal/success-modal.component";
 import {ErrorModalComponent} from "../modals/error-modal/error-modal.component";
+import {SystemService} from "../services/system.service";
 
 @Component({
   selector: 'app-accounts',
@@ -23,7 +24,9 @@ export class AccountsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private userService: UserService, private dialog: MatDialog) {
+  started: boolean;
+
+  constructor(private userService: UserService, private dialog: MatDialog, private systemService: SystemService) {
     this.userService.getAllUsers().subscribe(
       (data) => {
         this.dataSource = new MatTableDataSource(data);
@@ -34,6 +37,7 @@ export class AccountsComponent implements AfterViewInit {
         console.log(error);
       }
     );
+    this.systemService.getAllTempMedicalCases().subscribe((data) => this.started = data > 0);
   }
 
   ngAfterViewInit() {
@@ -64,5 +68,13 @@ export class AccountsComponent implements AfterViewInit {
           .afterClosed().subscribe(() => window.location.reload())
       }
     )
+  }
+
+  automaticallyAddMedicalCases() {
+    this.systemService.getImages().subscribe(()=> this.started = true);
+  }
+
+  stopAutomaticallyAddMedicalCases(){
+    this.systemService.deleteTempMedicalCases().subscribe(()=> this.started = false);
   }
 }

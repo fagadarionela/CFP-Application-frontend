@@ -1,4 +1,11 @@
 <br><br><br><br><br><br>
+<button mat-flat-button color="primary" (click)="automaticallyAddMedicalCases()" class="auto-add-case" *ngIf="!started">
+  Start automatic mode to add medical cases
+</button>
+<button mat-flat-button color="primary" (click)="stopAutomaticallyAddMedicalCases()" class="auto-add-case" *ngIf="started">
+  Stop automatic mode to add medical cases
+</button>
+<br><br>
 <mat-form-field class="input">
   <mat-label>Filtru</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Example: Resident" #input>

@@ -1,11 +1,5 @@
 <div class="content">
   <br><br><br><br><br><br>
-  <button mat-flat-button color="primary" (click)="automaticallyAddMedicalCases()" class="auto-add-case" *ngIf="!started">
-    Start automatic mode to add medical cases
-  </button>
-  <button mat-flat-button color="primary" (click)="stopAutomaticallyAddMedicalCases()" class="auto-add-case" *ngIf="started">
-    Stop automatic mode to add medical cases
-  </button>
   <mat-card *ngIf="role==='OPERATOR'" class="insert-medical-case">
     <!--    <div class="input">-->
     <br>
